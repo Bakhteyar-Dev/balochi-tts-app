@@ -1,5 +1,5 @@
-import io
 import csv
+import io
 import wave
 from datetime import datetime
 from pathlib import Path
@@ -80,7 +80,7 @@ def save_feedback(script_name, rating, feedback, source_text):
 
 
 st.set_page_config(
-    page_title="Neurolingo",
+    page_title="Balochi Text to Speech",
     page_icon="audio",
     layout="wide",
 )
@@ -100,25 +100,23 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
 
     :root {
-        --ink: #0a1628;
-        --muted: #506176;
-        --soft: #f4fbff;
+        --ink: #17202a;
+        --muted: #5d6978;
+        --paper: #fffaf1;
         --panel: rgba(255, 255, 255, 0.86);
-        --line: rgba(14, 116, 144, 0.18);
-        --blue: #0b5cad;
-        --sky: #12a8ef;
-        --mint: #0f766e;
-        --amber: #d98b1f;
-        --shadow: 0 24px 70px rgba(15, 23, 42, 0.11);
+        --line: rgba(35, 48, 66, 0.14);
+        --teal: #0f766e;
+        --teal-dark: #0b5d56;
+        --gold: #c9811a;
+        --rose: #a64253;
     }
 
     html, body, [data-testid="stAppViewContainer"] {
         font-family: 'Manrope', sans-serif;
         color: var(--ink);
         background:
-            linear-gradient(115deg, rgba(255,255,255,0.92), rgba(235,247,255,0.88)),
-            radial-gradient(circle at 14% 12%, rgba(18,168,239,0.20), transparent 32%),
-            radial-gradient(circle at 86% 80%, rgba(217,139,31,0.15), transparent 28%);
+            linear-gradient(120deg, rgba(255,250,241,0.95), rgba(237,247,245,0.95)),
+            repeating-linear-gradient(45deg, rgba(15,118,110,0.045) 0 1px, transparent 1px 18px);
     }
 
     [data-testid="stHeader"] {
@@ -126,256 +124,210 @@ st.markdown(
     }
 
     .block-container {
-        max-width: 1180px;
-        padding-top: 1.4rem;
-        padding-bottom: 2.2rem;
+        max-width: 1040px;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
     }
 
-    .app-shell {
-        border: 1px solid rgba(191, 221, 251, 0.75);
-        border-radius: 34px;
-        padding: 28px;
-        background: rgba(255, 255, 255, 0.54);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(18px);
+    .hero {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        padding: 34px;
+        background:
+            linear-gradient(135deg, rgba(255,255,255,0.94), rgba(248,242,231,0.9)),
+            radial-gradient(circle at 96% 12%, rgba(201,129,26,0.18), transparent 30%);
+        box-shadow: 0 26px 70px rgba(23, 32, 42, 0.12);
+        margin-bottom: 22px;
     }
 
-    .topbar {
+    .brand-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 24px;
+        gap: 18px;
         margin-bottom: 26px;
     }
 
-    .brand {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-    }
-
-    .logo {
-        width: 76px;
-        height: 58px;
-        border-radius: 20px;
+    .brand-mark {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
         display: grid;
         place-items: center;
         color: #ffffff;
-        font-size: 30px;
+        font-size: 22px;
         font-weight: 800;
-        background: linear-gradient(135deg, var(--sky), #5145e8);
-        box-shadow: 0 16px 30px rgba(37, 99, 235, 0.24);
+        background: linear-gradient(135deg, var(--teal), var(--gold));
+        box-shadow: 0 14px 30px rgba(15, 118, 110, 0.24);
     }
 
-    .brand-title {
-        margin: 0;
-        color: #000000;
-        font-size: clamp(34px, 5vw, 52px);
-        line-height: 0.95;
-        font-weight: 800;
-        letter-spacing: 0;
-    }
-
-    .brand-subtitle {
-        margin-top: 8px;
-        color: #182235;
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .status-pill {
+    .script-pill {
+        border: 1px solid rgba(15,118,110,0.22);
         border-radius: 999px;
-        padding: 12px 20px;
-        background: #0b5cad;
-        color: #ffffff;
-        font-size: 14px;
-        font-weight: 800;
-        box-shadow: 0 16px 34px rgba(11, 92, 173, 0.22);
-        white-space: nowrap;
-    }
-
-    .studio {
-        border: 1px solid var(--line);
-        border-radius: 28px;
-        padding: 24px;
-        background:
-            linear-gradient(135deg, rgba(255,255,255,0.92), rgba(243,250,255,0.82));
-    }
-
-    .panel {
-        min-height: 360px;
-        border: 1px solid rgba(191, 221, 251, 0.9);
-        border-radius: 24px;
-        padding: 18px;
-        background: rgba(255, 255, 255, 0.88);
-        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
-    }
-
-    .panel-title {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border: 1px solid #9ed4ff;
-        border-radius: 999px;
-        padding: 9px 17px;
-        margin-bottom: 14px;
-        background: linear-gradient(135deg, #ffffff, #e9f7ff);
-        color: #000000;
-        font-size: 15px;
-        font-weight: 800;
-    }
-
-    .script-line {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 14px;
-        color: var(--muted);
+        padding: 10px 14px;
+        color: var(--teal-dark);
+        background: rgba(255, 255, 255, 0.72);
         font-size: 13px;
-        font-weight: 800;
+        font-weight: 700;
     }
 
-    .script-badge {
-        border-radius: 999px;
-        padding: 8px 12px;
-        background: #eef8ff;
-        color: #0b5cad;
-        border: 1px solid #bfddfb;
-    }
-
-    div[data-testid="stTextArea"] label {
-        font-size: 0;
-    }
-
-    div[data-testid="stTextArea"] textarea {
-        min-height: 238px;
-        border-radius: 20px;
-        border: 1px solid rgba(191, 221, 251, 0.95);
-        background: #ffffff;
+    .hero h1 {
+        font-size: clamp(34px, 6vw, 62px);
+        line-height: 1;
+        letter-spacing: 0;
+        margin: 0 0 14px 0;
         color: var(--ink);
-        font-size: 17px;
-        line-height: 1.65;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
     }
 
-    div[data-testid="stTextArea"] textarea:focus {
-        border-color: #0b5cad;
-        box-shadow: 0 0 0 3px rgba(11, 92, 173, 0.12);
+    .hero p {
+        max-width: 680px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.6;
     }
 
-    .stButton > button {
-        width: 100%;
-        border: none;
-        border-radius: 22px;
-        padding: 0.92rem 1.1rem;
-        color: #ffffff;
-        background: linear-gradient(135deg, #0b5cad, #084b91);
+    .workspace {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--panel);
+        box-shadow: 0 18px 48px rgba(23, 32, 42, 0.08);
+        padding: 24px;
+    }
+
+    .section-title {
+        margin: 0 0 6px 0;
         font-size: 18px;
         font-weight: 800;
-        box-shadow: 0 16px 34px rgba(11, 92, 173, 0.28);
+        color: var(--ink);
     }
 
-    .stButton > button:hover {
-        border: none;
-        color: #ffffff;
-        background: linear-gradient(135deg, #116dc5, #08437f);
+    .section-copy {
+        margin: 0 0 16px 0;
+        color: var(--muted);
+        font-size: 14px;
     }
 
-    .audio-stage {
-        min-height: 238px;
-        border-radius: 20px;
-        border: 1px solid rgba(191, 221, 251, 0.95);
-        background:
-            linear-gradient(135deg, rgba(255,255,255,0.96), rgba(242,249,255,0.92));
-        padding: 20px;
-        display: grid;
-        align-content: center;
-    }
-
-    .empty-audio {
-        min-height: 190px;
-        display: grid;
-        place-items: center;
-        color: #8a98aa;
-        font-size: 46px;
-    }
-
-    .stDownloadButton > button {
-        width: 100%;
-        border-radius: 16px;
-        border: 1px solid #9ed4ff;
-        color: #0b5cad;
-        background: #ffffff;
-        font-weight: 800;
-    }
-
-    .rating-card {
-        margin-top: 22px;
-        border: 1px solid rgba(191, 221, 251, 0.9);
-        border-radius: 22px;
-        padding: 18px;
-        background: rgba(255,255,255,0.72);
-    }
-
-    .rating-title {
-        margin: 0 0 10px 0;
-        color: #000000;
-        font-size: 16px;
-        font-weight: 800;
-    }
-
+    div[data-testid="stTextArea"] label,
+    div[data-testid="stToggle"] label,
     div[data-testid="stSelectbox"] label,
     div[data-testid="stTextInput"] label {
         font-weight: 800;
         color: var(--ink);
     }
 
-    div[data-testid="stToggle"] {
-        margin-top: -4.25rem;
-        margin-left: auto;
-        width: fit-content;
-    }
-
-    div[data-testid="stToggle"] label {
-        border: 1px solid #d7e7f7;
-        border-radius: 999px;
-        padding: 9px 14px;
-        background: #ffffff;
-        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-        font-weight: 800;
+    div[data-testid="stTextArea"] textarea {
+        min-height: 190px;
+        border-radius: 18px;
+        border: 1px solid rgba(15,118,110,0.24);
+        background: #fffdf8;
         color: var(--ink);
+        font-size: 17px;
+        line-height: 1.65;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
     }
 
-    @media (max-width: 780px) {
+    .stButton > button {
+        width: 100%;
+        border-radius: 16px;
+        border: 0;
+        padding: 0.85rem 1rem;
+        background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+        color: white;
+        font-weight: 800;
+        box-shadow: 0 16px 34px rgba(15, 118, 110, 0.25);
+    }
+
+    .stButton > button:hover {
+        border: 0;
+        color: white;
+        background: linear-gradient(135deg, #12867d, #094c47);
+    }
+
+    .stDownloadButton > button {
+        width: 100%;
+        border-radius: 16px;
+        border: 1px solid rgba(166, 66, 83, 0.28);
+        color: var(--rose);
+        background: rgba(255,255,255,0.86);
+        font-weight: 800;
+    }
+
+    .audio-box {
+        border-radius: 20px;
+        border: 1px solid rgba(201,129,26,0.28);
+        background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,248,235,0.85));
+        padding: 18px;
+        margin-top: 18px;
+    }
+
+    .empty-audio {
+        min-height: 120px;
+        display: grid;
+        place-items: center;
+        color: #8a98aa;
+        font-size: 38px;
+    }
+
+    .hint-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .hint {
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        padding: 13px;
+        color: var(--muted);
+        background: rgba(255,255,255,0.64);
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .current-script {
+        border: 1px solid rgba(15,118,110,0.22);
+        border-radius: 16px;
+        padding: 14px 16px;
+        margin-bottom: 16px;
+        color: var(--teal-dark);
+        background: rgba(255,255,255,0.72);
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .feedback-box {
+        margin-top: 20px;
+        border-top: 1px solid rgba(35, 48, 66, 0.14);
+        padding-top: 16px;
+    }
+
+    @media (max-width: 720px) {
         .block-container {
             padding: 1rem;
         }
 
-        .app-shell {
-            border-radius: 24px;
-            padding: 16px;
+        .hero,
+        .workspace {
+            border-radius: 22px;
+            padding: 20px;
         }
 
-        .topbar,
-        .brand {
+        .brand-row {
             align-items: flex-start;
             flex-direction: column;
+            margin-bottom: 20px;
         }
 
-        .status-pill {
-            white-space: normal;
-        }
-
-        .studio,
-        .panel {
-            border-radius: 20px;
-            padding: 16px;
-        }
-
-        div[data-testid="stToggle"] {
-            margin: 0 0 14px 0;
+        .script-pill {
             width: 100%;
+            box-sizing: border-box;
+            overflow-wrap: anywhere;
+        }
+
+        .hint-grid {
+            grid-template-columns: 1fr;
         }
     }
     </style>
@@ -385,81 +337,60 @@ st.markdown(
 
 st.markdown(
     """
-    <div class="app-shell">
-        <div class="topbar">
-            <div class="brand">
-                <div class="logo">NL</div>
-                <div>
-                    <h1 class="brand-title">Neurolingo</h1>
-                    <div class="brand-subtitle">Balochi Text-to-Speech Studio</div>
-                </div>
-            </div>
-            <div class="status-pill">Voice Generator</div>
+    <section class="hero">
+        <div class="brand-row">
+            <div class="brand-mark">BT</div>
+            <div class="script-pill">Balochi voice generator</div>
         </div>
-    </div>
+        <h1>Balochi Text to Speech</h1>
+        <p>Type Balochi in your preferred script and generate clear spoken audio directly in the browser.</p>
+    </section>
     """,
     unsafe_allow_html=True,
 )
 
-use_arabic_script = st.toggle("Arabic script", value=False)
+st.markdown('<main class="workspace">', unsafe_allow_html=True)
+st.markdown('<p class="section-title">Create Speech</p>', unsafe_allow_html=True)
+st.markdown(
+    '<p class="section-copy">Choose the script, enter text, then generate and download the audio as a WAV file.</p>',
+    unsafe_allow_html=True,
+)
+
+use_arabic_script = st.toggle(
+    "Turn on Balochi Arabic script voice",
+    value=False,
+)
 
 script_name = "Arabic Script" if use_arabic_script else "Latin Script"
-script_hint = "Arabic-script Balochi text" if use_arabic_script else "Latin-script Balochi text"
-script_label = "Arabic" if use_arabic_script else "Latin"
+script_hint = "Latin-script Balochi text" if script_name == "Latin Script" else "Arabic-script Balochi text"
 
-st.markdown('<div class="studio">', unsafe_allow_html=True)
+st.markdown(
+    f'<div class="current-script">Current script: Balochi {script_name}</div>',
+    unsafe_allow_html=True,
+)
 
-input_col, output_col = st.columns(2, gap="large")
+text = st.text_area(
+    f"Enter {script_hint}",
+    height=160,
+    placeholder=f"Type {script_hint} here...",
+)
 
-with input_col:
-    st.markdown('<div class="panel">', unsafe_allow_html=True)
-    st.markdown('<div class="panel-title">Input Text</div>', unsafe_allow_html=True)
-    st.markdown(
-        f"""
-        <div class="script-line">
-            <span>Write Balochi text</span>
-            <span class="script-badge">{script_label} script</span>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    text = st.text_area(
-        "Text input",
-        height=238,
-        placeholder=f"Type {script_hint} here...",
-        label_visibility="collapsed",
-    )
-    st.markdown("</div>", unsafe_allow_html=True)
+col_generate, col_status = st.columns([1, 2])
 
-with output_col:
-    st.markdown('<div class="panel">', unsafe_allow_html=True)
-    st.markdown('<div class="panel-title">Generated Speech</div>', unsafe_allow_html=True)
-    st.markdown(
-        f"""
-        <div class="script-line">
-            <span>Audio result</span>
-            <span class="script-badge">{script_label} voice</span>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown('<div class="audio-stage">', unsafe_allow_html=True)
-    if st.session_state.wav_bytes:
-        st.audio(st.session_state.wav_bytes, format="audio/wav")
-        st.download_button(
-            "Download Speech",
-            data=st.session_state.wav_bytes,
-            file_name=f"neurolingo_{st.session_state.last_script_name.lower().replace(' ', '_')}.wav",
-            mime="audio/wav",
-        )
-    else:
-        st.markdown('<div class="empty-audio">&#9835;</div>', unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-left_space, action_col, right_space = st.columns([1, 2, 1])
-with action_col:
+with col_generate:
     generate_clicked = st.button("Generate Speech", type="primary")
+
+with col_status:
+    st.markdown(
+        """
+        <div class="hint-grid">
+            <div class="hint">Latin or Arabic script</div>
+            <div class="hint">Browser playback</div>
+            <div class="hint">WAV download</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 if generate_clicked:
     clean_text = text.strip()
@@ -479,14 +410,26 @@ if generate_clicked:
                 st.error(f"Could not generate speech: {error}")
 
 if st.session_state.wav_bytes:
-    st.markdown('<div class="rating-card">', unsafe_allow_html=True)
-    st.markdown('<p class="rating-title">Rate Speech Quality</p>', unsafe_allow_html=True)
+    st.markdown('<div class="audio-box">', unsafe_allow_html=True)
+    st.audio(st.session_state.wav_bytes, format="audio/wav")
+    st.download_button(
+        "Download WAV",
+        data=st.session_state.wav_bytes,
+        file_name=f"balochi_{st.session_state.last_script_name.lower().replace(' ', '_')}_tts.wav",
+        mime="audio/wav",
+    )
+    st.markdown("</div>", unsafe_allow_html=True)
+else:
+    st.markdown('<div class="audio-box"><div class="empty-audio">&#9835;</div></div>', unsafe_allow_html=True)
+
+if st.session_state.wav_bytes:
+    st.markdown('<div class="feedback-box">', unsafe_allow_html=True)
     with st.form("speech_quality_feedback", clear_on_submit=True):
         rating = st.selectbox(
-            "Quality rating",
+            "Rate the speech quality",
             ["5 - Excellent", "4 - Good", "3 - Average", "2 - Poor", "1 - Very poor"],
         )
-        feedback = st.text_input("Feedback", placeholder="Optional feedback")
+        feedback = st.text_input("Feedback message", placeholder="Optional feedback")
         submitted = st.form_submit_button("Submit Rating")
 
     if submitted:
@@ -497,16 +440,10 @@ if st.session_state.wav_bytes:
             st.session_state.last_text,
         )
         st.session_state.rating_submitted = True
-        st.session_state.last_feedback = {
-            "time": datetime.now().isoformat(timespec="seconds"),
-            "script": st.session_state.last_script_name,
-            "rating": rating,
-            "feedback": feedback,
-        }
 
     if st.session_state.rating_submitted:
         st.success("Thank you. Your speech quality rating was submitted successfully.")
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("</main>", unsafe_allow_html=True)
