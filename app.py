@@ -1,4 +1,3 @@
-```python
 import io
 import wave
 import re
