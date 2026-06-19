@@ -512,4 +512,3 @@ if st.session_state.result:
                 f'from {len(st.session_state.feedback_log)} rating(s)</div>',
                 unsafe_allow_html=True,
             )
-```
