@@ -343,7 +343,7 @@ if "feedback_log" not in st.session_state:
 # PAGE SETUP
 # ----------------------------------------------------------------------------
 
-st.set_page_config(page_title="BakhtAI Voice", page_icon="🎙️", layout="centered")
+st.set_page_config(page_title="Bakhteyar-AI Voice", page_icon="🎙️", layout="centered")
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 # ---- Top bar / logo ----
