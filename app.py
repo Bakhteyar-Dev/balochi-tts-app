@@ -15,7 +15,7 @@ MODELS = {
     "latin": {
         "id": "facebook/mms-tts-bcc-script_latin",
         "label": "Latin",
-        "placeholder": "Type Latin-script Balochi text here... (e.g. Tau choon haal e?)",
+        "placeholder": "Type Latin-script Balochi text here... (e.g. Man wati zobáná gapp janán)",
         "direction": "ltr",
         "align": "left",
         "font": "'Inter', sans-serif",
@@ -23,7 +23,7 @@ MODELS = {
     "arabic": {
         "id": "facebook/mms-tts-bcc-script_arabic",
         "label": "Arabic",
-        "placeholder": "بلوچی متن عربی رسم الخط ءَ ا گدا بنویس...",
+        "placeholder": "من ءَ بلوچی زبان دوست بیت ....",
         "direction": "rtl",
         "align": "right",
         "font": "'Noto Naskh Arabic', serif",
@@ -341,7 +341,7 @@ st.markdown(
     """
     <div class="bv-hero-sub">
         Type Balochi text in Latin or Arabic script and generate natural-sounding speech
-        in seconds.
+        in Balochi.
     </div>
     """,
     unsafe_allow_html=True,
@@ -416,10 +416,10 @@ if generate_clicked:
         st.warning("Please enter Balochi text first.")
 
     elif script_choice == "latin" and contains_arabic_script(clean_text):
-        st.warning("Please type Latin text.")
+        st.warning("Please select Latin script.")
 
     elif script_choice == "arabic" and contains_latin_script(clean_text):
-        st.warning("Please type Arabic text.")
+        st.warning("Please select Arabic script.")
 
     else:
         with st.spinner(f"Generating speech ({current['label']} script)..."):
