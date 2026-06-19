@@ -14,7 +14,7 @@ MODELS = {
     "latin": {
         "id": "facebook/mms-tts-bcc-script_latin",
         "label": "Latin",
-        "placeholder": "Type Latin-script Balochi text here... (e.g. Tau choon haal e?)",
+        "placeholder": "Type Latin-script Balochi text here... (e.g. Man wati zobáná gapp janán)",
         "direction": "ltr",
         "align": "left",
         "font": "'Inter', sans-serif",
@@ -22,7 +22,7 @@ MODELS = {
     "arabic": {
         "id": "facebook/mms-tts-bcc-script_arabic",
         "label": "Arabic",
-        "placeholder": "بلوچی متن عربی رسم الخط ءَ ا گدا بنویس...",
+        "placeholder": "سُہب وش بات....",
         "direction": "rtl",
         "align": "right",
         "font": "'Noto Naskh Arabic', serif",
