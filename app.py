@@ -40,12 +40,13 @@ CUSTOM_CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap');
 
 :root {
-    --bv-ink: #14181b;
-    --bv-muted: #5f6b73;
-    --bv-border: #e6e9eb;
-    --bv-bg-soft: #f7f8f9;
-    --bv-purple: #6f3fdc;
-    --bv-purple-dark: #5a2fc2;
+    --bv-ink: var(--text-color);
+    --bv-muted: color-mix(in srgb, var(--text-color) 60%, transparent);
+    --bv-border: color-mix(in srgb, var(--text-color) 16%, transparent);
+    --bv-bg-soft: var(--secondary-background-color);
+    --bv-card-bg: var(--secondary-background-color);
+    --bv-purple: #8a5cf0;
+    --bv-purple-dark: #6f3fdc;
     --bv-card-radius: 16px;
 }
 
@@ -80,15 +81,6 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     white-space: nowrap;
 }
 .bv-brand-name .accent { color: var(--bv-purple); }
-.bv-brand-tag {
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--bv-muted);
-    background: var(--bv-bg-soft);
-    border: 1px solid var(--bv-border);
-    padding: 2px 9px;
-    border-radius: 999px;
-}
 
 /* ---------- Hero ---------- */
 .bv-hero-title {
@@ -108,7 +100,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
 
 /* ---------- Section card (real containers, not cross-element divs) ---------- */
 .st-key-input_card, .st-key-result_card {
-    background: white;
+    background: var(--bv-card-bg);
     border: 1px solid var(--bv-border);
     border-radius: var(--bv-card-radius);
     padding: 24px 26px 8px 26px;
@@ -240,7 +232,6 @@ st.markdown(
             <div class="bv-logo-mark">{LOGO_SVG}</div>
             <span class="bv-brand-name">Bakht<span class="accent">AI</span> Voice</span>
         </div>
-        <span class="bv-brand-tag">Beta</span>
     </div>
     """,
     unsafe_allow_html=True,
