@@ -149,6 +149,67 @@ div[data-testid="stButton"] button[kind="primary"] {
 
 /* ---------- Misc ---------- */
 .bv-avg-rating { font-size: 0.85rem; color: var(--bv-muted); margin-top: 6px; }
+/* ---------- Mobile responsive fixes ---------- */
+@media screen and (max-width: 600px) {
+
+    .block-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 2rem;
+    }
+
+    .bv-hero-title {
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+
+    .bv-hero-sub {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .st-key-input_card,
+    .st-key-result_card {
+        padding: 18px 16px 8px 16px;
+        border-radius: 14px;
+    }
+
+    .st-key-script_switch {
+        max-width: 100%;
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 18px;
+    }
+
+    .st-key-script_switch div[data-testid="stHorizontalBlock"] {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+    }
+
+    .st-key-script_switch div[data-testid="column"] {
+        width: 50% !important;
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+    }
+
+    .st-key-script_switch button {
+        width: 100% !important;
+        min-height: 42px;
+        font-size: 0.9rem !important;
+        padding: 0.45rem 0.6rem !important;
+    }
+
+    div[data-testid="stTextArea"] textarea {
+        font-size: 1rem !important;
+        min-height: 140px !important;
+    }
+
+    div[data-testid="stButton"] button[kind="primary"] {
+        min-height: 44px;
+        font-size: 0.95rem !important;
+    }
+}
 </style>
 """
 
