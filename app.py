@@ -14,7 +14,7 @@ MODELS = {
     "latin": {
         "id": "facebook/mms-tts-bcc-script_latin",
         "label": "Latin",
-        "placeholder": "Type Latin-script Balochi text here... (e.g. Man wati zobáná gapp janán?)",
+        "placeholder": "Type Latin-script Balochi text here... (e.g. Tau choon haal e?)",
         "direction": "ltr",
         "align": "left",
         "font": "'Inter', sans-serif",
@@ -22,7 +22,7 @@ MODELS = {
     "arabic": {
         "id": "facebook/mms-tts-bcc-script_arabic",
         "label": "Arabic",
-        "placeholder": "سُہب وش بات....",
+        "placeholder": "بلوچی متن عربی رسم الخط ءَ ا گدا بنویس...",
         "direction": "rtl",
         "align": "right",
         "font": "'Noto Naskh Arabic', serif",
@@ -50,7 +50,7 @@ CUSTOM_CSS = """
 }
 
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-ink); }
-.block-container { padding-top: 1.2rem; max-width: 820px; }
+.block-container { padding-top: 3.2rem; max-width: 820px; }
 
 /* ---------- Top bar / logo ---------- */
 .bv-topbar {
@@ -106,14 +106,15 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     margin-bottom: 28px;
 }
 
-/* ---------- Section card ---------- */
-.bv-card {
+/* ---------- Section card (real containers, not cross-element divs) ---------- */
+.st-key-input_card, .st-key-result_card {
     background: white;
     border: 1px solid var(--bv-border);
     border-radius: var(--bv-card-radius);
-    padding: 24px 26px;
+    padding: 24px 26px 8px 26px;
     margin-bottom: 20px;
 }
+.st-key-input_card > div, .st-key-result_card > div { gap: 0 !important; }
 .bv-section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
 .bv-section-caption { font-size: 0.85rem; color: var(--bv-muted); margin-bottom: 18px; }
 
@@ -261,60 +262,59 @@ st.markdown(
 # INPUT CARD
 # ----------------------------------------------------------------------------
 
-st.markdown('<div class="bv-card">', unsafe_allow_html=True)
-st.markdown('<div class="bv-section-title">Enter your text</div>', unsafe_allow_html=True)
-st.markdown('<div class="bv-section-caption">Switch the script, then type your Balochi text below.</div>', unsafe_allow_html=True)
+with st.container(key="input_card"):
+    st.markdown('<div class="bv-section-title">Enter your text</div>', unsafe_allow_html=True)
+    st.markdown('<div class="bv-section-caption">Switch the script, then type your Balochi text below.</div>', unsafe_allow_html=True)
 
-# ---- Segmented script switch ----
-with st.container(key="script_switch"):
-    sw_col1, sw_col2 = st.columns(2)
-    with sw_col1:
-        if st.button(
-            "Latin",
-            type="primary" if st.session_state.script_key == "latin" else "secondary",
-            use_container_width=True,
-            key="btn_latin",
-        ):
-            st.session_state.script_key = "latin"
-            st.rerun()
-    with sw_col2:
-        if st.button(
-            "Arabic",
-            type="primary" if st.session_state.script_key == "arabic" else "secondary",
-            use_container_width=True,
-            key="btn_arabic",
-        ):
-            st.session_state.script_key = "arabic"
-            st.rerun()
+    # ---- Segmented script switch ----
+    with st.container(key="script_switch"):
+        sw_col1, sw_col2 = st.columns(2)
+        with sw_col1:
+            if st.button(
+                "Latin",
+                type="primary" if st.session_state.script_key == "latin" else "secondary",
+                use_container_width=True,
+                key="btn_latin",
+            ):
+                st.session_state.script_key = "latin"
+                st.rerun()
+        with sw_col2:
+            if st.button(
+                "Arabic",
+                type="primary" if st.session_state.script_key == "arabic" else "secondary",
+                use_container_width=True,
+                key="btn_arabic",
+            ):
+                st.session_state.script_key = "arabic"
+                st.rerun()
 
-script_choice = st.session_state.script_key
-current = MODELS[script_choice]
+    script_choice = st.session_state.script_key
+    current = MODELS[script_choice]
 
-# Apply text direction / font dynamically based on the selected script
-st.markdown(
-    f"""
-    <style>
-    div[data-testid="stTextArea"] textarea {{
-        direction: {current['direction']};
-        text-align: {current['align']};
-        font-family: {current['font']};
-        font-size: 1.05rem;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+    # Apply text direction / font dynamically based on the selected script
+    st.markdown(
+        f"""
+        <style>
+        div[data-testid="stTextArea"] textarea {{
+            direction: {current['direction']};
+            text-align: {current['align']};
+            font-family: {current['font']};
+            font-size: 1.05rem;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
-text = st.text_area(
-    "Enter Balochi text",
-    height=160,
-    placeholder=current["placeholder"],
-    label_visibility="collapsed",
-    key="bv_text_input",
-)
+    text = st.text_area(
+        "Enter Balochi text",
+        height=160,
+        placeholder=current["placeholder"],
+        label_visibility="collapsed",
+        key="bv_text_input",
+    )
 
-generate_clicked = st.button("Generate Speech", type="primary", use_container_width=True, key="btn_generate")
-st.markdown("</div>", unsafe_allow_html=True)
+    generate_clicked = st.button("Generate Speech", type="primary", use_container_width=True, key="btn_generate")
 
 # ----------------------------------------------------------------------------
 # GENERATION
@@ -345,50 +345,48 @@ if generate_clicked:
 if st.session_state.result:
     result = st.session_state.result
 
-    st.markdown('<div class="bv-card">', unsafe_allow_html=True)
-    st.markdown('<div class="bv-section-title">Result</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="bv-section-caption">{MODELS[result["script"]]["label"]} script</div>', unsafe_allow_html=True)
+    with st.container(key="result_card"):
+        st.markdown('<div class="bv-section-title">Result</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="bv-section-caption">{MODELS[result["script"]]["label"]} script</div>', unsafe_allow_html=True)
 
-    st.audio(result["wav"], format="audio/wav")
+        st.audio(result["wav"], format="audio/wav")
 
-    st.download_button(
-        "Download WAV",
-        data=result["wav"],
-        file_name=f"bakhtai_voice_{result['script']}.wav",
-        mime="audio/wav",
-        use_container_width=True,
-    )
-
-    st.markdown('<div class="bv-section-title" style="font-size:0.95rem; margin-top:20px;">Rate this audio</div>', unsafe_allow_html=True)
-
-    has_native_feedback = hasattr(st, "feedback")
-
-    if has_native_feedback:
-        rating = st.feedback("stars", key=f"rating_{id(result)}")
-        if rating is not None and not result["rated"]:
-            st.session_state.feedback_log.append(rating + 1)
-            st.session_state.result["rated"] = True
-            st.toast(f"Thanks for rating it {STAR_LABELS[rating]}!", icon="⭐")
-    else:
-        rating_label = st.radio(
-            "Rate this audio",
-            options=STAR_LABELS,
-            horizontal=True,
-            label_visibility="collapsed",
-            key=f"rating_fallback_{id(result)}",
-            index=None,
-        )
-        if rating_label and not result["rated"]:
-            st.session_state.feedback_log.append(STAR_LABELS.index(rating_label) + 1)
-            st.session_state.result["rated"] = True
-            st.toast(f"Thanks for rating it {rating_label}!", icon="⭐")
-
-    if st.session_state.feedback_log:
-        avg = sum(st.session_state.feedback_log) / len(st.session_state.feedback_log)
-        st.markdown(
-            f'<div class="bv-avg-rating">Average rating: {avg:.1f} / 5 '
-            f'from {len(st.session_state.feedback_log)} rating(s)</div>',
-            unsafe_allow_html=True,
+        st.download_button(
+            "Download WAV",
+            data=result["wav"],
+            file_name=f"bakhtai_voice_{result['script']}.wav",
+            mime="audio/wav",
+            use_container_width=True,
         )
 
-    st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown('<div class="bv-section-title" style="font-size:0.95rem; margin-top:20px;">Rate this audio</div>', unsafe_allow_html=True)
+
+        has_native_feedback = hasattr(st, "feedback")
+
+        if has_native_feedback:
+            rating = st.feedback("stars", key=f"rating_{id(result)}")
+            if rating is not None and not result["rated"]:
+                st.session_state.feedback_log.append(rating + 1)
+                st.session_state.result["rated"] = True
+                st.toast(f"Thanks for rating it {STAR_LABELS[rating]}!", icon="⭐")
+        else:
+            rating_label = st.radio(
+                "Rate this audio",
+                options=STAR_LABELS,
+                horizontal=True,
+                label_visibility="collapsed",
+                key=f"rating_fallback_{id(result)}",
+                index=None,
+            )
+            if rating_label and not result["rated"]:
+                st.session_state.feedback_log.append(STAR_LABELS.index(rating_label) + 1)
+                st.session_state.result["rated"] = True
+                st.toast(f"Thanks for rating it {rating_label}!", icon="⭐")
+
+        if st.session_state.feedback_log:
+            avg = sum(st.session_state.feedback_log) / len(st.session_state.feedback_log)
+            st.markdown(
+                f'<div class="bv-avg-rating">Average rating: {avg:.1f} / 5 '
+                f'from {len(st.session_state.feedback_log)} rating(s)</div>',
+                unsafe_allow_html=True,
+            )
