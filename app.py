@@ -58,7 +58,7 @@ st.set_page_config(
 )
 
 st.title("Balochi Latin Text to Speech")
-st.caption("Powered by facebook/mms-tts-bcc-script_latin")
+
 
 text = st.text_area(
     "Enter Balochi text in Latin script",
