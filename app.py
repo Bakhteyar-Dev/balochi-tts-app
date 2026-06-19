@@ -383,7 +383,7 @@ with st.container(key="input_card"):
         sw_col1, sw_col2 = st.columns(2)
         with sw_col1:
             if st.button(
-                "Latin",
+                "Balochi-Latin",
                 type="primary" if st.session_state.script_key == "latin" else "secondary",
                 use_container_width=True,
                 key="btn_latin",
@@ -392,7 +392,7 @@ with st.container(key="input_card"):
                 st.rerun()
         with sw_col2:
             if st.button(
-                "Arabic",
+                "Balochi-Arabic",
                 type="primary" if st.session_state.script_key == "arabic" else "secondary",
                 use_container_width=True,
                 key="btn_arabic",
