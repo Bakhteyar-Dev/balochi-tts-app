@@ -143,9 +143,21 @@ div[data-testid="stButton"] button[kind="primary"] {
     box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28);
 }
 
-/* ---------- Topbar ---------- */
-.st-key-topbar { border-bottom: 1px solid var(--bv-border); margin-bottom: 30px; padding-bottom: 14px; }
-.st-key-topbar div[data-testid="stHorizontalBlock"] { align-items: center; }
+/* ---------- Topbar sticky logo ---------- */
+.st-key-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: var(--background-color);
+    border-bottom: 1px solid var(--bv-border);
+    margin-bottom: 30px;
+    padding-top: 12px;
+    padding-bottom: 14px;
+}
+
+.st-key-topbar div[data-testid="stHorizontalBlock"] {
+    align-items: center;
+}
 
 /* ---------- Misc ---------- */
 .bv-avg-rating { font-size: 0.85rem; color: var(--bv-muted); margin-top: 6px; }
@@ -160,8 +172,12 @@ div[data-testid="stButton"] button[kind="primary"] {
     }
 
     .st-key-topbar {
-        padding-top: 8px;
-        padding-bottom: 16px;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background: var(--background-color);
+        padding-top: 10px;
+        padding-bottom: 14px;
         margin-bottom: 24px;
         overflow: visible !important;
     }
@@ -240,6 +256,7 @@ div[data-testid="stButton"] button[kind="primary"] {
         font-size: 0.95rem !important;
     }
 }
+
 /* ---------- Clear button ---------- */
 .st-key-btn_clear button {
     background: linear-gradient(135deg, #22c55e, #16a34a) !important;
