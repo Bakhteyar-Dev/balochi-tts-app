@@ -288,7 +288,17 @@ st.set_page_config(page_title="BakhtAI Voice", page_icon="🎙️", layout="cent
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 # ---- Require Google sign-in before showing anything else ----
-if not st.user.is_logged_in:
+try:
+    is_logged_in = st.user.is_logged_in
+except AttributeError:
+    st.error(
+        "Google sign-in isn't configured yet. Add an `[auth]` and "
+        "`[auth.google]` section to this app's Secrets (Streamlit Cloud → "
+        "⋮ → Settings → Secrets), then reboot the app."
+    )
+    st.stop()
+
+if not is_logged_in:
     st.markdown(
         f"""
         <div class="bv-signin-wrap">
