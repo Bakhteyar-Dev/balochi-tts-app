@@ -142,7 +142,7 @@ div[data-testid="stButton"] button[kind="primary"] {
     box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28);
 }
 
-/* ---------- Sign-in screen ---------- */
+/* ---------- Sign-in screen CSS kept unused ---------- */
 .bv-signin-wrap {
     display: flex;
     flex-direction: column;
@@ -174,7 +174,7 @@ div[data-testid="stButton"] button[kind="primary"] {
     box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
 }
 
-/* ---------- Sign-out control in header ---------- */
+/* ---------- Topbar ---------- */
 .st-key-topbar { border-bottom: 1px solid var(--bv-border); margin-bottom: 30px; padding-bottom: 14px; }
 .st-key-topbar div[data-testid="stHorizontalBlock"] { align-items: center; }
 .st-key-topbar button {
@@ -204,7 +204,6 @@ LOGO_SVG = """
 # ----------------------------------------------------------------------------
 # MODEL LOADING / INFERENCE
 # ----------------------------------------------------------------------------
-
 
 @st.cache_resource(show_spinner=False)
 def load_tts_model(model_id: str):
@@ -258,80 +257,20 @@ if "feedback_log" not in st.session_state:
 # PAGE SETUP
 # ----------------------------------------------------------------------------
 
-# ----------------------------------------------------------------------------
-# AUTH SETUP (one-time, before running)
-# ----------------------------------------------------------------------------
-# This app requires Google sign-in via Streamlit's built-in OIDC support
-# (st.login / st.user). Any signed-in Google account is allowed in.
-#
-# 1. Install the auth extra (adds Authlib, which st.login needs):
-#       pip install "streamlit[auth]"
-#
-# 2. Create a file at .streamlit/secrets.toml in your project root:
-#
-#       [auth]
-#       redirect_uri = "http://localhost:8501/oauth2callback"
-#       cookie_secret = "replace-with-a-long-random-string"
-#
-#       [auth.google]
-#       client_id = "YOUR_GOOGLE_CLIENT_ID"
-#       client_secret = "YOUR_GOOGLE_CLIENT_SECRET"
-#       server_metadata_url = "https://accounts.google.com/.well-known/openid-configuration"
-#
-#    When you deploy (e.g. Streamlit Community Cloud), change redirect_uri to
-#    your live URL + "/oauth2callback", e.g.
-#    "https://your-app.streamlit.app/oauth2callback" — and add that exact URL
-#    as an Authorized redirect URI on your Google OAuth client.
-# ----------------------------------------------------------------------------
-
 st.set_page_config(page_title="BakhtAI Voice", page_icon="🎙️", layout="centered")
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# ---- Require Google sign-in before showing anything else ----
-try:
-    is_logged_in = st.user.is_logged_in
-except AttributeError:
-    st.error(
-        "Google sign-in isn't configured yet. Add an `[auth]` and "
-        "`[auth.google]` section to this app's Secrets (Streamlit Cloud → "
-        "⋮ → Settings → Secrets), then reboot the app."
-    )
-    st.stop()
-
-if not is_logged_in:
+# ---- Top bar / logo ----
+with st.container(key="topbar"):
     st.markdown(
         f"""
-        <div class="bv-signin-wrap">
-            <div class="bv-logo-mark-lg">{LOGO_SVG}</div>
-            <div class="bv-signin-title">Bakht<span class="accent">AI</span> Voice</div>
-            <div class="bv-signin-sub">Sign in with Google to continue.</div>
+        <div class="bv-brand">
+            <div class="bv-logo-mark">{LOGO_SVG}</div>
+            <span class="bv-brand-name">Bakht<span class="accent">AI</span> Voice</span>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    btn_col1, btn_col2, btn_col3 = st.columns([1, 1.2, 1])
-    with btn_col2:
-        with st.container(key="signin_btn"):
-            if st.button("Sign in with Google", use_container_width=True):
-                st.login("google")
-    st.stop()
-
-# ---- Top bar / logo (real container so the sign-out button nests inside it) ----
-with st.container(key="topbar"):
-    tb_col1, tb_col2 = st.columns([4, 1])
-    with tb_col1:
-        st.markdown(
-            f"""
-            <div class="bv-brand">
-                <div class="bv-logo-mark">{LOGO_SVG}</div>
-                <span class="bv-brand-name">Bakht<span class="accent">AI</span> Voice</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with tb_col2:
-        if st.button("Sign out", use_container_width=True, key="btn_logout"):
-            st.logout()
 
 # ---- Hero ----
 st.markdown('<div class="bv-hero-title">Balochi Text to Speech</div>', unsafe_allow_html=True)
