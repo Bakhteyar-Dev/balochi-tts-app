@@ -14,7 +14,7 @@ MODELS = {
     "latin": {
         "id": "facebook/mms-tts-bcc-script_latin",
         "label": "Latin",
-        "placeholder": "Type Latin-script Balochi text here... (e.g. Man wati zobáná gapp janán)",
+        "placeholder": "Type Latin-script Balochi text here... (e.g. Man wati zobáná gapp janán?)",
         "direction": "ltr",
         "align": "left",
         "font": "'Inter', sans-serif",
@@ -73,9 +73,11 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     flex-shrink: 0;
 }
 .bv-brand-name {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    letter-spacing: normal;
+    white-space: nowrap;
 }
 .bv-brand-name .accent { color: var(--bv-purple); }
 .bv-brand-tag {
@@ -115,45 +117,38 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
 .bv-section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
 .bv-section-caption { font-size: 0.85rem; color: var(--bv-muted); margin-bottom: 18px; }
 
-/* ---------- Segmented script switch ---------- */
-.bv-switch-wrap { display: flex; justify-content: center; margin-bottom: 22px; }
-div[data-testid="stHorizontalBlock"]:has(button[kind]) {
+/* ---------- Segmented script switch (scoped to this container only) ---------- */
+.st-key-script_switch {
+    max-width: 260px;
+    margin: 0 auto 22px auto;
     background: var(--bv-bg-soft);
     border: 1px solid var(--bv-border);
     border-radius: 999px;
     padding: 4px;
-    width: fit-content;
-    margin: 0 auto 22px auto;
-    gap: 4px !important;
 }
-div[data-testid="stHorizontalBlock"]:has(button[kind]) > div {
-    width: auto !important;
-    flex: none !important;
-}
-div[data-testid="stHorizontalBlock"]:has(button[kind]) button {
+.st-key-script_switch div[data-testid="stHorizontalBlock"] { gap: 4px; }
+.st-key-script_switch button {
     border-radius: 999px !important;
-    padding: 0.45rem 1.6rem !important;
     font-weight: 700 !important;
     border: none !important;
     transition: all 0.15s ease;
 }
-div[data-testid="stHorizontalBlock"]:has(button[kind]) button[kind="primary"] {
+.st-key-script_switch button[kind="primary"] {
     background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark)) !important;
     color: white !important;
     box-shadow: 0 4px 10px rgba(111, 63, 220, 0.3);
 }
-div[data-testid="stHorizontalBlock"]:has(button[kind]) button[kind="secondary"] {
+.st-key-script_switch button[kind="secondary"] {
     background: transparent !important;
     color: var(--bv-muted) !important;
     box-shadow: none !important;
 }
-div[data-testid="stHorizontalBlock"]:has(button[kind]) button[kind="secondary"]:hover {
+.st-key-script_switch button[kind="secondary"]:hover {
     color: var(--bv-ink) !important;
 }
 
-/* ---------- Primary action button ---------- */
-div[data-testid="stButton"] button[data-testid="baseButton-primary"],
-.bv-generate-btn button[kind="primary"] {
+/* ---------- Primary action button (Generate Speech) ---------- */
+div[data-testid="stButton"] button[kind="primary"] {
     background: linear-gradient(135deg, var(--bv-purple), var(--bv-purple-dark));
     border: none;
     border-radius: 12px;
@@ -271,25 +266,26 @@ st.markdown('<div class="bv-section-title">Enter your text</div>', unsafe_allow_
 st.markdown('<div class="bv-section-caption">Switch the script, then type your Balochi text below.</div>', unsafe_allow_html=True)
 
 # ---- Segmented script switch ----
-sw_col1, sw_col2 = st.columns(2)
-with sw_col1:
-    if st.button(
-        "Latin",
-        type="primary" if st.session_state.script_key == "latin" else "secondary",
-        use_container_width=True,
-        key="btn_latin",
-    ):
-        st.session_state.script_key = "latin"
-        st.rerun()
-with sw_col2:
-    if st.button(
-        "Arabic",
-        type="primary" if st.session_state.script_key == "arabic" else "secondary",
-        use_container_width=True,
-        key="btn_arabic",
-    ):
-        st.session_state.script_key = "arabic"
-        st.rerun()
+with st.container(key="script_switch"):
+    sw_col1, sw_col2 = st.columns(2)
+    with sw_col1:
+        if st.button(
+            "Latin",
+            type="primary" if st.session_state.script_key == "latin" else "secondary",
+            use_container_width=True,
+            key="btn_latin",
+        ):
+            st.session_state.script_key = "latin"
+            st.rerun()
+    with sw_col2:
+        if st.button(
+            "Arabic",
+            type="primary" if st.session_state.script_key == "arabic" else "secondary",
+            use_container_width=True,
+            key="btn_arabic",
+        ):
+            st.session_state.script_key = "arabic"
+            st.rerun()
 
 script_choice = st.session_state.script_key
 current = MODELS[script_choice]
