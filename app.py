@@ -240,6 +240,20 @@ div[data-testid="stButton"] button[kind="primary"] {
         font-size: 0.95rem !important;
     }
 }
+/* ---------- Clear button ---------- */
+.st-key-btn_clear button {
+    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.28) !important;
+}
+
+.st-key-btn_clear button:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d) !important;
+    color: white !important;
+}
 </style>
 """
 
