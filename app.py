@@ -54,14 +54,6 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
 .block-container { padding-top: 3.2rem; max-width: 820px; }
 
 /* ---------- Top bar / logo ---------- */
-.bv-topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 4px 22px 4px;
-    border-bottom: 1px solid var(--bv-border);
-    margin-bottom: 30px;
-}
 .bv-brand { display: flex; align-items: center; gap: 12px; }
 .bv-logo-mark {
     width: 38px;
@@ -150,6 +142,51 @@ div[data-testid="stButton"] button[kind="primary"] {
     box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28);
 }
 
+/* ---------- Sign-in screen ---------- */
+.bv-signin-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    gap: 4px;
+}
+.bv-logo-mark-lg {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+.bv-logo-mark-lg svg { width: 32px; height: 32px; }
+.bv-signin-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+.bv-signin-sub { font-size: 0.95rem; color: var(--bv-muted); margin-bottom: 26px; }
+.st-key-signin_btn button {
+    background: white !important;
+    color: #1f1f1f !important;
+    border: 1px solid var(--bv-border) !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
+}
+
+/* ---------- Sign-out control in header ---------- */
+.st-key-topbar { border-bottom: 1px solid var(--bv-border); margin-bottom: 30px; padding-bottom: 14px; }
+.st-key-topbar div[data-testid="stHorizontalBlock"] { align-items: center; }
+.st-key-topbar button {
+    background: transparent !important;
+    border: 1px solid var(--bv-border) !important;
+    color: var(--bv-muted) !important;
+    border-radius: 999px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    padding: 0.3rem 0.9rem !important;
+}
+
 /* ---------- Misc ---------- */
 .bv-avg-rating { font-size: 0.85rem; color: var(--bv-muted); margin-top: 6px; }
 </style>
@@ -221,21 +258,70 @@ if "feedback_log" not in st.session_state:
 # PAGE SETUP
 # ----------------------------------------------------------------------------
 
+# ----------------------------------------------------------------------------
+# AUTH SETUP (one-time, before running)
+# ----------------------------------------------------------------------------
+# This app requires Google sign-in via Streamlit's built-in OIDC support
+# (st.login / st.user). Any signed-in Google account is allowed in.
+#
+# 1. Install the auth extra (adds Authlib, which st.login needs):
+#       pip install "streamlit[auth]"
+#
+# 2. Create a file at .streamlit/secrets.toml in your project root:
+#
+#       [auth]
+#       redirect_uri = "http://localhost:8501/oauth2callback"
+#       cookie_secret = "replace-with-a-long-random-string"
+#
+#       [auth.google]
+#       client_id = "YOUR_GOOGLE_CLIENT_ID"
+#       client_secret = "YOUR_GOOGLE_CLIENT_SECRET"
+#       server_metadata_url = "https://accounts.google.com/.well-known/openid-configuration"
+#
+#    When you deploy (e.g. Streamlit Community Cloud), change redirect_uri to
+#    your live URL + "/oauth2callback", e.g.
+#    "https://your-app.streamlit.app/oauth2callback" — and add that exact URL
+#    as an Authorized redirect URI on your Google OAuth client.
+# ----------------------------------------------------------------------------
+
 st.set_page_config(page_title="BakhtAI Voice", page_icon="🎙️", layout="centered")
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# ---- Top bar / logo ----
-st.markdown(
-    f"""
-    <div class="bv-topbar">
-        <div class="bv-brand">
-            <div class="bv-logo-mark">{LOGO_SVG}</div>
-            <span class="bv-brand-name">Bakht<span class="accent">AI</span> Voice</span>
+# ---- Require Google sign-in before showing anything else ----
+if not st.user.is_logged_in:
+    st.markdown(
+        f"""
+        <div class="bv-signin-wrap">
+            <div class="bv-logo-mark-lg">{LOGO_SVG}</div>
+            <div class="bv-signin-title">Bakht<span class="accent">AI</span> Voice</div>
+            <div class="bv-signin-sub">Sign in with Google to continue.</div>
         </div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+        """,
+        unsafe_allow_html=True,
+    )
+    btn_col1, btn_col2, btn_col3 = st.columns([1, 1.2, 1])
+    with btn_col2:
+        with st.container(key="signin_btn"):
+            if st.button("Sign in with Google", use_container_width=True):
+                st.login("google")
+    st.stop()
+
+# ---- Top bar / logo (real container so the sign-out button nests inside it) ----
+with st.container(key="topbar"):
+    tb_col1, tb_col2 = st.columns([4, 1])
+    with tb_col1:
+        st.markdown(
+            f"""
+            <div class="bv-brand">
+                <div class="bv-logo-mark">{LOGO_SVG}</div>
+                <span class="bv-brand-name">Bakht<span class="accent">AI</span> Voice</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with tb_col2:
+        if st.button("Sign out", use_container_width=True, key="btn_logout"):
+            st.logout()
 
 # ---- Hero ----
 st.markdown('<div class="bv-hero-title">Balochi Text to Speech</div>', unsafe_allow_html=True)
