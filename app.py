@@ -23,7 +23,7 @@ MODELS = {
     "arabic": {
         "id": "facebook/mms-tts-bcc-script_arabic",
         "label": "Arabic",
-        "placeholder": " Type arabic-script Balochi text here... (e.g من ءَ بلوچی زبان دوست بیت)",
+        "placeholder": " Type arabic-script Balochi text here... (من ءَ بلوچی زبان دوست بیت e.g)",
         "direction": "rtl",
         "align": "right",
         "font": "'Noto Naskh Arabic', serif",
