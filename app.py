@@ -51,23 +51,11 @@ CUSTOM_CSS = """
     --bv-card-radius: 16px;
 }
 
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-    color: var(--bv-ink);
-}
-
-.block-container {
-    padding-top: 6rem;
-    max-width: 820px;
-}
+html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-ink); }
+.block-container { padding-top: 3.2rem; max-width: 820px; }
 
 /* ---------- Top bar / logo ---------- */
-.bv-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
+.bv-brand { display: flex; align-items: center; gap: 12px; }
 .bv-logo-mark {
     width: 38px;
     height: 38px;
@@ -78,7 +66,6 @@ html, body, [class*="css"] {
     justify-content: center;
     flex-shrink: 0;
 }
-
 .bv-brand-name {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     font-size: 1.4rem;
@@ -86,10 +73,7 @@ html, body, [class*="css"] {
     letter-spacing: normal;
     white-space: nowrap;
 }
-
-.bv-brand-name .accent {
-    color: var(--bv-purple);
-}
+.bv-brand-name .accent { color: var(--bv-purple); }
 
 /* ---------- Hero ---------- */
 .bv-hero-title {
@@ -99,7 +83,6 @@ html, body, [class*="css"] {
     margin-bottom: 8px;
     line-height: 1.15;
 }
-
 .bv-hero-sub {
     font-size: 1rem;
     color: var(--bv-muted);
@@ -109,31 +92,16 @@ html, body, [class*="css"] {
 }
 
 /* ---------- Section card ---------- */
-.st-key-input_card,
-.st-key-result_card {
+.st-key-input_card, .st-key-result_card {
     background: var(--bv-card-bg);
     border: 1px solid var(--bv-border);
     border-radius: var(--bv-card-radius);
     padding: 24px 26px 8px 26px;
     margin-bottom: 20px;
 }
-
-.st-key-input_card > div,
-.st-key-result_card > div {
-    gap: 0 !important;
-}
-
-.bv-section-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.bv-section-caption {
-    font-size: 0.85rem;
-    color: var(--bv-muted);
-    margin-bottom: 18px;
-}
+.st-key-input_card > div, .st-key-result_card > div { gap: 0 !important; }
+.bv-section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
+.bv-section-caption { font-size: 0.85rem; color: var(--bv-muted); margin-bottom: 18px; }
 
 /* ---------- Segmented script switch ---------- */
 .st-key-script_switch {
@@ -144,30 +112,23 @@ html, body, [class*="css"] {
     border-radius: 999px;
     padding: 4px;
 }
-
-.st-key-script_switch div[data-testid="stHorizontalBlock"] {
-    gap: 4px;
-}
-
+.st-key-script_switch div[data-testid="stHorizontalBlock"] { gap: 4px; }
 .st-key-script_switch button {
     border-radius: 999px !important;
     font-weight: 700 !important;
     border: none !important;
     transition: all 0.15s ease;
 }
-
 .st-key-script_switch button[kind="primary"] {
     background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark)) !important;
     color: white !important;
     box-shadow: 0 4px 10px rgba(111, 63, 220, 0.3);
 }
-
 .st-key-script_switch button[kind="secondary"] {
     background: transparent !important;
     color: var(--bv-muted) !important;
     box-shadow: none !important;
 }
-
 .st-key-script_switch button[kind="secondary"]:hover {
     color: var(--bv-ink) !important;
 }
@@ -182,31 +143,12 @@ div[data-testid="stButton"] button[kind="primary"] {
     box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28);
 }
 
-/* ---------- Fixed topbar logo ---------- */
-.st-key-topbar {
-    position: fixed !important;
-    top: 0 !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: min(820px, calc(100% - 2rem)) !important;
-    z-index: 999999 !important;
-    background: var(--background-color) !important;
-    border-bottom: 1px solid var(--bv-border);
-    padding-top: 12px;
-    padding-bottom: 14px;
-    margin-bottom: 0 !important;
-}
-
-.st-key-topbar div[data-testid="stHorizontalBlock"] {
-    align-items: center;
-}
+/* ---------- Topbar ---------- */
+.st-key-topbar { border-bottom: 1px solid var(--bv-border); margin-bottom: 30px; padding-bottom: 14px; }
+.st-key-topbar div[data-testid="stHorizontalBlock"] { align-items: center; }
 
 /* ---------- Misc ---------- */
-.bv-avg-rating {
-    font-size: 0.85rem;
-    color: var(--bv-muted);
-    margin-top: 6px;
-}
+.bv-avg-rating { font-size: 0.85rem; color: var(--bv-muted); margin-top: 6px; }
 
 /* ---------- Mobile responsive fixes ---------- */
 @media screen and (max-width: 600px) {
@@ -214,20 +156,13 @@ div[data-testid="stButton"] button[kind="primary"] {
     .block-container {
         padding-left: 1rem;
         padding-right: 1rem;
-        padding-top: 6rem;
+        padding-top: 3.5rem;
     }
 
     .st-key-topbar {
-        position: fixed !important;
-        top: 0 !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: calc(100% - 2rem) !important;
-        z-index: 999999 !important;
-        background: var(--background-color) !important;
-        padding-top: 10px;
-        padding-bottom: 14px;
-        margin-bottom: 0 !important;
+        padding-top: 8px;
+        padding-bottom: 16px;
+        margin-bottom: 24px;
         overflow: visible !important;
     }
 
@@ -291,8 +226,8 @@ div[data-testid="stButton"] button[kind="primary"] {
     .st-key-script_switch button {
         width: 100% !important;
         min-height: 42px;
-        font-size: 0.85rem !important;
-        padding: 0.45rem 0.4rem !important;
+        font-size: 0.9rem !important;
+        padding: 0.45rem 0.6rem !important;
     }
 
     div[data-testid="stTextArea"] textarea {
@@ -305,7 +240,6 @@ div[data-testid="stButton"] button[kind="primary"] {
         font-size: 0.95rem !important;
     }
 }
-
 /* ---------- Clear button ---------- */
 .st-key-btn_clear button {
     background: linear-gradient(135deg, #22c55e, #16a34a) !important;
@@ -447,7 +381,6 @@ with st.container(key="input_card"):
     # ---- Segmented script switch ----
     with st.container(key="script_switch"):
         sw_col1, sw_col2 = st.columns(2)
-
         with sw_col1:
             if st.button(
                 "Balochi-Latin",
@@ -457,7 +390,6 @@ with st.container(key="input_card"):
             ):
                 st.session_state.script_key = "latin"
                 st.rerun()
-
         with sw_col2:
             if st.button(
                 "Balochi-Arabic",
@@ -501,7 +433,7 @@ with st.container(key="input_card"):
             "Generate Speech",
             type="primary",
             use_container_width=True,
-            key="btn_generate",
+            key="btn_generate"
         )
 
     with btn_col2:
@@ -509,7 +441,7 @@ with st.container(key="input_card"):
             "Clear",
             use_container_width=True,
             key="btn_clear",
-            on_click=clear_input,
+            on_click=clear_input
         )
 
 # ----------------------------------------------------------------------------
@@ -563,21 +495,16 @@ if st.session_state.result:
             use_container_width=True,
         )
 
-        st.markdown(
-            '<div class="bv-section-title" style="font-size:0.95rem; margin-top:20px;">Rate this audio</div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown('<div class="bv-section-title" style="font-size:0.95rem; margin-top:20px;">Rate this audio</div>', unsafe_allow_html=True)
 
         has_native_feedback = hasattr(st, "feedback")
 
         if has_native_feedback:
             rating = st.feedback("stars", key=f"rating_{id(result)}")
-
             if rating is not None and not result["rated"]:
                 st.session_state.feedback_log.append(rating + 1)
                 st.session_state.result["rated"] = True
                 st.toast(f"Thanks for rating it {STAR_LABELS[rating]}!", icon="⭐")
-
         else:
             rating_label = st.radio(
                 "Rate this audio",
@@ -587,7 +514,6 @@ if st.session_state.result:
                 key=f"rating_fallback_{id(result)}",
                 index=None,
             )
-
             if rating_label and not result["rated"]:
                 st.session_state.feedback_log.append(STAR_LABELS.index(rating_label) + 1)
                 st.session_state.result["rated"] = True
@@ -595,7 +521,6 @@ if st.session_state.result:
 
         if st.session_state.feedback_log:
             avg = sum(st.session_state.feedback_log) / len(st.session_state.feedback_log)
-
             st.markdown(
                 f'<div class="bv-avg-rating">Average rating: {avg:.1f} / 5 '
                 f'from {len(st.session_state.feedback_log)} rating(s)</div>',
