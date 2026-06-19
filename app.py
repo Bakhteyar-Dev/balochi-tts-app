@@ -1,3 +1,4 @@
+```python
 import io
 import wave
 import re
@@ -149,6 +150,7 @@ div[data-testid="stButton"] button[kind="primary"] {
 
 /* ---------- Misc ---------- */
 .bv-avg-rating { font-size: 0.85rem; color: var(--bv-muted); margin-top: 6px; }
+
 /* ---------- Mobile responsive fixes ---------- */
 @media screen and (max-width: 600px) {
 
@@ -239,7 +241,6 @@ div[data-testid="stButton"] button[kind="primary"] {
         font-size: 0.95rem !important;
     }
 }
-}
 </style>
 """
 
@@ -303,6 +304,15 @@ def contains_arabic_script(text: str) -> bool:
 
 def contains_latin_script(text: str) -> bool:
     return bool(re.search(r"[A-Za-z]", text))
+
+
+# ----------------------------------------------------------------------------
+# CLEAR INPUT
+# ----------------------------------------------------------------------------
+
+def clear_input():
+    st.session_state["bv_text_input"] = ""
+    st.session_state.result = None
 
 
 # ----------------------------------------------------------------------------
@@ -403,7 +413,23 @@ with st.container(key="input_card"):
         key="bv_text_input",
     )
 
-    generate_clicked = st.button("Generate Speech", type="primary", use_container_width=True, key="btn_generate")
+    btn_col1, btn_col2 = st.columns([3, 1])
+
+    with btn_col1:
+        generate_clicked = st.button(
+            "Generate Speech",
+            type="primary",
+            use_container_width=True,
+            key="btn_generate"
+        )
+
+    with btn_col2:
+        st.button(
+            "Clear",
+            use_container_width=True,
+            key="btn_clear",
+            on_click=clear_input
+        )
 
 # ----------------------------------------------------------------------------
 # GENERATION
@@ -487,3 +513,4 @@ if st.session_state.result:
                 f'from {len(st.session_state.feedback_log)} rating(s)</div>',
                 unsafe_allow_html=True,
             )
+```
