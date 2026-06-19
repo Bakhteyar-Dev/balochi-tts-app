@@ -155,7 +155,36 @@ div[data-testid="stButton"] button[kind="primary"] {
     .block-container {
         padding-left: 1rem;
         padding-right: 1rem;
-        padding-top: 2rem;
+        padding-top: 3.5rem;
+    }
+
+    .st-key-topbar {
+        padding-top: 8px;
+        padding-bottom: 16px;
+        margin-bottom: 24px;
+        overflow: visible !important;
+    }
+
+    .bv-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 48px;
+        overflow: visible !important;
+    }
+
+    .bv-logo-mark {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        min-height: 42px;
+        border-radius: 11px;
+        overflow: visible !important;
+    }
+
+    .bv-brand-name {
+        font-size: 1.2rem;
+        line-height: 1.2;
     }
 
     .bv-hero-title {
@@ -209,6 +238,7 @@ div[data-testid="stButton"] button[kind="primary"] {
         min-height: 44px;
         font-size: 0.95rem !important;
     }
+}
 }
 </style>
 """
