@@ -275,7 +275,7 @@ st.markdown(
     <section class="hero">
         <div class="brand-row">
             <div class="brand-mark">BT</div>
-            <div class="model-pill">facebook/mms-tts-bcc-script_latin</div>
+          
         </div>
         <h1>Balochi Latin Text to Speech</h1>
         <p>Type Balochi in Latin script and generate clear spoken audio directly in the browser.</p>
