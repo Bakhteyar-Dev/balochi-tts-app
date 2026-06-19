@@ -44,36 +44,42 @@ CUSTOM_CSS = """
     --bv-muted: #5f6b73;
     --bv-border: #e6e9eb;
     --bv-bg-soft: #f7f8f9;
-    --bv-orange: #f0901e;
-    --bv-purple: #7c4ee0;
-    --bv-blue: #1fb6dd;
+    --bv-purple: #6f3fdc;
+    --bv-purple-dark: #5a2fc2;
     --bv-card-radius: 16px;
 }
 
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-ink); }
-.block-container { padding-top: 1.2rem; max-width: 880px; }
+.block-container { padding-top: 1.2rem; max-width: 820px; }
 
-/* ---------- Top bar ---------- */
+/* ---------- Top bar / logo ---------- */
 .bv-topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 4px 22px 4px;
+    padding: 8px 4px 22px 4px;
     border-bottom: 1px solid var(--bv-border);
     margin-bottom: 30px;
 }
 .bv-brand { display: flex; align-items: center; gap: 12px; }
-.bv-brand-logo {
-    font-size: 1.7rem;
-    line-height: 1;
+.bv-logo-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 .bv-brand-name {
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
 }
+.bv-brand-name .accent { color: var(--bv-purple); }
 .bv-brand-tag {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: var(--bv-muted);
     background: var(--bv-bg-soft);
@@ -84,39 +90,19 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
 
 /* ---------- Hero ---------- */
 .bv-hero-title {
-    font-size: 2.6rem;
+    font-size: 2.3rem;
     font-weight: 800;
     letter-spacing: -0.03em;
-    margin-bottom: 10px;
-    line-height: 1.1;
+    margin-bottom: 8px;
+    line-height: 1.15;
 }
 .bv-hero-sub {
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: var(--bv-muted);
-    max-width: 640px;
+    max-width: 620px;
     line-height: 1.55;
     margin-bottom: 28px;
 }
-
-/* ---------- Feature cards ---------- */
-.bv-feature-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 36px;
-}
-.bv-feature-card {
-    border-radius: var(--bv-card-radius);
-    padding: 22px 20px;
-    color: white;
-    min-height: 130px;
-}
-.bv-feature-card.orange { background: linear-gradient(135deg, #f3a23d, #ea7e16); }
-.bv-feature-card.purple { background: linear-gradient(135deg, #9a72ec, #6f3fdc); }
-.bv-feature-card.blue   { background: linear-gradient(135deg, #3fc6e8, #149dc3); }
-.bv-feature-icon { font-size: 1.4rem; margin-bottom: 10px; opacity: 0.95; }
-.bv-feature-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
-.bv-feature-desc { font-size: 0.84rem; line-height: 1.4; opacity: 0.92; }
 
 /* ---------- Section card ---------- */
 .bv-card {
@@ -126,64 +112,68 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     padding: 24px 26px;
     margin-bottom: 20px;
 }
-.bv-section-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-.bv-section-caption {
-    font-size: 0.85rem;
-    color: var(--bv-muted);
-    margin-bottom: 18px;
-}
+.bv-section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
+.bv-section-caption { font-size: 0.85rem; color: var(--bv-muted); margin-bottom: 18px; }
 
-/* ---------- Script switch row ---------- */
-.bv-switch-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
+/* ---------- Segmented script switch ---------- */
+.bv-switch-wrap { display: flex; justify-content: center; margin-bottom: 22px; }
+div[data-testid="stHorizontalBlock"]:has(button[kind]) {
     background: var(--bv-bg-soft);
     border: 1px solid var(--bv-border);
     border-radius: 999px;
-    padding: 10px 22px;
+    padding: 4px;
     width: fit-content;
-    margin: 0 auto 24px auto;
+    margin: 0 auto 22px auto;
+    gap: 4px !important;
 }
-.bv-switch-label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--bv-muted);
-    transition: color 0.15s ease;
+div[data-testid="stHorizontalBlock"]:has(button[kind]) > div {
+    width: auto !important;
+    flex: none !important;
 }
-.bv-switch-label.active.left { color: var(--bv-orange); }
-.bv-switch-label.active.right { color: var(--bv-purple); }
+div[data-testid="stHorizontalBlock"]:has(button[kind]) button {
+    border-radius: 999px !important;
+    padding: 0.45rem 1.6rem !important;
+    font-weight: 700 !important;
+    border: none !important;
+    transition: all 0.15s ease;
+}
+div[data-testid="stHorizontalBlock"]:has(button[kind]) button[kind="primary"] {
+    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark)) !important;
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(111, 63, 220, 0.3);
+}
+div[data-testid="stHorizontalBlock"]:has(button[kind]) button[kind="secondary"] {
+    background: transparent !important;
+    color: var(--bv-muted) !important;
+    box-shadow: none !important;
+}
+div[data-testid="stHorizontalBlock"]:has(button[kind]) button[kind="secondary"]:hover {
+    color: var(--bv-ink) !important;
+}
 
-div[data-testid="stToggle"] { display: flex; justify-content: center; }
-div[data-testid="stToggle"] label { gap: 0; }
-
-/* ---------- Buttons ---------- */
-div[data-testid="stButton"] button[kind="primary"] {
-    background: linear-gradient(135deg, var(--bv-purple), #5d2fc9);
+/* ---------- Primary action button ---------- */
+div[data-testid="stButton"] button[data-testid="baseButton-primary"],
+.bv-generate-btn button[kind="primary"] {
+    background: linear-gradient(135deg, var(--bv-purple), var(--bv-purple-dark));
     border: none;
     border-radius: 12px;
     padding: 0.65rem 1.4rem;
     font-weight: 700;
-    box-shadow: 0 6px 16px rgba(124, 78, 224, 0.28);
-}
-div[data-testid="stButton"] button[kind="primary"]:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(124, 78, 224, 0.38);
+    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28);
 }
 
 /* ---------- Misc ---------- */
 .bv-avg-rating { font-size: 0.85rem; color: var(--bv-muted); margin-top: 6px; }
-.bv-footer-note { text-align: center; color: var(--bv-muted); font-size: 0.78rem; margin-top: 30px; }
-
-@media (max-width: 700px) {
-    .bv-feature-grid { grid-template-columns: 1fr; }
-}
 </style>
+"""
+
+LOGO_SVG = """
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="9" width="3" height="6" rx="1.5" fill="white" opacity="0.55"/>
+    <rect x="8" y="5" width="3" height="14" rx="1.5" fill="white"/>
+    <rect x="13" y="2" width="3" height="20" rx="1.5" fill="white" opacity="0.85"/>
+    <rect x="18" y="7" width="3" height="10" rx="1.5" fill="white" opacity="0.55"/>
+</svg>
 """
 
 # ----------------------------------------------------------------------------
@@ -232,8 +222,8 @@ def text_to_speech(text: str, script_key: str):
 # SESSION STATE
 # ----------------------------------------------------------------------------
 
-if "use_arabic" not in st.session_state:
-    st.session_state.use_arabic = False
+if "script_key" not in st.session_state:
+    st.session_state.script_key = "latin"
 if "result" not in st.session_state:
     st.session_state.result = None
 if "feedback_log" not in st.session_state:
@@ -246,13 +236,13 @@ if "feedback_log" not in st.session_state:
 st.set_page_config(page_title="BakhtAI Voice", page_icon="🎙️", layout="centered")
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# ---- Top bar ----
+# ---- Top bar / logo ----
 st.markdown(
-    """
+    f"""
     <div class="bv-topbar">
         <div class="bv-brand">
-            <span class="bv-brand-logo">🎙️</span>
-            <span class="bv-brand-name">BakhtAI Voice</span>
+            <div class="bv-logo-mark">{LOGO_SVG}</div>
+            <span class="bv-brand-name">Bakht<span class="accent">AI</span> Voice</span>
         </div>
         <span class="bv-brand-tag">Beta</span>
     </div>
@@ -265,32 +255,8 @@ st.markdown('<div class="bv-hero-title">Balochi Text to Speech</div>', unsafe_al
 st.markdown(
     """
     <div class="bv-hero-sub">
-        BakhtAI Voice turns Balochi text into natural-sounding speech, in both Latin and
-        Arabic script. Type your text, pick a script, and generate audio in seconds.
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---- Feature cards ----
-st.markdown(
-    """
-    <div class="bv-feature-grid">
-        <div class="bv-feature-card orange">
-            <div class="bv-feature-icon">🅻</div>
-            <div class="bv-feature-title">Latin Script</div>
-            <div class="bv-feature-desc">Write Balochi using Latin letters, left-to-right.</div>
-        </div>
-        <div class="bv-feature-card purple">
-            <div class="bv-feature-icon">🗨️</div>
-            <div class="bv-feature-title">Arabic Script</div>
-            <div class="bv-feature-desc">Write Balochi using Arabic letters, right-to-left.</div>
-        </div>
-        <div class="bv-feature-card blue">
-            <div class="bv-feature-icon">🔊</div>
-            <div class="bv-feature-title">Natural Voice</div>
-            <div class="bv-feature-desc">Powered by Meta's MMS speech synthesis models.</div>
-        </div>
+        Type Balochi text in Latin or Arabic script and generate natural-sounding speech
+        in seconds.
     </div>
     """,
     unsafe_allow_html=True,
@@ -304,21 +270,28 @@ st.markdown('<div class="bv-card">', unsafe_allow_html=True)
 st.markdown('<div class="bv-section-title">Enter your text</div>', unsafe_allow_html=True)
 st.markdown('<div class="bv-section-caption">Switch the script, then type your Balochi text below.</div>', unsafe_allow_html=True)
 
-# ---- Single toggle switch: Latin <-> Arabic ----
-left_active = "active left" if not st.session_state.use_arabic else ""
-right_active = "active right" if st.session_state.use_arabic else ""
-
-st.markdown('<div class="bv-switch-row">', unsafe_allow_html=True)
-sw_col1, sw_col2, sw_col3 = st.columns([1, 1, 1])
+# ---- Segmented script switch ----
+sw_col1, sw_col2 = st.columns(2)
 with sw_col1:
-    st.markdown(f'<div class="bv-switch-label {left_active}" style="text-align:right;">Latin</div>', unsafe_allow_html=True)
+    if st.button(
+        "Latin",
+        type="primary" if st.session_state.script_key == "latin" else "secondary",
+        use_container_width=True,
+        key="btn_latin",
+    ):
+        st.session_state.script_key = "latin"
+        st.rerun()
 with sw_col2:
-    use_arabic = st.toggle("Switch script", key="use_arabic", label_visibility="collapsed")
-with sw_col3:
-    st.markdown(f'<div class="bv-switch-label {right_active}" style="text-align:left;">Arabic</div>', unsafe_allow_html=True)
-st.markdown("</div>", unsafe_allow_html=True)
+    if st.button(
+        "Arabic",
+        type="primary" if st.session_state.script_key == "arabic" else "secondary",
+        use_container_width=True,
+        key="btn_arabic",
+    ):
+        st.session_state.script_key = "arabic"
+        st.rerun()
 
-script_choice = "arabic" if use_arabic else "latin"
+script_choice = st.session_state.script_key
 current = MODELS[script_choice]
 
 # Apply text direction / font dynamically based on the selected script
@@ -344,7 +317,7 @@ text = st.text_area(
     key="bv_text_input",
 )
 
-generate_clicked = st.button("Generate Speech", type="primary", use_container_width=True)
+generate_clicked = st.button("Generate Speech", type="primary", use_container_width=True, key="btn_generate")
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ----------------------------------------------------------------------------
@@ -423,8 +396,3 @@ if st.session_state.result:
         )
 
     st.markdown("</div>", unsafe_allow_html=True)
-
-st.markdown(
-    '<div class="bv-footer-note">BakhtAI Voice runs on Meta MMS-TTS models for Balochi (bcc).</div>',
-    unsafe_allow_html=True,
-)
