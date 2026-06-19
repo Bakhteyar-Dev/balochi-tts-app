@@ -1,10 +1,6 @@
-# Balochi Latin Text to Speech
+# Balochi Text to Speech
 
-This is a Streamlit app for Balochi Latin-script text-to-speech using:
-
-```text
-facebook/mms-tts-bcc-script_latin
-```
+This is a Streamlit app for Balochi text-to-speech. It supports both Latin-script and Arabic-script Balochi input.
 
 ## Run Locally
 
