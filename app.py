@@ -1,5 +1,6 @@
 import io
 import wave
+import re
 
 import numpy as np
 import streamlit as st
@@ -90,7 +91,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     margin-bottom: 28px;
 }
 
-/* ---------- Section card (real containers, not cross-element divs) ---------- */
+/* ---------- Section card ---------- */
 .st-key-input_card, .st-key-result_card {
     background: var(--bv-card-bg);
     border: 1px solid var(--bv-border);
@@ -102,7 +103,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
 .bv-section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
 .bv-section-caption { font-size: 0.85rem; color: var(--bv-muted); margin-bottom: 18px; }
 
-/* ---------- Segmented script switch (scoped to this container only) ---------- */
+/* ---------- Segmented script switch ---------- */
 .st-key-script_switch {
     max-width: 260px;
     margin: 0 auto 22px auto;
@@ -132,7 +133,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     color: var(--bv-ink) !important;
 }
 
-/* ---------- Primary action button (Generate Speech) ---------- */
+/* ---------- Primary action button ---------- */
 div[data-testid="stButton"] button[kind="primary"] {
     background: linear-gradient(135deg, var(--bv-purple), var(--bv-purple-dark));
     border: none;
@@ -142,50 +143,9 @@ div[data-testid="stButton"] button[kind="primary"] {
     box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28);
 }
 
-/* ---------- Sign-in screen CSS kept unused ---------- */
-.bv-signin-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-    text-align: center;
-    gap: 4px;
-}
-.bv-logo-mark-lg {
-    width: 64px;
-    height: 64px;
-    border-radius: 18px;
-    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 18px;
-}
-.bv-logo-mark-lg svg { width: 32px; height: 32px; }
-.bv-signin-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
-.bv-signin-sub { font-size: 0.95rem; color: var(--bv-muted); margin-bottom: 26px; }
-.st-key-signin_btn button {
-    background: white !important;
-    color: #1f1f1f !important;
-    border: 1px solid var(--bv-border) !important;
-    border-radius: 10px !important;
-    font-weight: 600 !important;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
-}
-
 /* ---------- Topbar ---------- */
 .st-key-topbar { border-bottom: 1px solid var(--bv-border); margin-bottom: 30px; padding-bottom: 14px; }
 .st-key-topbar div[data-testid="stHorizontalBlock"] { align-items: center; }
-.st-key-topbar button {
-    background: transparent !important;
-    border: 1px solid var(--bv-border) !important;
-    color: var(--bv-muted) !important;
-    border-radius: 999px !important;
-    font-size: 0.8rem !important;
-    font-weight: 600 !important;
-    padding: 0.3rem 0.9rem !important;
-}
 
 /* ---------- Misc ---------- */
 .bv-avg-rating { font-size: 0.85rem; color: var(--bv-muted); margin-top: 6px; }
@@ -240,6 +200,18 @@ def text_to_speech(text: str, script_key: str):
 
     waveform = waveform.squeeze().detach().cpu().numpy()
     return waveform_to_wav_bytes(waveform, model.config.sampling_rate)
+
+
+# ----------------------------------------------------------------------------
+# TEXT SCRIPT VALIDATION
+# ----------------------------------------------------------------------------
+
+def contains_arabic_script(text: str) -> bool:
+    return bool(re.search(r"[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]", text))
+
+
+def contains_latin_script(text: str) -> bool:
+    return bool(re.search(r"[A-Za-z]", text))
 
 
 # ----------------------------------------------------------------------------
@@ -348,8 +320,16 @@ with st.container(key="input_card"):
 
 if generate_clicked:
     clean_text = text.strip()
+
     if not clean_text:
         st.warning("Please enter Balochi text first.")
+
+    elif script_choice == "latin" and contains_arabic_script(clean_text):
+        st.warning("Please type Latin text.")
+
+    elif script_choice == "arabic" and contains_latin_script(clean_text):
+        st.warning("Please type Arabic text.")
+
     else:
         with st.spinner(f"Generating speech ({current['label']} script)..."):
             try:
