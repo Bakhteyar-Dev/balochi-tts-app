@@ -352,7 +352,7 @@ with st.container(key="topbar"):
         f"""
         <div class="bv-brand">
             <div class="bv-logo-mark">{LOGO_SVG}</div>
-            <span class="bv-brand-name">Bakht<span class="accent">AI</span> Voice</span>
+            <span class="bv-brand-name">Bakhteyar<span class="accent">-AI</span> Voice</span>
         </div>
         """,
         unsafe_allow_html=True,
