@@ -7,14 +7,18 @@ import torch
 from transformers import AutoTokenizer, VitsModel
 
 
-TTS_MODEL_ID = "facebook/mms-tts-bcc-script_latin"
+TTS_MODEL_IDS = {
+    "Latin Script": "facebook/mms-tts-bcc-script_latin",
+    "Arabic Script": "facebook/mms-tts-bcc-script_arabic",
+}
 
 
 @st.cache_resource
-def load_tts_model():
+def load_tts_model(script_name):
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    tokenizer = AutoTokenizer.from_pretrained(TTS_MODEL_ID)
-    model = VitsModel.from_pretrained(TTS_MODEL_ID).to(device)
+    model_id = TTS_MODEL_IDS[script_name]
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    model = VitsModel.from_pretrained(model_id).to(device)
     model.eval()
     return tokenizer, model, device
 
@@ -33,8 +37,8 @@ def waveform_to_wav_bytes(waveform, sampling_rate):
     return buffer.getvalue()
 
 
-def text_to_speech(text):
-    tokenizer, model, device = load_tts_model()
+def text_to_speech(text, script_name):
+    tokenizer, model, device = load_tts_model(script_name)
 
     inputs = tokenizer(
         text,
@@ -52,7 +56,7 @@ def text_to_speech(text):
 
 
 st.set_page_config(
-    page_title="Balochi Latin Text to Speech",
+    page_title="Balochi Text to Speech",
     page_icon="audio",
     layout="wide",
 )
@@ -124,7 +128,7 @@ st.markdown(
         box-shadow: 0 14px 30px rgba(15, 118, 110, 0.24);
     }
 
-    .model-pill {
+    .script-pill {
         border: 1px solid rgba(15,118,110,0.22);
         border-radius: 999px;
         padding: 10px 14px;
@@ -238,6 +242,17 @@ st.markdown(
         font-weight: 700;
     }
 
+    .current-script {
+        border: 1px solid rgba(15,118,110,0.22);
+        border-radius: 16px;
+        padding: 14px 16px;
+        margin-bottom: 16px;
+        color: var(--teal-dark);
+        background: rgba(255,255,255,0.72);
+        font-size: 14px;
+        font-weight: 800;
+    }
+
     @media (max-width: 720px) {
         .block-container {
             padding: 1rem;
@@ -255,7 +270,7 @@ st.markdown(
             margin-bottom: 20px;
         }
 
-        .model-pill {
+        .script-pill {
             width: 100%;
             box-sizing: border-box;
             overflow-wrap: anywhere;
@@ -275,10 +290,10 @@ st.markdown(
     <section class="hero">
         <div class="brand-row">
             <div class="brand-mark">BT</div>
-          
+            <div class="script-pill">Balochi voice generator</div>
         </div>
-        <h1>Balochi Latin Text to Speech</h1>
-        <p>Type Balochi in Latin script and generate clear spoken audio directly in the browser.</p>
+        <h1>Balochi Text to Speech</h1>
+        <p>Type Balochi in your preferred script and generate clear spoken audio directly in the browser.</p>
     </section>
     """,
     unsafe_allow_html=True,
@@ -287,14 +302,27 @@ st.markdown(
 st.markdown('<main class="workspace">', unsafe_allow_html=True)
 st.markdown('<p class="section-title">Create Speech</p>', unsafe_allow_html=True)
 st.markdown(
-    '<p class="section-copy">Enter text below, then generate and download the audio as a WAV file.</p>',
+    '<p class="section-copy">Choose the script, enter text, then generate and download the audio as a WAV file.</p>',
+    unsafe_allow_html=True,
+)
+
+use_arabic_script = st.toggle(
+    "Turn on Balochi Arabic script voice",
+    value=False,
+)
+
+script_name = "Arabic Script" if use_arabic_script else "Latin Script"
+script_hint = "Latin-script Balochi text" if script_name == "Latin Script" else "Arabic-script Balochi text"
+
+st.markdown(
+    f'<div class="current-script">Current voice: Balochi {script_name}</div>',
     unsafe_allow_html=True,
 )
 
 text = st.text_area(
-    "Enter Balochi text in Latin script",
+    f"Enter {script_hint}",
     height=160,
-    placeholder="Type Latin-script Balochi text here...",
+    placeholder=f"Type {script_hint} here...",
 )
 
 col_generate, col_status = st.columns([1, 2])
@@ -306,7 +334,7 @@ with col_status:
     st.markdown(
         """
         <div class="hint-grid">
-            <div class="hint">Latin script input</div>
+            <div class="hint">Latin or Arabic script</div>
             <div class="hint">Browser playback</div>
             <div class="hint">WAV download</div>
         </div>
@@ -322,13 +350,13 @@ if generate_clicked:
     else:
         with st.spinner("Generating speech..."):
             try:
-                wav_bytes = text_to_speech(clean_text)
+                wav_bytes = text_to_speech(clean_text, script_name)
                 st.markdown('<div class="audio-box">', unsafe_allow_html=True)
                 st.audio(wav_bytes, format="audio/wav")
                 st.download_button(
                     "Download WAV",
                     data=wav_bytes,
-                    file_name="balochi_latin_tts.wav",
+                    file_name=f"balochi_{script_name.lower().replace(' ', '_')}_tts.wav",
                     mime="audio/wav",
                 )
                 st.markdown("</div>", unsafe_allow_html=True)
