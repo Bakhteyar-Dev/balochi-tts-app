@@ -1,6 +1,8 @@
 streamlit
 torch
+torchvision
 transformers
 sentencepiece
+sacremoses
 numpy
-sentencepiece
+scipy
