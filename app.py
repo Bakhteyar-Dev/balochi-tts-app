@@ -63,29 +63,29 @@ div[data-testid="stSidebarUserContent"] {
     margin-bottom: 22px;
 }
 
+/* ---------- Custom sidebar coloured buttons ---------- */
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
+    background: linear-gradient(135deg, #8a5cf0, #6f3fdc) !important;
+    color: white !important;
     border-radius: 14px !important;
-    margin: 6px 8px !important;
+    margin: 8px 8px !important;
     padding: 12px 14px !important;
-    font-weight: 700 !important;
-    color: #111827 !important;
-    background: transparent !important;
-    transition: all 0.15s ease !important;
+    font-weight: 800 !important;
     justify-content: flex-start !important;
+    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.22) !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a p,
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a span {
+    color: white !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
-    background: rgba(138, 92, 240, 0.12) !important;
+    opacity: 0.92 !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
-    background: linear-gradient(135deg, #8a5cf0, #6f3fdc) !important;
-    color: white !important;
-    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28) !important;
-}
-
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] p,
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] span {
+    background: linear-gradient(135deg, #6f3fdc, #4c1d95) !important;
     color: white !important;
 }
 
@@ -172,22 +172,24 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     margin-bottom: 18px;
 }
 
-/* ---------- Main page buttons only ---------- */
+/* ---------- Main page open buttons only ---------- */
 div[data-testid="stMain"] div[data-testid="stPageLink"] a {
-    background: linear-gradient(135deg, var(--bv-purple), var(--bv-purple-dark)) !important;
+    background: linear-gradient(135deg, #8a5cf0, #6f3fdc) !important;
     color: white !important;
-    border-radius: 10px !important;
-    font-weight: 700 !important;
+    border-radius: 12px !important;
+    font-weight: 800 !important;
     justify-content: center !important;
-    padding: 0.5rem 1rem !important;
+    padding: 0.65rem 1rem !important;
+    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.24) !important;
 }
 
-div[data-testid="stMain"] div[data-testid="stPageLink"] a p {
+div[data-testid="stMain"] div[data-testid="stPageLink"] a p,
+div[data-testid="stMain"] div[data-testid="stPageLink"] a span {
     color: white !important;
 }
 
 div[data-testid="stMain"] div[data-testid="stPageLink"] a:hover {
-    opacity: 0.92;
+    opacity: 0.92 !important;
 }
 
 @media screen and (max-width: 600px) {
