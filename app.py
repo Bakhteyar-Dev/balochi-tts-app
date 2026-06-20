@@ -18,10 +18,84 @@ CUSTOM_CSS = """
     --bv-card-radius: 16px;
 }
 
-html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-ink); }
-.block-container { padding-top: 3.2rem; max-width: 880px; }
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+    color: var(--bv-ink);
+}
 
-.bv-brand { display: flex; align-items: center; gap: 12px; }
+.block-container {
+    padding-top: 3.2rem;
+    max-width: 880px;
+}
+
+/* ---------- Hide default Streamlit sidebar navigation ---------- */
+[data-testid="stSidebarNav"],
+section[data-testid="stSidebarNav"],
+div[data-testid="stSidebarNav"],
+ul[data-testid="stSidebarNavItems"],
+[data-testid="stSidebarNavItems"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* ---------- Custom sidebar ---------- */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #f8fbff 0%, #eef6ff 100%) !important;
+    border-right: 1px solid var(--bv-border);
+}
+
+div[data-testid="stSidebarUserContent"] {
+    padding-top: 1.2rem;
+}
+
+.bv-side-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: #111827;
+}
+
+.bv-side-sub {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 22px;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
+    border-radius: 14px !important;
+    margin: 6px 8px !important;
+    padding: 12px 14px !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    background: transparent !important;
+    transition: all 0.15s ease !important;
+    justify-content: flex-start !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
+    background: rgba(138, 92, 240, 0.12) !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
+    background: linear-gradient(135deg, #8a5cf0, #6f3fdc) !important;
+    color: white !important;
+    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28) !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] p,
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] span {
+    color: white !important;
+}
+
+/* ---------- Main top brand ---------- */
+.bv-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .bv-logo-mark {
     width: 38px;
     height: 38px;
@@ -32,10 +106,22 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     justify-content: center;
     flex-shrink: 0;
 }
-.bv-brand-name { font-size: 1.4rem; font-weight: 700; white-space: nowrap; }
-.bv-brand-name .accent { color: var(--bv-purple); }
 
-.st-key-topbar { border-bottom: 1px solid var(--bv-border); margin-bottom: 36px; padding-bottom: 14px; }
+.bv-brand-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.bv-brand-name .accent {
+    color: var(--bv-purple);
+}
+
+.st-key-topbar {
+    border-bottom: 1px solid var(--bv-border);
+    margin-bottom: 36px;
+    padding-bottom: 14px;
+}
 
 .bv-hero-title {
     font-size: 2.6rem;
@@ -44,6 +130,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     margin-bottom: 10px;
     line-height: 1.15;
 }
+
 .bv-hero-sub {
     font-size: 1.05rem;
     color: var(--bv-muted);
@@ -59,6 +146,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     padding: 26px 24px;
     height: 100%;
 }
+
 .bv-tool-icon {
     width: 46px;
     height: 46px;
@@ -70,10 +158,22 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     font-size: 1.4rem;
     margin-bottom: 14px;
 }
-.bv-tool-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; }
-.bv-tool-desc { font-size: 0.92rem; color: var(--bv-muted); line-height: 1.55; margin-bottom: 18px; }
 
-div[data-testid="stPageLink"] a {
+.bv-tool-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.bv-tool-desc {
+    font-size: 0.92rem;
+    color: var(--bv-muted);
+    line-height: 1.55;
+    margin-bottom: 18px;
+}
+
+/* ---------- Main page buttons only ---------- */
+div[data-testid="stMain"] div[data-testid="stPageLink"] a {
     background: linear-gradient(135deg, var(--bv-purple), var(--bv-purple-dark)) !important;
     color: white !important;
     border-radius: 10px !important;
@@ -81,40 +181,35 @@ div[data-testid="stPageLink"] a {
     justify-content: center !important;
     padding: 0.5rem 1rem !important;
 }
-div[data-testid="stPageLink"] a p { color: white !important; }
-div[data-testid="stPageLink"] a:hover { opacity: 0.92; }
+
+div[data-testid="stMain"] div[data-testid="stPageLink"] a p {
+    color: white !important;
+}
+
+div[data-testid="stMain"] div[data-testid="stPageLink"] a:hover {
+    opacity: 0.92;
+}
 
 @media screen and (max-width: 600px) {
-    .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 3.5rem; }
-    .bv-hero-title { font-size: 1.9rem; }
-    .bv-hero-sub { font-size: 0.92rem; margin-bottom: 24px; }
-    .bv-tool-card { padding: 20px 18px; margin-bottom: 16px; }
-}
+    .block-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 3.5rem;
+    }
 
-/* ---------- Sidebar navigation styling ---------- */
-section[data-testid="stSidebarNav"] a {
-    border-radius: 10px;
-    margin: 2px 10px;
-    padding: 8px 12px;
-    color: var(--bv-ink) !important;
-    font-weight: 600;
-    transition: all 0.15s ease;
-}
-section[data-testid="stSidebarNav"] a span { color: inherit !important; }
-section[data-testid="stSidebarNav"] a:hover {
-    background: color-mix(in srgb, var(--bv-purple) 14%, transparent);
-}
-section[data-testid="stSidebarNav"] a[aria-current="page"] {
-    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark)) !important;
-    color: white !important;
-    box-shadow: 0 4px 10px rgba(111, 63, 220, 0.3);
-}
-section[data-testid="stSidebarNav"] a[aria-current="page"] span {
-    color: white !important;
-}
-/* Hide default Streamlit navigation */
-section[data-testid="stSidebarNav"] {
-    display: none !important;
+    .bv-hero-title {
+        font-size: 1.9rem;
+    }
+
+    .bv-hero-sub {
+        font-size: 0.92rem;
+        margin-bottom: 24px;
+    }
+
+    .bv-tool-card {
+        padding: 20px 18px;
+        margin-bottom: 16px;
+    }
 }
 </style>
 """
@@ -134,16 +229,17 @@ LOGO_SVG = """
 
 st.set_page_config(page_title="Bakhteyar-AI", page_icon="🟣", layout="centered")
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
+# ----------------------------------------------------------------------------
+# CUSTOM SIDEBAR
+# ----------------------------------------------------------------------------
+
 with st.sidebar:
     st.markdown(
         """
         <div style="padding: 12px 10px 20px 10px;">
-            <div style="font-size: 1.35rem; font-weight: 800; margin-bottom: 4px;">
-                Bakhteyar-AI
-            </div>
-            <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 22px;">
-                Balochi Language Tools
-            </div>
+            <div class="bv-side-title">Bakhteyar-AI</div>
+            <div class="bv-side-sub">Balochi Language Tools</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -152,6 +248,10 @@ with st.sidebar:
     st.page_link("app.py", label="Home", icon="🏠")
     st.page_link("pages/1_🌐_Translation.py", label="Translation", icon="🌐")
     st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon="🔊")
+
+# ----------------------------------------------------------------------------
+# MAIN PAGE
+# ----------------------------------------------------------------------------
 
 with st.container(key="topbar"):
     st.markdown(
@@ -164,7 +264,11 @@ with st.container(key="topbar"):
         unsafe_allow_html=True,
     )
 
-st.markdown('<div class="bv-hero-title">Balochi Language AI Tools</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="bv-hero-title">Balochi Language AI Tools</div>',
+    unsafe_allow_html=True
+)
+
 st.markdown(
     """
     <div class="bv-hero-sub">
@@ -196,7 +300,12 @@ with col1:
         """,
         unsafe_allow_html=True,
     )
-    st.page_link("pages/1_🌐_Translation.py", label="Open Translation", icon="🌐")
+
+    st.page_link(
+        "pages/1_🌐_Translation.py",
+        label="Open Translation",
+        icon="🌐"
+    )
 
 with col2:
     st.markdown(
@@ -212,4 +321,9 @@ with col2:
         """,
         unsafe_allow_html=True,
     )
-    st.page_link("pages/2_🔊_Text_to_Speech.py", label="Open Text to Speech", icon="🔊")
+
+    st.page_link(
+        "pages/2_🔊_Text_to_Speech.py",
+        label="Open Text to Speech",
+        icon="🔊"
+    )
