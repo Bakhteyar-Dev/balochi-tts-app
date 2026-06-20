@@ -51,11 +51,84 @@ CUSTOM_CSS = """
     --bv-card-radius: 16px;
 }
 
-html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-ink); }
-.block-container { padding-top: 3.2rem; max-width: 820px; }
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+    color: var(--bv-ink);
+}
+
+.block-container {
+    padding-top: 3.2rem;
+    max-width: 820px;
+}
+
+/* ---------- Hide default Streamlit sidebar navigation ---------- */
+[data-testid="stSidebarNav"],
+section[data-testid="stSidebarNav"],
+div[data-testid="stSidebarNav"],
+ul[data-testid="stSidebarNavItems"],
+[data-testid="stSidebarNavItems"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* ---------- Custom sidebar ---------- */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #f8fbff 0%, #eef6ff 100%) !important;
+    border-right: 1px solid var(--bv-border);
+}
+
+div[data-testid="stSidebarUserContent"] {
+    padding-top: 1.2rem;
+}
+
+.bv-side-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: #111827;
+}
+
+.bv-side-sub {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 22px;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
+    border-radius: 14px !important;
+    margin: 6px 8px !important;
+    padding: 12px 14px !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    background: transparent !important;
+    transition: all 0.15s ease !important;
+    justify-content: flex-start !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
+    background: rgba(138, 92, 240, 0.12) !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
+    background: linear-gradient(135deg, #8a5cf0, #6f3fdc) !important;
+    color: white !important;
+    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28) !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] p,
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] span {
+    color: white !important;
+}
 
 /* ---------- Top bar / logo ---------- */
-.bv-brand { display: flex; align-items: center; gap: 12px; }
+.bv-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .bv-logo-mark {
     width: 38px;
     height: 38px;
@@ -66,6 +139,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     justify-content: center;
     flex-shrink: 0;
 }
+
 .bv-brand-name {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     font-size: 1.4rem;
@@ -73,7 +147,10 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     letter-spacing: normal;
     white-space: nowrap;
 }
-.bv-brand-name .accent { color: var(--bv-purple); }
+
+.bv-brand-name .accent {
+    color: var(--bv-purple);
+}
 
 /* ---------- Hero ---------- */
 .bv-hero-title {
@@ -83,6 +160,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     margin-bottom: 8px;
     line-height: 1.15;
 }
+
 .bv-hero-sub {
     font-size: 1rem;
     color: var(--bv-muted);
@@ -92,16 +170,31 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
 }
 
 /* ---------- Section card ---------- */
-.st-key-input_card, .st-key-result_card {
+.st-key-input_card,
+.st-key-result_card {
     background: var(--bv-card-bg);
     border: 1px solid var(--bv-border);
     border-radius: var(--bv-card-radius);
     padding: 24px 26px 8px 26px;
     margin-bottom: 20px;
 }
-.st-key-input_card > div, .st-key-result_card > div { gap: 0 !important; }
-.bv-section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
-.bv-section-caption { font-size: 0.85rem; color: var(--bv-muted); margin-bottom: 18px; }
+
+.st-key-input_card > div,
+.st-key-result_card > div {
+    gap: 0 !important;
+}
+
+.bv-section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.bv-section-caption {
+    font-size: 0.85rem;
+    color: var(--bv-muted);
+    margin-bottom: 18px;
+}
 
 /* ---------- Segmented script switch ---------- */
 .st-key-script_switch {
@@ -112,23 +205,30 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--bv-i
     border-radius: 999px;
     padding: 4px;
 }
-.st-key-script_switch div[data-testid="stHorizontalBlock"] { gap: 4px; }
+
+.st-key-script_switch div[data-testid="stHorizontalBlock"] {
+    gap: 4px;
+}
+
 .st-key-script_switch button {
     border-radius: 999px !important;
     font-weight: 700 !important;
     border: none !important;
     transition: all 0.15s ease;
 }
+
 .st-key-script_switch button[kind="primary"] {
     background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark)) !important;
     color: white !important;
     box-shadow: 0 4px 10px rgba(111, 63, 220, 0.3);
 }
+
 .st-key-script_switch button[kind="secondary"] {
     background: transparent !important;
     color: var(--bv-muted) !important;
     box-shadow: none !important;
 }
+
 .st-key-script_switch button[kind="secondary"]:hover {
     color: var(--bv-ink) !important;
 }
@@ -144,15 +244,40 @@ div[data-testid="stButton"] button[kind="primary"] {
 }
 
 /* ---------- Topbar ---------- */
-.st-key-topbar { border-bottom: 1px solid var(--bv-border); margin-bottom: 30px; padding-bottom: 14px; }
-.st-key-topbar div[data-testid="stHorizontalBlock"] { align-items: center; }
+.st-key-topbar {
+    border-bottom: 1px solid var(--bv-border);
+    margin-bottom: 30px;
+    padding-bottom: 14px;
+}
+
+.st-key-topbar div[data-testid="stHorizontalBlock"] {
+    align-items: center;
+}
 
 /* ---------- Misc ---------- */
-.bv-avg-rating { font-size: 0.85rem; color: var(--bv-muted); margin-top: 6px; }
+.bv-avg-rating {
+    font-size: 0.85rem;
+    color: var(--bv-muted);
+    margin-top: 6px;
+}
+
+/* ---------- Clear button ---------- */
+.st-key-btn_clear button {
+    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.28) !important;
+}
+
+.st-key-btn_clear button:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d) !important;
+    color: white !important;
+}
 
 /* ---------- Mobile responsive fixes ---------- */
 @media screen and (max-width: 600px) {
-
     .block-container {
         padding-left: 1rem;
         padding-right: 1rem;
@@ -240,46 +365,6 @@ div[data-testid="stButton"] button[kind="primary"] {
         font-size: 0.95rem !important;
     }
 }
-/* ---------- Clear button ---------- */
-.st-key-btn_clear button {
-    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 12px !important;
-    font-weight: 700 !important;
-    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.28) !important;
-}
-
-.st-key-btn_clear button:hover {
-    background: linear-gradient(135deg, #16a34a, #15803d) !important;
-    color: white !important;
-}
-
-/* ---------- Sidebar navigation styling ---------- */
-section[data-testid="stSidebarNav"] a {
-    border-radius: 10px;
-    margin: 2px 10px;
-    padding: 8px 12px;
-    color: var(--bv-ink) !important;
-    font-weight: 600;
-    transition: all 0.15s ease;
-}
-section[data-testid="stSidebarNav"] a span { color: inherit !important; }
-section[data-testid="stSidebarNav"] a:hover {
-    background: color-mix(in srgb, var(--bv-purple) 14%, transparent);
-}
-section[data-testid="stSidebarNav"] a[aria-current="page"] {
-    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark)) !important;
-    color: white !important;
-    box-shadow: 0 4px 10px rgba(111, 63, 220, 0.3);
-}
-section[data-testid="stSidebarNav"] a[aria-current="page"] span {
-    color: white !important;
-}
-/* Hide default Streamlit navigation */
-section[data-testid="stSidebarNav"] {
-    display: none !important;
-}
 </style>
 """
 
@@ -332,7 +417,6 @@ def text_to_speech(text: str, script_key: str):
     waveform = waveform.squeeze().detach().cpu().numpy()
     return waveform_to_wav_bytes(waveform, model.config.sampling_rate)
 
-
 # ----------------------------------------------------------------------------
 # TEXT SCRIPT VALIDATION
 # ----------------------------------------------------------------------------
@@ -344,7 +428,6 @@ def contains_arabic_script(text: str) -> bool:
 def contains_latin_script(text: str) -> bool:
     return bool(re.search(r"[A-Za-z]", text))
 
-
 # ----------------------------------------------------------------------------
 # CLEAR INPUT
 # ----------------------------------------------------------------------------
@@ -353,15 +436,16 @@ def clear_input():
     st.session_state["bv_text_input"] = ""
     st.session_state.result = None
 
-
 # ----------------------------------------------------------------------------
 # SESSION STATE
 # ----------------------------------------------------------------------------
 
 if "script_key" not in st.session_state:
     st.session_state.script_key = "latin"
+
 if "result" not in st.session_state:
     st.session_state.result = None
+
 if "feedback_log" not in st.session_state:
     st.session_state.feedback_log = []
 
@@ -371,16 +455,17 @@ if "feedback_log" not in st.session_state:
 
 st.set_page_config(page_title="Bakhteyar-AI Voice", page_icon="🎙️", layout="centered")
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
+# ----------------------------------------------------------------------------
+# CUSTOM SIDEBAR
+# ----------------------------------------------------------------------------
+
 with st.sidebar:
     st.markdown(
         """
         <div style="padding: 12px 10px 20px 10px;">
-            <div style="font-size: 1.35rem; font-weight: 800; margin-bottom: 4px;">
-                Bakhteyar-AI
-            </div>
-            <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 22px;">
-                Balochi Language Tools
-            </div>
+            <div class="bv-side-title">Bakhteyar-AI</div>
+            <div class="bv-side-sub">Balochi Language Tools</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -390,7 +475,10 @@ with st.sidebar:
     st.page_link("pages/1_🌐_Translation.py", label="Translation", icon="🌐")
     st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon="🔊")
 
-# ---- Top bar / logo ----
+# ----------------------------------------------------------------------------
+# TOP BAR
+# ----------------------------------------------------------------------------
+
 with st.container(key="topbar"):
     st.markdown(
         f"""
@@ -402,8 +490,15 @@ with st.container(key="topbar"):
         unsafe_allow_html=True,
     )
 
-# ---- Hero ----
-st.markdown('<div class="bv-hero-title">Balochi Text to Speech</div>', unsafe_allow_html=True)
+# ----------------------------------------------------------------------------
+# HERO
+# ----------------------------------------------------------------------------
+
+st.markdown(
+    '<div class="bv-hero-title">Balochi Text to Speech</div>',
+    unsafe_allow_html=True
+)
+
 st.markdown(
     """
     <div class="bv-hero-sub">
@@ -419,12 +514,19 @@ st.markdown(
 # ----------------------------------------------------------------------------
 
 with st.container(key="input_card"):
-    st.markdown('<div class="bv-section-title">Enter your text</div>', unsafe_allow_html=True)
-    st.markdown('<div class="bv-section-caption">Switch the script, then type your Balochi text below.</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="bv-section-title">Enter your text</div>',
+        unsafe_allow_html=True
+    )
 
-    # ---- Segmented script switch ----
+    st.markdown(
+        '<div class="bv-section-caption">Switch the script, then type your Balochi text below.</div>',
+        unsafe_allow_html=True
+    )
+
     with st.container(key="script_switch"):
         sw_col1, sw_col2 = st.columns(2)
+
         with sw_col1:
             if st.button(
                 "Balochi-Latin",
@@ -434,6 +536,7 @@ with st.container(key="input_card"):
             ):
                 st.session_state.script_key = "latin"
                 st.rerun()
+
         with sw_col2:
             if st.button(
                 "Balochi-Arabic",
@@ -447,7 +550,6 @@ with st.container(key="input_card"):
     script_choice = st.session_state.script_key
     current = MODELS[script_choice]
 
-    # Apply text direction / font dynamically based on the selected script
     st.markdown(
         f"""
         <style>
@@ -508,12 +610,14 @@ if generate_clicked:
         with st.spinner(f"Generating speech ({current['label']} script)..."):
             try:
                 wav_bytes = text_to_speech(clean_text, script_choice)
+
                 st.session_state.result = {
                     "wav": wav_bytes,
                     "text": clean_text,
                     "script": script_choice,
                     "rated": False,
                 }
+
             except Exception as error:
                 st.session_state.result = None
                 st.error(f"Could not generate speech: {error}")
@@ -526,8 +630,15 @@ if st.session_state.result:
     result = st.session_state.result
 
     with st.container(key="result_card"):
-        st.markdown('<div class="bv-section-title">Result</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="bv-section-caption">{MODELS[result["script"]]["label"]} script</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="bv-section-title">Result</div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'<div class="bv-section-caption">{MODELS[result["script"]]["label"]} script</div>',
+            unsafe_allow_html=True
+        )
 
         st.audio(result["wav"], format="audio/wav")
 
@@ -539,16 +650,21 @@ if st.session_state.result:
             use_container_width=True,
         )
 
-        st.markdown('<div class="bv-section-title" style="font-size:0.95rem; margin-top:20px;">Rate this audio</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="bv-section-title" style="font-size:0.95rem; margin-top:20px;">Rate this audio</div>',
+            unsafe_allow_html=True
+        )
 
         has_native_feedback = hasattr(st, "feedback")
 
         if has_native_feedback:
             rating = st.feedback("stars", key=f"rating_{id(result)}")
+
             if rating is not None and not result["rated"]:
                 st.session_state.feedback_log.append(rating + 1)
                 st.session_state.result["rated"] = True
                 st.toast(f"Thanks for rating it {STAR_LABELS[rating]}!", icon="⭐")
+
         else:
             rating_label = st.radio(
                 "Rate this audio",
@@ -558,13 +674,17 @@ if st.session_state.result:
                 key=f"rating_fallback_{id(result)}",
                 index=None,
             )
+
             if rating_label and not result["rated"]:
-                st.session_state.feedback_log.append(STAR_LABELS.index(rating_label) + 1)
+                st.session_state.feedback_log.append(
+                    STAR_LABELS.index(rating_label) + 1
+                )
                 st.session_state.result["rated"] = True
                 st.toast(f"Thanks for rating it {rating_label}!", icon="⭐")
 
         if st.session_state.feedback_log:
             avg = sum(st.session_state.feedback_log) / len(st.session_state.feedback_log)
+
             st.markdown(
                 f'<div class="bv-avg-rating">Average rating: {avg:.1f} / 5 '
                 f'from {len(st.session_state.feedback_log)} rating(s)</div>',
