@@ -367,6 +367,24 @@ if "feedback_log" not in st.session_state:
 
 st.set_page_config(page_title="Bakhteyar-AI Voice", page_icon="🎙️", layout="centered")
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+with st.sidebar:
+    st.markdown(
+        """
+        <div style="padding: 12px 10px 20px 10px;">
+            <div style="font-size: 1.35rem; font-weight: 800; margin-bottom: 4px;">
+                Bakhteyar-AI
+            </div>
+            <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 22px;">
+                Balochi Language Tools
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.page_link("app.py", label="Home", icon="🏠")
+    st.page_link("pages/1_🌐_Translation.py", label="Translation", icon="🌐")
+    st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon="🔊")
 
 # ---- Top bar / logo ----
 with st.container(key="topbar"):
