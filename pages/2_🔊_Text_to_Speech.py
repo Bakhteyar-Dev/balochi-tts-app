@@ -254,6 +254,28 @@ div[data-testid="stButton"] button[kind="primary"] {
     background: linear-gradient(135deg, #16a34a, #15803d) !important;
     color: white !important;
 }
+
+/* ---------- Sidebar navigation styling ---------- */
+section[data-testid="stSidebarNav"] a {
+    border-radius: 10px;
+    margin: 2px 10px;
+    padding: 8px 12px;
+    color: var(--bv-ink) !important;
+    font-weight: 600;
+    transition: all 0.15s ease;
+}
+section[data-testid="stSidebarNav"] a span { color: inherit !important; }
+section[data-testid="stSidebarNav"] a:hover {
+    background: color-mix(in srgb, var(--bv-purple) 14%, transparent);
+}
+section[data-testid="stSidebarNav"] a[aria-current="page"] {
+    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark)) !important;
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(111, 63, 220, 0.3);
+}
+section[data-testid="stSidebarNav"] a[aria-current="page"] span {
+    color: white !important;
+}
 </style>
 """
 
