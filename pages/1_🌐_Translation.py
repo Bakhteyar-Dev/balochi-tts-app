@@ -193,6 +193,10 @@ section[data-testid="stSidebarNav"] a[aria-current="page"] {
 section[data-testid="stSidebarNav"] a[aria-current="page"] span {
     color: white !important;
 }
+/* Hide default Streamlit navigation */
+section[data-testid="stSidebarNav"] {
+    display: none !important;
+}
 </style>
 """
 
