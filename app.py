@@ -375,6 +375,55 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
         border-radius: 15px;
     }
 }
+/* ---------- Tool card layout fix ---------- */
+.bv-tool-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bv-tool-card .custom-page-link {
+    margin-top: 8px;
+}
+
+/* ---------- Mobile position fix ---------- */
+@media screen and (max-width: 600px) {
+    .bv-tool-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 22px 22px 24px 22px;
+        margin-bottom: 28px;
+    }
+
+    .card-logo {
+        margin-bottom: 10px;
+    }
+
+    .bv-tool-title {
+        font-size: 1.45rem;
+        line-height: 1.25;
+        margin-bottom: 4px;
+    }
+
+    .bv-tool-desc {
+        font-size: 1rem;
+        line-height: 1.55;
+        margin-bottom: 12px;
+    }
+
+    .custom-page-link {
+        margin-top: 8px;
+        gap: 14px;
+        font-size: 1rem;
+    }
+
+    .custom-page-link .app-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 15px;
+    }
+}
 </style>
 """
 
