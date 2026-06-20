@@ -378,24 +378,9 @@ LOGO_SVG = """
 </svg>
 """
 
-TRANSLATION_LOGO_HTML = """
-<span class="app-logo translation-logo">
-    <span class="logo-bubble logo-a">A</span>
-    <span class="logo-bubble logo-b">文</span>
-    <span class="logo-bubble logo-c">ع</span>
-    <span class="logo-arrow arrow-one"></span>
-    <span class="logo-arrow arrow-two"></span>
-</span>
-"""
+TRANSLATION_LOGO_HTML = '<span class="app-logo translation-logo"><span class="logo-bubble logo-a">A</span><span class="logo-bubble logo-b">文</span><span class="logo-bubble logo-c">ع</span><span class="logo-arrow arrow-one"></span><span class="logo-arrow arrow-two"></span></span>'
 
-TTS_LOGO_HTML = """
-<span class="app-logo tts-logo">
-    <span class="mic-head"></span>
-    <span class="mic-stand"></span>
-    <span class="wave wave-left"></span>
-    <span class="wave wave-right"></span>
-</span>
-"""
+TTS_LOGO_HTML = '<span class="app-logo tts-logo"><span class="mic-head"></span><span class="mic-stand"></span><span class="wave wave-left"></span><span class="wave wave-right"></span></span>'
 
 # ----------------------------------------------------------------------------
 # PAGE SETUP
@@ -476,12 +461,7 @@ with col1:
     )
 
     st.markdown(
-        f"""
-        <a class="custom-page-link" href="./Translation" target="_self">
-            {TRANSLATION_LOGO_HTML}
-            <span class="link-label">Open Translation</span>
-        </a>
-        """,
+        f'<a class="custom-page-link" href="./Translation" target="_self">{TRANSLATION_LOGO_HTML}<span class="link-label">Open Translation</span></a>',
         unsafe_allow_html=True,
     )
 
@@ -501,11 +481,6 @@ with col2:
     )
 
     st.markdown(
-        f"""
-        <a class="custom-page-link" href="./Text_to_Speech" target="_self">
-            {TTS_LOGO_HTML}
-            <span class="link-label">Open Text to Speech</span>
-        </a>
-        """,
+        f'<a class="custom-page-link" href="./Text_to_Speech" target="_self">{TTS_LOGO_HTML}<span class="link-label">Open Text to Speech</span></a>',
         unsafe_allow_html=True,
     )
