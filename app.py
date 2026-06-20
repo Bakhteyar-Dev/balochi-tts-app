@@ -96,17 +96,6 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     gap: 12px;
 }
 
-.bv-logo-mark {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
 .bv-brand-name {
     font-size: 1.4rem;
     font-weight: 700;
@@ -145,6 +134,9 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     border-radius: var(--bv-card-radius);
     padding: 26px 24px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .bv-tool-title {
@@ -157,7 +149,7 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     font-size: 0.92rem;
     color: var(--bv-muted);
     line-height: 1.55;
-    margin-bottom: 18px;
+    margin-bottom: 8px;
 }
 
 /* ---------- Code-made app logos ---------- */
@@ -172,11 +164,18 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     box-shadow: 0 10px 24px rgba(79, 70, 229, 0.28);
 }
 
-.card-logo {
-    margin-bottom: 18px;
+.brand-app-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(111, 63, 220, 0.28);
 }
 
-/* Translation logo */
+.card-logo {
+    margin-bottom: 6px;
+}
+
+/* ---------- Translation logo ---------- */
 .translation-logo {
     background: radial-gradient(circle at 50% 45%, #1d4ed8 0%, #0f2e91 46%, #06164f 100%);
 }
@@ -207,6 +206,13 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     justify-content: center;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
     z-index: 3;
+}
+
+.brand-app-logo .logo-bubble {
+    width: 12px;
+    height: 12px;
+    font-size: 7px;
+    border-radius: 4px;
 }
 
 .logo-a {
@@ -248,75 +254,133 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     transform: rotate(28deg);
 }
 
-/* Text to speech logo */
-.tts-logo {
-    background: radial-gradient(circle at 50% 40%, #a855f7 0%, #6d28d9 45%, #3b0764 100%);
+/* ---------- Purple speech/audio logo ---------- */
+.voice-logo {
+    background:
+        radial-gradient(circle at 48% 40%, #b26cff 0%, #7c2df0 42%, #3b087c 100%);
 }
 
-.tts-logo::before {
+.voice-logo::before {
     content: "";
     position: absolute;
-    width: 39px;
-    height: 39px;
-    border: 2px solid rgba(216, 180, 254, 0.75);
+    width: 38px;
+    height: 34px;
+    left: 7px;
+    top: 8px;
+    border: 3px solid rgba(238, 215, 255, 0.9);
     border-radius: 50%;
-    left: 6px;
-    top: 6px;
-    box-shadow: 0 0 14px rgba(216, 180, 254, 0.7);
+    box-shadow:
+        0 0 10px rgba(216, 180, 254, 0.75),
+        inset 0 0 10px rgba(216, 180, 254, 0.25);
 }
 
-.mic-head {
+.voice-logo::after {
+    content: "";
     position: absolute;
-    width: 15px;
-    height: 25px;
-    border-radius: 10px;
+    width: 12px;
+    height: 10px;
+    left: 11px;
+    bottom: 10px;
+    border-left: 3px solid rgba(238, 215, 255, 0.95);
+    border-bottom: 3px solid rgba(238, 215, 255, 0.95);
+    border-radius: 0 0 0 10px;
+    transform: rotate(-18deg);
+    box-shadow: 0 0 8px rgba(216, 180, 254, 0.65);
+}
+
+.voice-bar {
+    position: absolute;
+    bottom: 14px;
+    width: 7px;
+    border-radius: 99px;
     background: linear-gradient(180deg, #ffffff, #d8b4fe);
-    left: 19px;
-    top: 10px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.55);
+    z-index: 4;
+}
+
+.voice-bar-one {
+    height: 18px;
+    left: 15px;
+}
+
+.voice-bar-two {
+    height: 28px;
+    left: 24px;
+}
+
+.voice-bar-three {
+    height: 21px;
+    left: 33px;
+}
+
+.voice-wave {
+    position: absolute;
+    top: 24px;
+    width: 12px;
+    height: 3px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 0 8px rgba(216, 180, 254, 0.75);
     z-index: 3;
 }
 
-.mic-stand {
-    position: absolute;
-    width: 20px;
-    height: 16px;
-    border: 3px solid #ffffff;
-    border-top: none;
-    border-radius: 0 0 12px 12px;
-    left: 15px;
-    top: 26px;
-    z-index: 2;
+.voice-wave-left {
+    left: 4px;
 }
 
-.mic-stand::after {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 8px;
-    background: #ffffff;
-    left: 8px;
-    top: 13px;
-    border-radius: 99px;
+.voice-wave-right {
+    right: 4px;
 }
 
-.wave {
-    position: absolute;
-    width: 10px;
+.brand-app-logo::before {
+    width: 27px;
     height: 24px;
-    top: 15px;
-    border-radius: 50%;
-    border: 3px solid #e9d5ff;
-    opacity: 0.9;
-}
-
-.wave-left {
     left: 5px;
-    border-right: none;
+    top: 6px;
+    border-width: 2px;
 }
 
-.wave-right {
-    right: 5px;
-    border-left: none;
+.brand-app-logo::after {
+    width: 8px;
+    height: 7px;
+    left: 8px;
+    bottom: 7px;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+}
+
+.brand-app-logo .voice-bar {
+    bottom: 10px;
+    width: 5px;
+}
+
+.brand-app-logo .voice-bar-one {
+    height: 13px;
+    left: 11px;
+}
+
+.brand-app-logo .voice-bar-two {
+    height: 20px;
+    left: 17px;
+}
+
+.brand-app-logo .voice-bar-three {
+    height: 15px;
+    left: 23px;
+}
+
+.brand-app-logo .voice-wave {
+    top: 17px;
+    width: 8px;
+    height: 2px;
+}
+
+.brand-app-logo .voice-wave-left {
+    left: 3px;
+}
+
+.brand-app-logo .voice-wave-right {
+    right: 3px;
 }
 
 /* ---------- Custom home page links ---------- */
@@ -328,7 +392,7 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     color: var(--bv-ink) !important;
     font-weight: 800;
     font-size: 1rem;
-    margin-top: 20px;
+    margin-top: 8px;
 }
 
 .custom-page-link .link-label {
@@ -348,6 +412,7 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     color: var(--bv-ink) !important;
 }
 
+/* ---------- Mobile position fix ---------- */
 @media screen and (max-width: 600px) {
     .block-container {
         padding-left: 1rem;
@@ -365,35 +430,9 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     }
 
     .bv-tool-card {
-        padding: 20px 18px;
-        margin-bottom: 16px;
-    }
-
-    .app-logo {
-        width: 48px;
-        height: 48px;
-        border-radius: 15px;
-    }
-}
-/* ---------- Tool card layout fix ---------- */
-.bv-tool-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.bv-tool-card .custom-page-link {
-    margin-top: 8px;
-}
-
-/* ---------- Mobile position fix ---------- */
-@media screen and (max-width: 600px) {
-    .bv-tool-card {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
         padding: 22px 22px 24px 22px;
         margin-bottom: 28px;
+        align-items: flex-start;
     }
 
     .card-logo {
@@ -418,7 +457,7 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
         font-size: 1rem;
     }
 
-    .custom-page-link .app-logo {
+    .app-logo {
         width: 48px;
         height: 48px;
         border-radius: 15px;
@@ -427,18 +466,11 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
 </style>
 """
 
-LOGO_SVG = """
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="9" width="3" height="6" rx="1.5" fill="white" opacity="0.55"/>
-    <rect x="8" y="5" width="3" height="14" rx="1.5" fill="white"/>
-    <rect x="13" y="2" width="3" height="20" rx="1.5" fill="white" opacity="0.85"/>
-    <rect x="18" y="7" width="3" height="10" rx="1.5" fill="white" opacity="0.55"/>
-</svg>
-"""
+MAIN_LOGO_HTML = '<span class="app-logo voice-logo brand-app-logo"><span class="voice-bar voice-bar-one"></span><span class="voice-bar voice-bar-two"></span><span class="voice-bar voice-bar-three"></span><span class="voice-wave voice-wave-left"></span><span class="voice-wave voice-wave-right"></span></span>'
 
 TRANSLATION_LOGO_HTML = '<span class="app-logo translation-logo"><span class="logo-bubble logo-a">A</span><span class="logo-bubble logo-b">文</span><span class="logo-bubble logo-c">ع</span><span class="logo-arrow arrow-one"></span><span class="logo-arrow arrow-two"></span></span>'
 
-TTS_LOGO_HTML = '<span class="app-logo tts-logo"><span class="mic-head"></span><span class="mic-stand"></span><span class="wave wave-left"></span><span class="wave wave-right"></span></span>'
+TTS_LOGO_HTML = '<span class="app-logo voice-logo"><span class="voice-bar voice-bar-one"></span><span class="voice-bar voice-bar-two"></span><span class="voice-bar voice-bar-three"></span><span class="voice-wave voice-wave-left"></span><span class="voice-wave voice-wave-right"></span></span>'
 
 # ----------------------------------------------------------------------------
 # PAGE SETUP
@@ -474,7 +506,7 @@ with st.container(key="topbar"):
     st.markdown(
         f"""
         <div class="bv-brand">
-            <div class="bv-logo-mark">{LOGO_SVG}</div>
+            {MAIN_LOGO_HTML}
             <span class="bv-brand-name">Bakhteyar<span class="accent">-AI</span></span>
         </div>
         """,
@@ -505,40 +537,12 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.markdown(
-        f"""
-        <div class="bv-tool-card">
-            <div class="card-logo">{TRANSLATION_LOGO_HTML}</div>
-            <div class="bv-tool-title">Text to Text Translation</div>
-            <div class="bv-tool-desc">
-                Translate English text into Balochi. Choose Latin or Arabic script
-                for the output.
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        f'<a class="custom-page-link" href="./Translation" target="_self">{TRANSLATION_LOGO_HTML}<span class="link-label">Open Translation</span></a>',
+        f'<div class="bv-tool-card"><div class="card-logo">{TRANSLATION_LOGO_HTML}</div><div class="bv-tool-title">Text to Text Translation</div><div class="bv-tool-desc">Translate English text into Balochi. Choose Latin or Arabic script for the output.</div><a class="custom-page-link" href="./Translation" target="_self">{TRANSLATION_LOGO_HTML}<span class="link-label">Open Translation</span></a></div>',
         unsafe_allow_html=True,
     )
 
 with col2:
     st.markdown(
-        f"""
-        <div class="bv-tool-card">
-            <div class="card-logo">{TTS_LOGO_HTML}</div>
-            <div class="bv-tool-title">Text to Speech</div>
-            <div class="bv-tool-desc">
-                Type Balochi text in Latin or Arabic script and generate
-                natural-sounding speech.
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        f'<a class="custom-page-link" href="./Text_to_Speech" target="_self">{TTS_LOGO_HTML}<span class="link-label">Open Text to Speech</span></a>',
+        f'<div class="bv-tool-card"><div class="card-logo">{TTS_LOGO_HTML}</div><div class="bv-tool-title">Text to Speech</div><div class="bv-tool-desc">Type Balochi text in Latin or Arabic script and generate natural-sounding speech.</div><a class="custom-page-link" href="./Text_to_Speech" target="_self">{TTS_LOGO_HTML}<span class="link-label">Open Text to Speech</span></a></div>',
         unsafe_allow_html=True,
     )
