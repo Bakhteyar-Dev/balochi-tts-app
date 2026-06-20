@@ -89,29 +89,29 @@ div[data-testid="stSidebarUserContent"] {
     margin-bottom: 22px;
 }
 
+/* ---------- Custom sidebar coloured buttons ---------- */
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
+    background: linear-gradient(135deg, #8a5cf0, #6f3fdc) !important;
+    color: white !important;
     border-radius: 14px !important;
-    margin: 6px 8px !important;
+    margin: 8px 8px !important;
     padding: 12px 14px !important;
-    font-weight: 700 !important;
-    color: #111827 !important;
-    background: transparent !important;
-    transition: all 0.15s ease !important;
+    font-weight: 800 !important;
     justify-content: flex-start !important;
+    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.22) !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a p,
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a span {
+    color: white !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
-    background: rgba(138, 92, 240, 0.12) !important;
+    opacity: 0.92 !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
-    background: linear-gradient(135deg, #8a5cf0, #6f3fdc) !important;
-    color: white !important;
-    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28) !important;
-}
-
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] p,
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] span {
+    background: linear-gradient(135deg, #6f3fdc, #4c1d95) !important;
     color: white !important;
 }
 
