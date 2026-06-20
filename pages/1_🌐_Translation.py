@@ -9,6 +9,8 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 #   - Arabic script  -> mBART model  (Bakhteyar/mbart-en-to-bal-19k)
 #   - Latin script   -> MarianMT model (Bakhteyar/Balochi-Model)
 
+STAR_LABELS = ["Poor", "Fair", "Good", "Very Good", "Excellent"]
+
 TRANSLATION_MODELS = {
     "latin": {
         "id": "Bakhteyar/Balochi-Model",
@@ -144,6 +146,8 @@ div[data-testid="stButton"] button[kind="primary"] {
     margin-bottom: 16px;
 }
 
+.bv-avg-rating { font-size: 0.85rem; color: var(--bv-muted); margin-top: 6px; }
+
 .st-key-btn_clear button {
     background: linear-gradient(135deg, #22c55e, #16a34a) !important;
     color: white !important;
@@ -225,6 +229,8 @@ if "translate_script_key" not in st.session_state:
     st.session_state.translate_script_key = "latin"
 if "translation_result" not in st.session_state:
     st.session_state.translation_result = None
+if "translation_feedback_log" not in st.session_state:
+    st.session_state.translation_feedback_log = []
 
 # ----------------------------------------------------------------------------
 # PAGE SETUP
@@ -328,6 +334,7 @@ if translate_clicked:
                     "text": translated,
                     "source": clean_text,
                     "script": script_choice,
+                    "rated": False,
                 }
             except Exception as error:
                 st.session_state.translation_result = None
@@ -364,3 +371,35 @@ if st.session_state.translation_result:
             mime="text/plain",
             use_container_width=True,
         )
+
+        st.markdown('<div class="bv-section-title" style="font-size:0.95rem; margin-top:20px;">Rate this translation</div>', unsafe_allow_html=True)
+
+        has_native_feedback = hasattr(st, "feedback")
+
+        if has_native_feedback:
+            rating = st.feedback("stars", key=f"translation_rating_{id(result)}")
+            if rating is not None and not result["rated"]:
+                st.session_state.translation_feedback_log.append(rating + 1)
+                st.session_state.translation_result["rated"] = True
+                st.toast(f"Thanks for rating it {STAR_LABELS[rating]}!", icon="⭐")
+        else:
+            rating_label = st.radio(
+                "Rate this translation",
+                options=STAR_LABELS,
+                horizontal=True,
+                label_visibility="collapsed",
+                key=f"translation_rating_fallback_{id(result)}",
+                index=None,
+            )
+            if rating_label and not result["rated"]:
+                st.session_state.translation_feedback_log.append(STAR_LABELS.index(rating_label) + 1)
+                st.session_state.translation_result["rated"] = True
+                st.toast(f"Thanks for rating it {rating_label}!", icon="⭐")
+
+        if st.session_state.translation_feedback_log:
+            avg = sum(st.session_state.translation_feedback_log) / len(st.session_state.translation_feedback_log)
+            st.markdown(
+                f'<div class="bv-avg-rating">Average rating: {avg:.1f} / 5 '
+                f'from {len(st.session_state.translation_feedback_log)} rating(s)</div>',
+                unsafe_allow_html=True,
+            )
