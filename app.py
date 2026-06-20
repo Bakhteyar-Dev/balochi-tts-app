@@ -325,18 +325,27 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     align-items: center;
     gap: 14px;
     text-decoration: none !important;
-    color: #111827 !important;
+    color: var(--bv-ink) !important;
     font-weight: 800;
     font-size: 1rem;
     margin-top: 20px;
 }
 
 .custom-page-link .link-label {
-    color: #111827 !important;
+    color: var(--bv-ink) !important;
 }
 
+.custom-page-link:visited,
+.custom-page-link:active,
 .custom-page-link:hover {
+    color: var(--bv-ink) !important;
     opacity: 0.9;
+}
+
+.custom-page-link:visited .link-label,
+.custom-page-link:active .link-label,
+.custom-page-link:hover .link-label {
+    color: var(--bv-ink) !important;
 }
 
 @media screen and (max-width: 600px) {
