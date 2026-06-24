@@ -13,7 +13,12 @@ from bv_ui import (
 # PAGE SETUP
 # ----------------------------------------------------------------------------
 
-st.set_page_config(page_title="Bakhteyar-AI", page_icon="🟣", layout="centered")
+st.set_page_config(
+    page_title="Bakhteyar-AI",
+    page_icon="🟣",
+    layout="centered",
+    initial_sidebar_state="expanded",
+)
 inject_theme()
 render_sidebar()
 render_topbar()

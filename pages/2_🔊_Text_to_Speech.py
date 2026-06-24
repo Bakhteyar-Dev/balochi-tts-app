@@ -110,7 +110,12 @@ if "feedback_log" not in st.session_state:
 # PAGE SETUP
 # ----------------------------------------------------------------------------
 
-st.set_page_config(page_title="Bakhteyar-AI Voice", page_icon="🎙️", layout="centered")
+st.set_page_config(
+    page_title="Bakhteyar-AI Voice",
+    page_icon="🎙️",
+    layout="centered",
+    initial_sidebar_state="expanded",
+)
 inject_theme()
 render_sidebar()
 render_topbar("Voice")
