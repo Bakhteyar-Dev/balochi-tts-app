@@ -2,6 +2,8 @@ import streamlit as st
 import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
+from bv_ui import inject_theme, render_footer, render_sidebar, render_topbar
+
 # ----------------------------------------------------------------------------
 # CONFIG
 # ----------------------------------------------------------------------------
@@ -24,312 +26,6 @@ TRANSLATION_MODELS = {
         "font": "'Noto Naskh Arabic', serif",
     },
 }
-
-# ----------------------------------------------------------------------------
-# STYLES
-# ----------------------------------------------------------------------------
-
-CUSTOM_CSS = """
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap');
-
-:root {
-    --bv-ink: var(--text-color);
-    --bv-muted: color-mix(in srgb, var(--text-color) 60%, transparent);
-    --bv-border: color-mix(in srgb, var(--text-color) 16%, transparent);
-    --bv-bg-soft: var(--secondary-background-color);
-    --bv-card-bg: var(--secondary-background-color);
-    --bv-purple: #8a5cf0;
-    --bv-purple-dark: #6f3fdc;
-    --bv-card-radius: 16px;
-}
-
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-    color: var(--bv-ink);
-}
-
-.block-container {
-    padding-top: 3.2rem;
-    max-width: 820px;
-}
-
-/* ---------- Hide default Streamlit sidebar navigation ---------- */
-[data-testid="stSidebarNav"],
-section[data-testid="stSidebarNav"],
-div[data-testid="stSidebarNav"],
-ul[data-testid="stSidebarNavItems"],
-[data-testid="stSidebarNavItems"] {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    overflow: hidden !important;
-}
-
-/* ---------- Custom sidebar ---------- */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #f8fbff 0%, #eef6ff 100%) !important;
-    border-right: 1px solid var(--bv-border);
-}
-
-div[data-testid="stSidebarUserContent"] {
-    padding-top: 1.2rem;
-}
-
-.bv-side-title {
-    font-size: 1.35rem;
-    font-weight: 800;
-    margin-bottom: 4px;
-    color: #111827;
-}
-
-.bv-side-sub {
-    font-size: 0.85rem;
-    color: #6b7280;
-    margin-bottom: 22px;
-}
-
-/* ---------- Custom sidebar coloured buttons ---------- */
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
-    background: linear-gradient(135deg, #8a5cf0, #6f3fdc) !important;
-    color: white !important;
-    border-radius: 14px !important;
-    margin: 8px 8px !important;
-    padding: 12px 14px !important;
-    font-weight: 800 !important;
-    justify-content: flex-start !important;
-    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.22) !important;
-}
-
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a p,
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a span {
-    color: white !important;
-}
-
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
-    opacity: 0.92 !important;
-}
-
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
-    background: linear-gradient(135deg, #6f3fdc, #4c1d95) !important;
-    color: white !important;
-}
-
-/* ---------- Top bar ---------- */
-.bv-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.bv-logo-mark {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.bv-brand-name {
-    font-size: 1.4rem;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.bv-brand-name .accent {
-    color: var(--bv-purple);
-}
-
-.st-key-topbar {
-    border-bottom: 1px solid var(--bv-border);
-    margin-bottom: 30px;
-    padding-bottom: 14px;
-}
-
-.bv-hero-title {
-    font-size: 2.3rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    margin-bottom: 8px;
-    line-height: 1.15;
-}
-
-.bv-hero-sub {
-    font-size: 1rem;
-    color: var(--bv-muted);
-    max-width: 620px;
-    line-height: 1.55;
-    margin-bottom: 28px;
-}
-
-/* ---------- Cards ---------- */
-.st-key-input_card,
-.st-key-result_card {
-    background: var(--bv-card-bg);
-    border: 1px solid var(--bv-border);
-    border-radius: var(--bv-card-radius);
-    padding: 24px 26px 8px 26px;
-    margin-bottom: 20px;
-}
-
-.st-key-input_card > div,
-.st-key-result_card > div {
-    gap: 0 !important;
-}
-
-.bv-section-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.bv-section-caption {
-    font-size: 0.85rem;
-    color: var(--bv-muted);
-    margin-bottom: 18px;
-}
-
-/* ---------- Script switch ---------- */
-.st-key-script_switch {
-    max-width: 320px;
-    margin: 0 auto 22px auto;
-    background: var(--bv-bg-soft);
-    border: 1px solid var(--bv-border);
-    border-radius: 999px;
-    padding: 4px;
-}
-
-.st-key-script_switch div[data-testid="stHorizontalBlock"] {
-    gap: 4px;
-}
-
-.st-key-script_switch button {
-    border-radius: 999px !important;
-    font-weight: 700 !important;
-    border: none !important;
-    transition: all 0.15s ease;
-}
-
-.st-key-script_switch button[kind="primary"] {
-    background: linear-gradient(135deg, #8a5cf0, var(--bv-purple-dark)) !important;
-    color: white !important;
-    box-shadow: 0 4px 10px rgba(111, 63, 220, 0.3);
-}
-
-.st-key-script_switch button[kind="secondary"] {
-    background: transparent !important;
-    color: var(--bv-muted) !important;
-    box-shadow: none !important;
-}
-
-.st-key-script_switch button[kind="secondary"]:hover {
-    color: var(--bv-ink) !important;
-}
-
-/* ---------- Primary button ---------- */
-div[data-testid="stButton"] button[kind="primary"] {
-    background: linear-gradient(135deg, var(--bv-purple), var(--bv-purple-dark));
-    border: none;
-    border-radius: 12px;
-    padding: 0.65rem 1.4rem;
-    font-weight: 700;
-    box-shadow: 0 6px 16px rgba(111, 63, 220, 0.28);
-}
-
-/* ---------- Clear button ---------- */
-.st-key-btn_clear button {
-    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 12px !important;
-    font-weight: 700 !important;
-    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.28) !important;
-}
-
-.st-key-btn_clear button:hover {
-    background: linear-gradient(135deg, #16a34a, #15803d) !important;
-    color: white !important;
-}
-
-/* ---------- Result ---------- */
-.bv-result-text {
-    border: 1px solid var(--bv-border);
-    border-radius: 12px;
-    padding: 16px 18px;
-    min-height: 100px;
-    font-size: 1.1rem;
-    line-height: 1.7;
-    background: var(--background-color);
-    margin-bottom: 16px;
-}
-
-.bv-avg-rating {
-    font-size: 0.85rem;
-    color: var(--bv-muted);
-    margin-top: 6px;
-}
-
-/* ---------- Mobile ---------- */
-@media screen and (max-width: 600px) {
-    .block-container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-        padding-top: 3.5rem;
-    }
-
-    .bv-hero-title {
-        font-size: 1.8rem;
-    }
-
-    .bv-hero-sub {
-        font-size: 0.9rem;
-        margin-bottom: 20px;
-    }
-
-    .st-key-input_card,
-    .st-key-result_card {
-        padding: 18px 16px 8px 16px;
-        border-radius: 14px;
-    }
-
-    .st-key-script_switch {
-        max-width: 100%;
-        width: 100%;
-        padding: 5px;
-        margin-bottom: 18px;
-    }
-
-    .st-key-script_switch div[data-testid="column"] {
-        width: 50% !important;
-        flex: 1 1 0 !important;
-        min-width: 0 !important;
-    }
-
-    .st-key-script_switch button {
-        width: 100% !important;
-        min-height: 42px;
-        font-size: 0.9rem !important;
-    }
-
-    div[data-testid="stTextArea"] textarea {
-        font-size: 1rem !important;
-        min-height: 140px !important;
-    }
-}
-</style>
-"""
-
-LOGO_SVG = """
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="9" width="3" height="6" rx="1.5" fill="white" opacity="0.55"/>
-    <rect x="8" y="5" width="3" height="14" rx="1.5" fill="white"/>
-    <rect x="13" y="2" width="3" height="20" rx="1.5" fill="white" opacity="0.85"/>
-    <rect x="18" y="7" width="3" height="10" rx="1.5" fill="white" opacity="0.55"/>
-</svg>
-"""
 
 # ----------------------------------------------------------------------------
 # MODEL LOADING / INFERENCE
@@ -382,45 +78,19 @@ if "translation_feedback_log" not in st.session_state:
 # ----------------------------------------------------------------------------
 
 st.set_page_config(page_title="Bakhteyar-AI Translate", page_icon="🌐", layout="centered")
-st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+inject_theme()
+render_sidebar()
+render_topbar("Translate")
 
 # ----------------------------------------------------------------------------
-# CUSTOM SIDEBAR
+# HERO
 # ----------------------------------------------------------------------------
 
-with st.sidebar:
-    st.markdown(
-        """
-        <div style="padding: 12px 10px 20px 10px;">
-            <div class="bv-side-title">Bakhteyar-AI</div>
-            <div class="bv-side-sub">Balochi Language Tools</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.page_link("app.py", label="Home", icon="🏠")
-    st.page_link("pages/1_🌐_Translation.py", label="Translation", icon="🌐")
-    st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon="🔊")
-
-# ----------------------------------------------------------------------------
-# TOP BAR
-# ----------------------------------------------------------------------------
-
-with st.container(key="topbar"):
-    st.markdown(
-        f"""
-        <div class="bv-brand">
-            <div class="bv-logo-mark">{LOGO_SVG}</div>
-            <span class="bv-brand-name">Bakhteyar<span class="accent">-AI</span> Translate</span>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+st.markdown('<span class="bv-eyebrow">English → Balochi</span>', unsafe_allow_html=True)
 
 st.markdown(
-    '<div class="bv-hero-title">English to Balochi Translation</div>',
-    unsafe_allow_html=True
+    '<div class="bv-hero-title">Text <span class="grad">Translation</span></div>',
+    unsafe_allow_html=True,
 )
 
 st.markdown(
@@ -438,14 +108,10 @@ st.markdown(
 # ----------------------------------------------------------------------------
 
 with st.container(key="input_card"):
-    st.markdown(
-        '<div class="bv-section-title">Enter your text</div>',
-        unsafe_allow_html=True
-    )
-
+    st.markdown('<div class="bv-section-title">Enter your text</div>', unsafe_allow_html=True)
     st.markdown(
         '<div class="bv-section-caption">Choose the output script, then type your English text below.</div>',
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
     with st.container(key="script_switch"):
@@ -534,14 +200,10 @@ if st.session_state.translation_result:
     result_script = TRANSLATION_MODELS[result["script"]]
 
     with st.container(key="result_card"):
-        st.markdown(
-            '<div class="bv-section-title">Translation</div>',
-            unsafe_allow_html=True
-        )
-
+        st.markdown('<div class="bv-section-title">Translation</div>', unsafe_allow_html=True)
         st.markdown(
             f'<div class="bv-section-caption">{result_script["label"]} script</div>',
-            unsafe_allow_html=True
+            unsafe_allow_html=True,
         )
 
         st.markdown(
@@ -566,7 +228,7 @@ if st.session_state.translation_result:
 
         st.markdown(
             '<div class="bv-section-title" style="font-size:0.95rem; margin-top:20px;">Rate this translation</div>',
-            unsafe_allow_html=True
+            unsafe_allow_html=True,
         )
 
         has_native_feedback = hasattr(st, "feedback")
@@ -606,3 +268,5 @@ if st.session_state.translation_result:
                 f'from {len(st.session_state.translation_feedback_log)} rating(s)</div>',
                 unsafe_allow_html=True,
             )
+
+render_footer()
