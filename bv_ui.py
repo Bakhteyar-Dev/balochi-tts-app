@@ -83,6 +83,8 @@ THEME_CONFIG = {
         "input_bg": "#fcfbff",
         "input_color": "#1e1b2e",
         "sidebar_bg": "linear-gradient(180deg, #2a1758 0%, #4c1d95 55%, #6d28d9 100%)",
+        "toggle_bg": "rgba(255, 255, 255, 0.25)",
+        "toggle_icon": "#ffffff",
     },
     "dark": {
         "ink": "#f3f0ff",
@@ -96,6 +98,8 @@ THEME_CONFIG = {
         "input_bg": "#000000",
         "input_color": "#ffffff",
         "sidebar_bg": "linear-gradient(180deg, #0d0b14 0%, #111018 55%, #181520 100%)",
+        "toggle_bg": "#ffffff",
+        "toggle_icon": "#7c3aed",
     }
 }
  
@@ -166,17 +170,17 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {
 button[data-testid="stSidebarCollapse"],
 [data-testid="collapsedControl"] button,
 [data-testid="collapsedControl"] {
-    background: var(--bv-grad) !important;
+    background: {toggle_bg} !important;
     border: none !important;
     border-radius: 8px !important;
     opacity: 1 !important;
-    color: white !important;
+    color: {toggle_icon} !important;
 }
 button[data-testid="stSidebarCollapse"] svg,
 [data-testid="collapsedControl"] svg {
-    fill: white !important;
-    color: white !important;
-    stroke: white !important;
+    fill: {toggle_icon} !important;
+    color: {toggle_icon} !important;
+    stroke: {toggle_icon} !important;
 }
 
 /* Theme Toggle: always visible with gradient bg and white text */
