@@ -226,7 +226,8 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
 }
  
 .bv-side-foot {
-    margin: 20px 8px 6px 8px; font-size: 0.72rem; opacity: 0.55; line-height: 1.5;
+    margin: 20px 8px 6px 8px; font-size: 0.72rem; opacity: 0.85; line-height: 1.5;
+    color: #f3eaff !important;
 }
  
 /* ---------- Brand mark (animated bars) ---------- */
