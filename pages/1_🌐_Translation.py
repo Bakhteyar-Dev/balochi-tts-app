@@ -118,46 +118,38 @@ inject_theme()
 # Custom CSS for the Direction Toggle
 st.markdown("""
     <style>
-    /* Direction Switch Container - Refined for Dual Color */
-    .st-key-direction_switch {
-        background: var(--bv-soft) !important;
-        border: 1px solid var(--bv-border) !important;
-        border-radius: 999px !important;
-        padding: 4px !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-    
-    /* Direction Switch Container - Compact Pill Style */
-    .st-key-direction_switch {
-        background: #f8fafc !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 999px !important;
-        padding: 4px 8px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+    /* Compact Pill Style for */.st-key-direction_switch {
+        background: #f8fafc !impa: 1px solid #e2e8f0 !important;
+        border-radius: 999px !importanct Pil forustify-content: center !important;
         width: fit-content !important;
         margin: 0 auto !important;
+        height: 42px !important;
+        min-width: 180px !important;
+        height: 42px !important;
+        min-width: 180px !important;
     }
     
-    /* Force horizontal even on mobile */
+    /* Dynamic Trackd: #3b82f6 !iCportant; lorder-radous: 999px !important; }
+    
+    .st-key-dir_green_track { background: #22c55e !important; border-radius: 999px !important; }
+    .st-key-dir_blue_track { background: #3b82f6 !important; border-radius: 999px !important; }
+    
     .st-key-direction_switch [data-testid="stHorizontalBlock"] {
         flex-direction: row !important;
         flex-wrap: nowrap !important;
         align-items: center !important;
-        gap: 0 !important;
-        width: auto !important;
     }
 
     .st-key-direction_switch button {
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
+        color: white !important;
+        color: white !important;
         font-weight: 700 !important;
-        font-size: 0.85rem !important;
-        height: 32px !important;
-        padding: 0 10px !important;
+        font-size: 0.8rem !important;
+        height: 38px !important;
+        padding: 0 12px !important;
         min-width: 0 !important;
         width: auto !important;
     }
@@ -165,129 +157,25 @@ st.markdown("""
     /* Middle Swap Circle */
     .st-key-dir_mid_btn button {
         background: white !important;
-        color: inherit !important;
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        border-radius: 50% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 0 !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-        margin: 0 8px !important;
-        font-size: 1rem !important;
-    }
-    
-    /* Active State: English -> Balochi (Green) */
-    .st-key-dir_en_bal_label button { color: #64748b !important; }
-    .st-key-dir_arb_bal_label button { color: #22c55e !important; font-family: 'Noto Naskh Arabic', serif !important; }
-    .st-key-dir_green_track button { 
-        background: #22c55e !important; 
-        color: white !important; 
-        border: 1.5px solid #22c55e !important;
-    }
-    
-    /* Active State: Balochi -> English (Blue) */
-    .st-key-dir_en_bal_label_blue button { color: #3b82f6 !important; }
-    .st-key-dir_arb_bal_label_gray button { color: #64748b !important; font-family: 'Noto Naskh Arabic', serif !important; }
-    .st-key-dir_blue_track button { 
-        background: #3b82f6 !important; 
-        color: white !important;
-        border: 1.5px solid #3b82f6 !important;
-    }
-
-    /* Dark Mode Adjustments */
-    [data-theme="dark"] .st-key-direction_switch { background: #1e293b !important; border-color: #334155 !important; }
-    [data-theme="dark"] .st-key-dir_mid_btn button { background: #0f172a !important; border-color: #334155 !important; }
-    
-    .st-key-direction_switch, .st-key-script_switch {
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-    }
-
-    .st-key-script_switch button,
-    .st-key-direction_switch button {
-        width: 100% !important;
-        border-radius: 999px !important;
-        font-weight: 700 !important;
-        border: none !important;
-        transition: all 0.3s ease !important;
-        height: 42px !important;
-        font-size: 0.9rem !important;
-        padding: 0 5px !important;
-    }
-    
-    /* Middle Arrow Button - Positioned absolutely is safer for centering */
-    .st-key-dir_mid_btn button {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        border-radius: 50% !important;
-        background: white !important;
         color: #64748b !important;
-        border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-        padding: 0 !important;
-        font-size: 1.2rem !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        border-radius: 50% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-    }
-    
+        padding: 0 !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !importan 8px !important;
+        font-size: 1rem !important;
+   i  /* Dark Mode Adjustment */
+    [data-theme="dark"] .st-key-direction_switch { background: #1e293b !important; border-color: #3341    
+    /* Responsive stacking for settings */
     @media screen and (max-width: 640px) {
-        .st-key-direction_switch button { font-size: 0.8rem !important; height: 40px !important; }
-        .st-key-dir_mid_btn button { width: 36px !important; height: 36px !important; min-width: 36px !important; }
-    }
-    
-    /* Green for English -> Balochi */
-    .st-key-dir_en_bal button[kind="primary"] {
-        background: #22c55e !important;
-        color: white !important;
-        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3) !important;
-    }
-    
-    /* Blue for Balochi -> English */
-    .st-key-dir_bal_en button[kind="primary"] {
-        background: #3b82f6 !important;
-        color: white !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
-    }
-    
-    .st-key-direction_switch button[kind="secondary"] {
-        background: transparent !important;
-        color: var(--bv-muted) !important;
-    }
-
-    /* Dark Mode Adjustment for Middle Button */
-    [data-theme="dark"] .st-key-dir_mid_btn button,
-    .dark .st-key-dir_mid_btn button {
-        background: #1e293b !important;
-        border-color: #334155 !important;
-        color: #94a3b8 !important;
-    }
-    
-    /* Disabled State */
-    .st-key-btn_toggle_dir_dis button {
-        background: #f1f5f9 !important;
-        color: #94a3b8 !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 999px !important;
-        font-weight: 600 !important;
-        cursor: not-allowed !important;
-        opacity: 0.7 !important;
-    }
-    .st-key-btn_toggle_dir_dis button p {
-        color: #94a3b8 !important;
-    }
-    
-    /* Dark Mode Overrides for Disabled State */
-    [data-testid="stAppViewContainer"] [data-theme="dark"] .st-key-btn_toggle_dir_dis button,
-    .stApp.dark .st-key-btn_toggle_dir_dis button {
-        background: #1e293b !important;
-        color: #475569 !important;
-        border-color: #334155 !important;
+        .st-key-settings_grid [data-testid="stHorizontalBlock"] {
+            flex-direction: column !important;
+            gap: 1.2rem !important;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -299,7 +187,7 @@ render_topbar("Translate")
 # HERO
 # ----------------------------------------------------------------------------
 
-direction_label = "English → Balochi" if st.session_state.translate_direction == "en_to_bal" else "Balochi → English"
+direction_la Balochi" if st.session_state.translate_direction == "en_to_bal" elBlolish"
 st.markdown(f'<span class="bv-eyebrow">{direction_label}</span>', unsafe_allow_html=True)
 
 st.markdown(
@@ -332,7 +220,7 @@ with st.container(key="input_card"):
             with st.container(key="script_switch"):
                 sw_col1, sw_col2 = st.columns(2)
                 with sw_col1:
-                    if st.button("Latin", type="primary" if st.session_state.translate_script_key == "latin" else "secondary", use_container_width=True, key="btn_lat"):
+ */          if st.button("Latin", type="primary" if st.session_state.translate_script_key == "latin" else "secondary", use_container_width=True, key="btn_lat"):
                         st.session_state.translate_script_key = "latin"
                         st.rerun()
                 with sw_col2:
@@ -344,37 +232,36 @@ with st.container(key="input_card"):
             is_latin = st.session_state.translate_script_key == "latin"
             if not is_latin:
                 st.markdown('<div class="bv-section-caption" style="text-align:center;">Select Direction</div>', unsafe_allow_html=True)
+                
+                is_en_to_bal = st.session_state.translate_direction == "en_to_bal"
+                with st.container(key=track_class):
+                        # 3 columns for En, Swap, Bal
+                
+                # Small, compact direction switcher
                 with st.container(key="direction_switch"):
-                    # Dynamic classes for colors
-                    is_en_to_bal = st.session_state.translate_direction == "en_to_bal"
-                    en_class = "dir_en_bal_label" if is_en_to_bal else "dir_en_bal_label_blue"
-                    bal_class = "dir_arb_bal_label" if is_en_to_bal else "dir_arb_bal_label_gray"
-                    track_class = "dir_green_track" if is_en_to_bal else "dir_blue_track"
-
-                    dir_col1, dir_mid, dir_col2 = st.columns([1, 1, 1])
-                    
-                    with dir_col1:
-                        with st.container(key=en_class):
-                            if st.button("ENG", use_container_width=True, key="lbl_en"):
-                                st.session_state.translate_direction = "en_to_bal"
+                trackwith diracoklass):
+                        # 3 columns for En, Swap, Bal
+                           dir_col1, dir_mid, dir_col2 = st.columns([1, 0.6, 1])
+                        
+               
+                            if st.button("ENG", key="lbl_en", key="lbl_en", use_container_width=True):
+                        st.session_state.translate_direction = "en_to_bal"
                                 st.rerun()
-                    
-                    with dir_mid:
-                        with st.container(key=track_class):
-                            with st.container(key="dir_mid_btn"):
+                        
+                        wit
+                            with dirmd_btn"):
                                 if st.button("⇄", key="btn_swap", use_container_width=True):
-                                    st.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
+                   t.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
                                     st.rerun()
-                    
-                    with dir_col2:
-                        with st.container(key=bal_class):
-                            if st.button("بلوچی", use_container_width=True, key="lbl_bal"):
+                        
+                        wit
+                            if st.button("بلوچی", key="lbl_bal", key="lbl_bal", use_container_width=True):
                                 st.session_state.translate_direction = "bal_to_en"
-                                st.rerun()
+               n()
             else:
                 st.session_state.translate_direction = "en_to_bal"
-                # Cleaner spacing for Latin mode
-                st.markdown('<div style="margin-top: 38px;"></div>', unsafe_allow_html=True)
+   for Latin mode
+                st.markdown('<div style="margin-top: 32px;"></div>', unsafe_allow_html=True)
 
     script_choice = st.session_state.translate_script_key
     current = TRANSLATION_MODELS[script_choice]
