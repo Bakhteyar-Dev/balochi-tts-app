@@ -442,12 +442,6 @@ def render_theme_toggle() -> None:
 
 def render_sidebar() -> None:
     """Render the branded sidebar with navigation."""
-    
-    # Navigation Icons
-    HOME_NAV = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
-    TRANS_NAV = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/><path d="M12 12h.01"/><path d="M7 12c0-3 2-5 5-5s5 2 5 5-2 5-5 5-5-2-5-5z" opacity="0.3"/></svg>'
-    VOICE_NAV = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>'
-
     with st.sidebar:
         st.markdown(
             f'<div class="bv-side-brand">{BRAND_MARK}'
@@ -456,9 +450,9 @@ def render_sidebar() -> None:
             unsafe_allow_html=True,
         )
  
-        st.page_link("app.py", label="Home", icon=HOME_NAV)
-        st.page_link("pages/1_🌐_Translation.py", label="Translation", icon=TRANS_NAV)
-        st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon=VOICE_NAV)
+        st.page_link("app.py", label="Home", icon=":material/home:")
+        st.page_link("pages/1_🌐_Translation.py", label="Translation", icon=":material/translate:")
+        st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon=":material/record_voice_over:")
 
         st.markdown('<div style="margin-top: 2rem;"></div>', unsafe_allow_html=True)
         render_theme_toggle()
