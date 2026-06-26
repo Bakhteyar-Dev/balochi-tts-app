@@ -151,16 +151,34 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {
     background: linear-gradient(180deg, #2a1758 0%, #4c1d95 55%, #6d28d9 100%) !important;
     border-right: none !important;
 }
-[data-testid="stSidebar"] * { color: #f3eaff !important; }
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stSidebar"] .bv-side-title,
+[data-testid="stSidebar"] .bv-side-sub { 
+    color: #f3eaff !important; 
+}
 
-/* Fix Sidebar Toggle Button Visibility */
+/* Sidebar Toggle Button Visibility Fix */
 button[data-testid="stSidebarCollapse"] {
     color: white !important;
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    border-radius: 8px !important;
-}
-button[data-testid="stSidebarCollapse"]:hover {
     background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Theme Toggle Specific Styling */
+.st-key-theme_toggle button {
+    background: white !important;
+    color: #7c3aed !important;
+    border: 2px solid white !important;
+    border-radius: 999px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+.st-key-theme_toggle button p {
+    color: #7c3aed !important;
+    font-weight: 800 !important;
+}
+.st-key-theme_toggle button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
 }
  
 div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
