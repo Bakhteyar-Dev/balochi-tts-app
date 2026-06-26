@@ -46,7 +46,7 @@ def load_translation_model(model_id: str):
         tokenizer = AutoTokenizer.from_pretrained(base_model_id)
         base_model = AutoModelForSeq2SeqLM.from_pretrained(
             base_model_id,
-            load_in_8bit=True,
+            torch_dtype=torch.float16,
             device_map="auto"
         )
         base_model.resize_token_embeddings(len(tokenizer))
