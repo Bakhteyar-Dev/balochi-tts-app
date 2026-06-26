@@ -89,6 +89,42 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 inject_theme()
+
+# Custom CSS for the Direction Toggle
+st.markdown("""
+    <style>
+    /* Direction Toggle Button Styling */
+    div.stButton > button[key="btn_toggle_dir"] {
+        background: var(--bv-grad) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 999px !important;
+        font-weight: 700 !important;
+        padding: 0.5rem 1rem !important;
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3) !important;
+        transition: all 0.2s ease !important;
+    }
+    div.stButton > button[key="btn_toggle_dir"]:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4) !important;
+    }
+    /* Disabled State */
+    div.stButton > button[key="btn_toggle_dir_dis"] {
+        background: #e2e8f0 !important;
+        color: #94a3b8 !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 999px !important;
+        font-weight: 600 !important;
+        cursor: not-allowed !important;
+    }
+    [data-theme="dark"] div.stButton > button[key="btn_toggle_dir_dis"] {
+        background: #1e293b !important;
+        color: #475569 !important;
+        border-color: #334155 !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 render_sidebar()
 render_topbar("Translate")
 
