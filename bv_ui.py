@@ -416,11 +416,25 @@ def inject_theme() -> None:
 
 
 def render_theme_toggle() -> None:
-    """Render a theme toggle button."""
+    """Render a high-visibility theme toggle button."""
     if "theme" not in st.session_state:
         st.session_state.theme = "light"
     
     label = "🌙 Dark Mode" if st.session_state.theme == "light" else "☀️ Light Mode"
+    
+    # Custom styling for the toggle button to ensure visibility
+    st.markdown("""
+        <style>
+        div.stButton > button[key="theme_toggle"] {
+            background: var(--bv-grad) !important;
+            color: white !important;
+            border: none !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
     if st.button(label, use_container_width=True, key="theme_toggle"):
         st.session_state.theme = "dark" if st.session_state.theme == "light" else "light"
         st.rerun()
@@ -428,6 +442,12 @@ def render_theme_toggle() -> None:
 
 def render_sidebar() -> None:
     """Render the branded sidebar with navigation."""
+    
+    # Navigation Icons
+    HOME_NAV = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+    TRANS_NAV = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/><path d="M12 12h.01"/><path d="M7 12c0-3 2-5 5-5s5 2 5 5-2 5-5 5-5-2-5-5z" opacity="0.3"/></svg>'
+    VOICE_NAV = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>'
+
     with st.sidebar:
         st.markdown(
             f'<div class="bv-side-brand">{BRAND_MARK}'
@@ -436,9 +456,9 @@ def render_sidebar() -> None:
             unsafe_allow_html=True,
         )
  
-        st.page_link("app.py", label="Home", icon="🏠")
-        st.page_link("pages/1_🌐_Translation.py", label="Translation", icon="🌐")
-        st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon="🔊")
+        st.page_link("app.py", label="Home", icon=HOME_NAV)
+        st.page_link("pages/1_🌐_Translation.py", label="Translation", icon=TRANS_NAV)
+        st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon=VOICE_NAV)
 
         st.markdown('<div style="margin-top: 2rem;"></div>', unsafe_allow_html=True)
         render_theme_toggle()
