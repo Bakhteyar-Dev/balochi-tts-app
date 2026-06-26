@@ -36,13 +36,13 @@ TRANSLATION_MODELS = {
 @st.cache_resource(show_spinner=False, max_entries=1)
 def load_translation_model(model_id: str):
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    
+
     if "lora" in model_id.lower():
         from peft import PeftModel, PeftConfig
-        
+
         config = PeftConfig.from_pretrained(model_id)
         base_model_id = config.base_model_name_or_path
-        
+
         tokenizer = AutoTokenizer.from_pretrained(base_model_id)
 
         load_kwargs = {
@@ -57,13 +57,15 @@ def load_translation_model(model_id: str):
             **load_kwargs,
         )
 
+        base_model.resize_token_embeddings(256205)
+
         model = PeftModel.from_pretrained(base_model, model_id)
         model = model.to(device)
 
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_id)
         model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to(device)
-        
+
     model.eval()
     return tokenizer, model, device
 
@@ -85,6 +87,7 @@ def translate_text(text: str, script_key: str, direction: str) -> str:
 
     return tokenizer.batch_decode(generated, skip_special_tokens=True)[0].strip()
 
+
 # ----------------------------------------------------------------------------
 # CLEAR INPUT
 # ----------------------------------------------------------------------------
@@ -92,6 +95,7 @@ def translate_text(text: str, script_key: str, direction: str) -> str:
 def clear_input():
     st.session_state["bv_translate_input"] = ""
     st.session_state.translation_result = None
+
 
 # ----------------------------------------------------------------------------
 # SESSION STATE
@@ -109,6 +113,7 @@ if "translation_result" not in st.session_state:
 if "translation_feedback_log" not in st.session_state:
     st.session_state.translation_feedback_log = []
 
+
 # ----------------------------------------------------------------------------
 # PAGE SETUP
 # ----------------------------------------------------------------------------
@@ -119,6 +124,7 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="expanded",
 )
+
 inject_theme()
 
 st.markdown("""
@@ -136,10 +142,10 @@ st.markdown("""
         height: 42px !important;
         min-width: 180px !important;
     }
-    
+
     .st-key-dir_green_track { background: #22c55e !important; border-radius: 999px !important; }
     .st-key-dir_blue_track { background: #3b82f6 !important; border-radius: 999px !important; }
-    
+
     .st-key-direction_switch [data-testid="stHorizontalBlock"] {
         flex-direction: row !important;
         flex-wrap: nowrap !important;
@@ -159,7 +165,7 @@ st.markdown("""
         min-width: 0 !important;
         width: auto !important;
     }
-    
+
     .st-key-dir_mid_btn button {
         background: white !important;
         color: #64748b !important;
@@ -175,12 +181,12 @@ st.markdown("""
         margin: 0 8px !important;
         font-size: 1rem !important;
     }
-    
+
     .st-key-dir_mid_btn button p { color: #64748b !important; }
 
     [data-theme="dark"] .st-key-direction_switch { background: #1e293b !important; border-color: #334155 !important; }
     [data-theme="dark"] .st-key-dir_mid_btn button { background: #f8fafc !important; }
-    
+
     [data-testid="column"] .stButton {
         display: flex !important;
         justify-content: center !important;
@@ -191,7 +197,10 @@ st.markdown("""
             flex-direction: column !important;
             gap: 1.5rem !important;
         }
-        .bv-hero-title { margin-top: 15px !important; }
+
+        .bv-hero-title {
+            margin-top: 15px !important;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -199,11 +208,17 @@ st.markdown("""
 render_sidebar()
 render_topbar("Translate")
 
+
 # ----------------------------------------------------------------------------
 # HERO
 # ----------------------------------------------------------------------------
 
-direction_label = "English → Balochi" if st.session_state.translate_direction == "en_to_bal" else "Balochi → English"
+direction_label = (
+    "English → Balochi"
+    if st.session_state.translate_direction == "en_to_bal"
+    else "Balochi → English"
+)
+
 st.markdown(f'<span class="bv-eyebrow">{direction_label}</span>', unsafe_allow_html=True)
 
 st.markdown(
@@ -220,18 +235,20 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+
 # ----------------------------------------------------------------------------
 # INPUT CARD
 # ----------------------------------------------------------------------------
 
 with st.container(key="input_card"):
     st.markdown('<div class="bv-section-title">Translation Settings</div>', unsafe_allow_html=True)
-    
+
     with st.container(key="settings_grid"):
         set_col1, set_col2 = st.columns(2)
-        
+
         with set_col1:
             st.markdown('<div class="bv-section-caption">Select Script</div>', unsafe_allow_html=True)
+
             st.markdown("""
                 <style>
                 .st-key-script_switch_container button {
@@ -240,6 +257,7 @@ with st.container(key="input_card"):
                     height: 42px !important;
                     transition: all 0.2s ease !important;
                 }
+
                 .st-key-script_switch_container div[data-testid="column"]:first-child button[kind="primary"],
                 .st-key-script_switch_container div[data-testid="column"]:last-child button[kind="primary"] {
                     background: var(--bv-grad) !important;
@@ -248,26 +266,42 @@ with st.container(key="input_card"):
                 }
                 </style>
             """, unsafe_allow_html=True)
-            
+
             with st.container(key="script_switch_container"):
                 sw_col1, sw_col2 = st.columns(2)
+
                 with sw_col1:
-                    if st.button("Latin", type="primary" if st.session_state.translate_script_key == "latin" else "secondary", use_container_width=True, key="btn_lat"):
+                    if st.button(
+                        "Latin",
+                        type="primary" if st.session_state.translate_script_key == "latin" else "secondary",
+                        use_container_width=True,
+                        key="btn_lat",
+                    ):
                         st.session_state.translate_script_key = "latin"
                         st.rerun()
+
                 with sw_col2:
-                    if st.button("Arabic", type="primary" if st.session_state.translate_script_key == "arabic" else "secondary", use_container_width=True, key="btn_arb"):
+                    if st.button(
+                        "Arabic",
+                        type="primary" if st.session_state.translate_script_key == "arabic" else "secondary",
+                        use_container_width=True,
+                        key="btn_arb",
+                    ):
                         st.session_state.translate_script_key = "arabic"
                         st.rerun()
 
         with set_col2:
             is_latin = st.session_state.translate_script_key == "latin"
+
             if not is_latin:
-                st.markdown('<div class="bv-section-caption" style="text-align:center;">Select Direction</div>', unsafe_allow_html=True)
-                
+                st.markdown(
+                    '<div class="bv-section-caption" style="text-align:center;">Select Direction</div>',
+                    unsafe_allow_html=True,
+                )
+
                 is_en_to_bal = st.session_state.translate_direction == "en_to_bal"
                 track_color = "#22c55e" if is_en_to_bal else "#3b82f6"
-                
+
                 st.markdown(f"""
                     <style>
                     .st-key-dir_pill_toggle button {{
@@ -286,27 +320,47 @@ with st.container(key="input_card"):
                         box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
                         transition: all 0.2s ease !important;
                     }}
+
                     .st-key-dir_pill_toggle button:hover {{
                         transform: scale(1.02);
                         opacity: 0.9;
                     }}
                     </style>
                 """, unsafe_allow_html=True)
-                
+
                 if st.button("ENG    ⇄    بلوچی", key="dir_pill_toggle"):
-                    st.session_state.translate_direction = "bal_to_en" if is_en_to_bal else "en_to_bal"
+                    st.session_state.translate_direction = (
+                        "bal_to_en"
+                        if is_en_to_bal
+                        else "en_to_bal"
+                    )
                     st.rerun()
+
             else:
                 st.session_state.translate_direction = "en_to_bal"
                 st.markdown('<div style="margin-top: 32px;"></div>', unsafe_allow_html=True)
 
     script_choice = st.session_state.translate_script_key
     current = TRANSLATION_MODELS[script_choice]
-    
-    source_dir = "ltr" if st.session_state.translate_direction == "en_to_bal" else current["direction"]
-    source_align = "left" if st.session_state.translate_direction == "en_to_bal" else current["align"]
-    source_font = "'Inter', sans-serif" if st.session_state.translate_direction == "en_to_bal" else current["font"]
-    
+
+    source_dir = (
+        "ltr"
+        if st.session_state.translate_direction == "en_to_bal"
+        else current["direction"]
+    )
+
+    source_align = (
+        "left"
+        if st.session_state.translate_direction == "en_to_bal"
+        else current["align"]
+    )
+
+    source_font = (
+        "'Inter', sans-serif"
+        if st.session_state.translate_direction == "en_to_bal"
+        else current["font"]
+    )
+
     st.markdown(f"""
         <style>
         div[data-testid="stTextArea"] textarea {{
@@ -317,8 +371,12 @@ with st.container(key="input_card"):
         </style>
     """, unsafe_allow_html=True)
 
-    input_placeholder = "Type English text here..." if st.session_state.translate_direction == "en_to_bal" else f"Type Balochi ({script_choice}) text here..."
-    
+    input_placeholder = (
+        "Type English text here..."
+        if st.session_state.translate_direction == "en_to_bal"
+        else f"Type Balochi ({script_choice}) text here..."
+    )
+
     text = st.text_area(
         "Input Text",
         height=160,
@@ -345,6 +403,7 @@ with st.container(key="input_card"):
             on_click=clear_input,
         )
 
+
 # ----------------------------------------------------------------------------
 # TRANSLATION LOGIC
 # ----------------------------------------------------------------------------
@@ -357,7 +416,11 @@ if translate_clicked:
     else:
         with st.spinner(f"Translating... ({direction_label})"):
             try:
-                translated = translate_text(clean_text, script_choice, st.session_state.translate_direction)
+                translated = translate_text(
+                    clean_text,
+                    script_choice,
+                    st.session_state.translate_direction,
+                )
 
                 st.session_state.translation_result = {
                     "text": translated,
@@ -371,13 +434,14 @@ if translate_clicked:
                 st.session_state.translation_result = None
                 st.error(f"Could not translate text: {error}")
 
+
 # ----------------------------------------------------------------------------
 # RESULT CARD
 # ----------------------------------------------------------------------------
 
 if st.session_state.translation_result:
     result = st.session_state.translation_result
-    
+
     if result["direction"] == "en_to_bal":
         res_dir = TRANSLATION_MODELS[result["script"]]["direction"]
         res_align = TRANSLATION_MODELS[result["script"]]["align"]
@@ -390,8 +454,15 @@ if st.session_state.translation_result:
         res_label = "English"
 
     with st.container(key="result_card"):
-        st.markdown(f'<div class="bv-section-title">Translation Result</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="bv-section-caption">Output: {res_label}</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="bv-section-title">Translation Result</div>',
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            f'<div class="bv-section-caption">Output: {res_label}</div>',
+            unsafe_allow_html=True,
+        )
 
         st.markdown(
             f"""
@@ -442,6 +513,7 @@ if st.session_state.translation_result:
                 st.session_state.translation_feedback_log.append(
                     STAR_LABELS.index(rating_label) + 1
                 )
+
                 st.session_state.translation_result["rated"] = True
                 st.toast(f"Thanks for rating it {rating_label}!", icon="⭐")
 
@@ -455,5 +527,6 @@ if st.session_state.translation_result:
                 f'from {len(st.session_state.translation_feedback_log)} rating(s)</div>',
                 unsafe_allow_html=True,
             )
+
 
 render_footer()
