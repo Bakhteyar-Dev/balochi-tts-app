@@ -51,7 +51,11 @@ def load_translation_model(model_id: str):
         # Load the base model
         base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_id).to(device)
         
-        # Load the LoRA adapter onto the base model
+        # Resize embeddings to handle the shape mismatch (256205 vs 256206)
+        # The error shows the checkpoint has 256205 tokens
+        base_model.resize_token_embeddings(256205)
+        
+        # Load the LoRA adapter onto the resized base model
         model = PeftModel.from_pretrained(base_model, model_id)
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_id)
