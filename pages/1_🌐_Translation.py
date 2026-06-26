@@ -128,19 +128,18 @@ st.markdown("""
         align-items: center !important;
     }
     
-    /* Force horizontal layout even on narrow portrait screens */
+    /* Fix for mobile stacking in settings grid */
+    [data-testid="column"] {
+        width: 100% !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+    }
+    
     div[data-testid="stHorizontalBlock"] {
         flex-direction: row !important;
         flex-wrap: nowrap !important;
         align-items: center !important;
-        width: 100% !important;
-    }
-
-    .st-key-direction_switch [data-testid="column"],
-    .st-key-script_switch [data-testid="column"] {
-        width: 100% !important;
-        flex: 1 1 auto !important;
-        min-width: 0 !important;
+        gap: 0.5rem !important;
     }
     
     .st-key-direction_switch, .st-key-script_switch {
@@ -266,53 +265,50 @@ with st.container(key="input_card"):
     st.markdown('<div class="bv-section-title">Translation Settings</div>', unsafe_allow_html=True)
     
     # Grid for Script and Direction
-    set_col1, set_col2 = st.columns(2)
-    
-    with set_col1:
-        st.markdown('<div class="bv-section-caption">Select Script</div>', unsafe_allow_html=True)
-        with st.container(key="script_switch"):
-            sw_col1, sw_col2 = st.columns(2)
-            with sw_col1:
-                if st.button("Latin", type="primary" if st.session_state.translate_script_key == "latin" else "secondary", use_container_width=True, key="btn_lat"):
-                    st.session_state.translate_script_key = "latin"
-                    st.rerun()
-            with sw_col2:
-                if st.button("Arabic", type="primary" if st.session_state.translate_script_key == "arabic" else "secondary", use_container_width=True, key="btn_arb"):
-                    st.session_state.translate_script_key = "arabic"
-                    st.rerun()
+    with st.container(key="settings_grid"):
+        set_col1, set_col2 = st.columns(2)
+        
+        with set_col1:
+            st.markdown('<div class="bv-section-caption">Select Script</div>', unsafe_allow_html=True)
+            with st.container(key="script_switch"):
+                sw_col1, sw_col2 = st.columns(2)
+                with sw_col1:
+                    if st.button("Latin", type="primary" if st.session_state.translate_script_key == "latin" else "secondary", use_container_width=True, key="btn_lat"):
+                        st.session_state.translate_script_key = "latin"
+                        st.rerun()
+                with sw_col2:
+                    if st.button("Arabic", type="primary" if st.session_state.translate_script_key == "arabic" else "secondary", use_container_width=True, key="btn_arb"):
+                        st.session_state.translate_script_key = "arabic"
+                        st.rerun()
 
-    with set_col2:
-        is_latin = st.session_state.translate_script_key == "latin"
-        if not is_latin:
-            st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
-            with st.container(key="direction_switch"):
-                # Force horizontal layout for direction switch on all screens
-                dir_col1, dir_mid, dir_col2 = st.columns([1.5, 0.6, 1.5])
-                
-                with dir_col1:
-                    is_en = st.session_state.translate_direction == "en_to_bal"
-                    if st.button("English", type="primary" if is_en else "secondary", use_container_width=True, key="dir_en_bal"):
-                        st.session_state.translate_direction = "en_to_bal"
-                        st.rerun()
-                
-                with dir_mid:
-                    # Circular swap button
-                    if st.button("⇄", key="dir_mid_btn", use_container_width=True):
-                        st.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
-                        st.rerun()
-                
-                with dir_col2:
-                    is_bal = st.session_state.translate_direction == "bal_to_en"
-                    # Shortened label for mobile fit
-                    bal_label = "Balochi"
-                    if st.button(bal_label, type="primary" if is_bal else "secondary", use_container_width=True, key="dir_bal_en"):
-                        st.session_state.translate_direction = "bal_to_en"
-                        st.rerun()
-        else:
-            st.session_state.translate_direction = "en_to_bal"
-            # On mobile, we don't want a huge empty space when direction is hidden
-            st.markdown('<div class="bv-mobile-spacer" style="height: 10px;"></div>', unsafe_allow_html=True)
-            st.markdown('<style>@media screen and (min-width: 641px) { .bv-mobile-spacer { height: 68px !important; } }</style>', unsafe_allow_html=True)
+        with set_col2:
+            is_latin = st.session_state.translate_script_key == "latin"
+            if not is_latin:
+                st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
+                with st.container(key="direction_switch"):
+                    # Using the balanced column logic from the TTS page for mobile stability
+                    dir_col1, dir_mid, dir_col2 = st.columns([1, 0.4, 1])
+                    
+                    with dir_col1:
+                        is_en = st.session_state.translate_direction == "en_to_bal"
+                        if st.button("English", type="primary" if is_en else "secondary", use_container_width=True, key="dir_en_bal"):
+                            st.session_state.translate_direction = "en_to_bal"
+                            st.rerun()
+                    
+                    with dir_mid:
+                        if st.button("⇄", key="dir_mid_btn", use_container_width=True):
+                            st.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
+                            st.rerun()
+                    
+                    with dir_col2:
+                        is_bal = st.session_state.translate_direction == "bal_to_en"
+                        if st.button("Balochi", type="primary" if is_bal else "secondary", use_container_width=True, key="dir_bal_en"):
+                            st.session_state.translate_direction = "bal_to_en"
+                            st.rerun()
+            else:
+                st.session_state.translate_direction = "en_to_bal"
+                # Cleaner spacing for Latin mode
+                st.markdown('<div style="margin-top: 38px;"></div>', unsafe_allow_html=True)
 
     script_choice = st.session_state.translate_script_key
     current = TRANSLATION_MODELS[script_choice]
