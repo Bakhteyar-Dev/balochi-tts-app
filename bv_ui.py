@@ -82,6 +82,7 @@ THEME_CONFIG = {
         "bg_glow_2": "rgba(219, 39, 119, 0.08)",
         "input_bg": "#fcfbff",
         "input_color": "#1e1b2e",
+        "sidebar_bg": "linear-gradient(180deg, #2a1758 0%, #4c1d95 55%, #6d28d9 100%)",
     },
     "dark": {
         "ink": "#f3f0ff",
@@ -92,8 +93,9 @@ THEME_CONFIG = {
         "bg": "#0b0a0f",
         "bg_glow_1": "rgba(124, 58, 237, 0.15)",
         "bg_glow_2": "rgba(219, 39, 119, 0.12)",
-        "input_bg": "#1a1628",
-        "input_color": "#f3f0ff",
+        "input_bg": "#000000",
+        "input_color": "#ffffff",
+        "sidebar_bg": "linear-gradient(180deg, #0d0b14 0%, #111018 55%, #181520 100%)",
     }
 }
  
@@ -151,7 +153,7 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {
  
 /* ---------- Sidebar ---------- */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #2a1758 0%, #4c1d95 55%, #6d28d9 100%) !important;
+    background: {sidebar_bg} !important;
     border-right: none !important;
 }
 [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
@@ -166,22 +168,23 @@ button[data-testid="stSidebarCollapse"] {
     background-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Theme Toggle Specific Styling */
+/* Theme Toggle: always visible with gradient bg and white text */
 .st-key-theme_toggle button {
-    background: white !important;
-    color: #7c3aed !important;
-    border: 2px solid white !important;
+    background: var(--bv-grad) !important;
+    color: #ffffff !important;
+    border: none !important;
     border-radius: 999px !important;
     font-weight: 800 !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35) !important;
+    opacity: 1 !important;
 }
 .st-key-theme_toggle button p {
-    color: #7c3aed !important;
+    color: #ffffff !important;
     font-weight: 800 !important;
 }
 .st-key-theme_toggle button:hover {
     transform: scale(1.02);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45) !important;
 }
  
 div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
@@ -367,6 +370,7 @@ div[data-testid="stTextArea"] textarea {
     font-size: 1.02rem !important;
     background: {input_bg} !important;
     color: {input_color} !important;
+    caret-color: {input_color} !important;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 div[data-testid="stTextArea"] textarea:focus {
@@ -394,10 +398,27 @@ div[data-testid="stTextArea"] textarea::placeholder {
     background: var(--bv-grad) !important; color: #fff !important;
     box-shadow: 0 6px 14px rgba(124, 58, 237, 0.35) !important;
 }
-.st-key-script_switch button[kind="secondary"] {
-    background: transparent !important; color: var(--bv-muted) !important; box-shadow: none !important;
+/* FIX: inactive script button always readable in both light and dark mode */
+.st-key-script_switch button[kind="secondary"],
+.st-key-script_switch_container button[kind="secondary"] {
+    background: rgba(124, 58, 237, 0.08) !important;
+    color: {input_color} !important;
+    box-shadow: none !important;
+    border: 1px solid var(--bv-border) !important;
 }
-.st-key-script_switch button[kind="secondary"]:hover { color: var(--bv-purple) !important; }
+.st-key-script_switch button[kind="secondary"] p,
+.st-key-script_switch_container button[kind="secondary"] p {
+    color: {input_color} !important;
+}
+.st-key-script_switch button[kind="secondary"]:hover,
+.st-key-script_switch_container button[kind="secondary"]:hover {
+    color: var(--bv-purple) !important;
+    background: rgba(124, 58, 237, 0.15) !important;
+}
+.st-key-script_switch button[kind="secondary"]:hover p,
+.st-key-script_switch_container button[kind="secondary"]:hover p {
+    color: var(--bv-purple) !important;
+}
  
 /* ---------- Buttons ---------- */
 div[data-testid="stButton"] button[kind="primary"], 
@@ -478,23 +499,6 @@ def render_theme_toggle() -> None:
         st.session_state.theme = "light"
     
     label = "🌙 Dark Mode" if st.session_state.theme == "light" else "☀️ Light Mode"
-    
-    st.markdown("""
-        <style>
-        div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
-            background: var(--bv-grad) !important;
-            color: white !important;
-            border: none !important;
-            font-weight: 700 !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
-            opacity: 1 !important;
-        }
-        div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] p {
-            color: white !important;
-            font-weight: 700 !important;
-        }
-        </style>
-    """, unsafe_allow_html=True)
 
     if st.button(label, use_container_width=True, key="theme_toggle"):
         st.session_state.theme = "dark" if st.session_state.theme == "light" else "light"
