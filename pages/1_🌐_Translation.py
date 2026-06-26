@@ -35,9 +35,29 @@ TRANSLATION_MODELS = {
 
 @st.cache_resource(show_spinner=False)
 def load_translation_model(model_id: str):
+    import torch
+    from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+    
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to(device)
+    
+    # Check if it's a LoRA adapter (contains 'lora' in ID or has adapter config)
+    if "lora" in model_id.lower():
+        try:
+            from peft import PeftModel, PeftConfig
+            config = PeftConfig.from_pretrained(model_id)
+            # Use the base model specified in the LoRA config
+            base_model_id = config.base_model_name_or_path
+            tokenizer = AutoTokenizer.from_pretrained(model_id)
+            base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_id).to(device)
+            model = PeftModel.from_pretrained(base_model, model_id)
+        except ImportError:
+            # Fallback if PEFT is not available or fails
+            tokenizer = AutoTokenizer.from_pretrained(model_id)
+            model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to(device)
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(model_id)
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to(device)
+        
     model.eval()
     return tokenizer, model, device
 
@@ -185,18 +205,12 @@ with st.container(key="input_card"):
                     st.rerun()
 
     with set_col2:
-        st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
-        
-        # Disable direction toggle if current script doesn't support bidirectional
         is_latin = st.session_state.translate_script_key == "latin"
         if is_latin:
             st.session_state.translate_direction = "en_to_bal" # Force English to Balochi for Latin
-            
-        btn_label = f"🔄 {direction_label}"
-        if is_latin:
-            st.button(btn_label, use_container_width=True, key="btn_toggle_dir_dis", disabled=True, help="Latin script only supports English to Balochi.")
         else:
-            if st.button(btn_label, use_container_width=True, key="btn_toggle_dir"):
+            st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
+            if st.button(f"🔄 {direction_label}", use_container_width=True, key="btn_toggle_dir"):
                 st.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
                 st.rerun()
 
