@@ -114,9 +114,77 @@ st.set_page_config(
 )
 inject_theme()
 
-# Custom CSS for page-specific elements
+# Custom CSS for the Direction Toggle
 st.markdown("""
     <style>
+    /* Compact Pill Style for Direction Switch */
+    .st-key-direction_switch {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 999px !important;
+        padding: 2px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: fit-content !important;
+        margin: 0 auto !important;
+        height: 42px !important;
+        min-width: 180px !important;
+    }
+    
+    /* Dynamic Track Colors */
+    .st-key-dir_green_track { background: #22c55e !important; border-radius: 999px !important; }
+    .st-key-dir_blue_track { background: #3b82f6 !important; border-radius: 999px !important; }
+    
+    .st-key-direction_switch [data-testid="stHorizontalBlock"] {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 0 !important;
+    }
+
+    .st-key-direction_switch button {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: white !important;
+        font-weight: 700 !important;
+        font-size: 0.8rem !important;
+        height: 38px !important;
+        padding: 0 12px !important;
+        min-width: 0 !important;
+        width: auto !important;
+    }
+    
+    /* Middle Swap Circle */
+    .st-key-dir_mid_btn button {
+        background: white !important;
+        color: #64748b !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        margin: 0 8px !important;
+        font-size: 1rem !important;
+    }
+    
+    .st-key-dir_mid_btn button p { color: #64748b !important; }
+
+    /* Dark Mode Adjustment */
+    [data-theme="dark"] .st-key-direction_switch { background: #1e293b !important; border-color: #334155 !important; }
+    [data-theme="dark"] .st-key-dir_mid_btn button { background: #f8fafc !important; }
+    
+    /* Center the direction toggle button container */
+    [data-testid="column"] .stButton {
+        display: flex !important;
+        justify-content: center !important;
+    }
+
     /* Responsive stacking for settings */
     @media screen and (max-width: 640px) {
         .st-key-settings_grid [data-testid="stHorizontalBlock"] {
@@ -124,31 +192,6 @@ st.markdown("""
             gap: 1.5rem !important;
         }
         .bv-hero-title { margin-top: 15px !important; }
-    }
-    
-    /* Script Switch Buttons */
-    .st-key-script_switch_container button {
-        border-radius: 999px !important;
-        font-weight: 700 !important;
-        height: 42px !important;
-        transition: all 0.2s ease !important;
-    }
-    
-    /* Direction Pill Toggle */
-    .st-key-dir_pill_toggle button {
-        color: white !important;
-        border-radius: 999px !important;
-        padding: 0 24px !important;
-        height: 42px !important;
-        border: none !important;
-        font-weight: 700 !important;
-        font-size: 0.9rem !important;
-        width: 100% !important;
-        max-width: 220px !important;
-        margin: 0 auto !important;
-        display: block !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-        transition: all 0.2s ease !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -190,16 +233,32 @@ with st.container(key="input_card"):
         
         with set_col1:
             st.markdown('<div class="bv-section-caption">Select Script</div>', unsafe_allow_html=True)
+            # Branded script toggle
+            st.markdown("""
+                <style>
+                .st-key-script_switch_container button {
+                    border-radius: 999px !important;
+                    font-weight: 700 !important;
+                    height: 42px !important;
+                    transition: all 0.2s ease !important;
+                }
+                .st-key-script_switch_container div[data-testid="column"]:first-child button[kind="primary"],
+                .st-key-script_switch_container div[data-testid="column"]:last-child button[kind="primary"] {
+                    background: var(--bv-grad) !important;
+                    border: none !important;
+                    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+                }
+                </style>
+            """, unsafe_allow_html=True)
+            
             with st.container(key="script_switch_container"):
                 sw_col1, sw_col2 = st.columns(2)
                 with sw_col1:
-                    is_active = st.session_state.translate_script_key == "latin"
-                    if st.button("Latin", type="primary" if is_active else "secondary", use_container_width=True, key="btn_lat"):
+                    if st.button("Latin", type="primary" if st.session_state.translate_script_key == "latin" else "secondary", use_container_width=True, key="btn_lat"):
                         st.session_state.translate_script_key = "latin"
                         st.rerun()
                 with sw_col2:
-                    is_active = st.session_state.translate_script_key == "arabic"
-                    if st.button("Arabic", type="primary" if is_active else "secondary", use_container_width=True, key="btn_arb"):
+                    if st.button("Arabic", type="primary" if st.session_state.translate_script_key == "arabic" else "secondary", use_container_width=True, key="btn_arb"):
                         st.session_state.translate_script_key = "arabic"
                         st.rerun()
 
@@ -214,7 +273,26 @@ with st.container(key="input_card"):
                 # Single button styled as a compact pill toggle
                 st.markdown(f"""
                     <style>
-                    .st-key-dir_pill_toggle button {{ background: {track_color} !important; }}
+                    .st-key-dir_pill_toggle button {{
+                        background: {track_color} !important;
+                        color: white !important;
+                        border-radius: 999px !important;
+                        padding: 0 24px !important;
+                        height: 42px !important;
+                        border: none !important;
+                        font-weight: 700 !important;
+                        font-size: 0.9rem !important;
+                        width: auto !important;
+                        min-width: 180px !important;
+                        margin: 0 auto !important;
+                        display: block !important;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+                        transition: all 0.2s ease !important;
+                    }}
+                    .st-key-dir_pill_toggle button:hover {{
+                        transform: scale(1.02);
+                        opacity: 0.9;
+                    }}
                     </style>
                 """, unsafe_allow_html=True)
                 
@@ -374,7 +452,9 @@ if st.session_state.translation_result:
                 st.toast(f"Thanks for rating it {rating_label}!", icon="⭐")
 
         if st.session_state.translation_feedback_log:
-            avg = sum(st.session_state.translation_feedback_log) / len(st.session_state.translation_feedback_log)
+            avg = sum(st.session_state.translation_feedback_log) / len(
+                st.session_state.translation_feedback_log
+            )
 
             st.markdown(
                 f'<div class="bv-avg-rating">Average rating: {avg:.1f} / 5 '
