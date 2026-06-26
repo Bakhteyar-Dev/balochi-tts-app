@@ -6,3 +6,5 @@ sentencepiece
 sacremoses
 numpy
 scipy
+peft
+accelerate
