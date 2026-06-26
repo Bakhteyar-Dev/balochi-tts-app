@@ -44,19 +44,12 @@ def load_translation_model(model_id: str):
         base_model_id = config.base_model_name_or_path
         
         tokenizer = AutoTokenizer.from_pretrained(base_model_id)
-        base_model = AutoModelForSeq2SeqLM.from_pretrained(
-            base_model_id,
-            torch_dtype=torch.float16,
-            device_map="auto"
-        )
-        base_model.resize_token_embeddings(len(tokenizer))
+        base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_id).to(device)
+        base_model.resize_token_embeddings(256205)
         model = PeftModel.from_pretrained(base_model, model_id)
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_id)
-        model = AutoModelForSeq2SeqLM.from_pretrained(
-            model_id,
-            device_map="auto"
-        )
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to(device)
         
     model.eval()
     return tokenizer, model, device
