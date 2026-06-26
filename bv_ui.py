@@ -420,16 +420,19 @@ audio { width: 100% !important; border-radius: 12px; }
  
 /* ---------- Mobile ---------- */
 @media screen and (max-width: 640px) {
-    .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 2.2rem; }
+    .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 3.5rem !important; }
     .bv-hero-title { font-size: 2.1rem; }
     .bv-hero-sub { font-size: 0.96rem; margin-bottom: 26px; }
     .bv-h2 { font-size: 1.4rem; }
     .bv-card, .bv-step, .bv-soon { margin-bottom: 16px; }
-    .st-key-input_card, .st-key-result_card { padding: 20px 18px 8px 18px; }
+    .st-key-input_card, .st-key-result_card { padding: 22px 20px 10px 20px; }
     .st-key-script_switch { max-width: 100%; width: 100%; }
-    .st-key-script_switch div[data-testid="column"] { width: 50% !important; flex: 1 1 0 !important; min-width: 0 !important; }
-    .st-key-script_switch button { width: 100% !important; min-height: 42px; font-size: 0.9rem !important; }
+    .st-key-script_switch div[data-testid="column"] { width: 100% !important; flex: 1 1 100% !important; }
+    .st-key-script_switch button { width: 100% !important; min-height: 46px; font-size: 1rem !important; }
     .bv-footer { flex-direction: column; align-items: flex-start; }
+    
+    /* Move section titles down on mobile to avoid overlap with toggle */
+    .bv-section-title { margin-top: 8px !important; }
 }
 </style>
 """
