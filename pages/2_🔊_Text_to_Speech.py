@@ -156,9 +156,10 @@ with st.container(key="input_card"):
         sw_col1, sw_col2 = st.columns(2)
 
         with sw_col1:
+            is_active = st.session_state.script_key == "latin"
             if st.button(
                 "Balochi-Latin",
-                type="primary" if st.session_state.script_key == "latin" else "secondary",
+                type="primary" if is_active else "secondary",
                 use_container_width=True,
                 key="btn_latin",
             ):
@@ -166,9 +167,10 @@ with st.container(key="input_card"):
                 st.rerun()
 
         with sw_col2:
+            is_active = st.session_state.script_key == "arabic"
             if st.button(
                 "Balochi-Arabic",
-                type="primary" if st.session_state.script_key == "arabic" else "secondary",
+                type="primary" if is_active else "secondary",
                 use_container_width=True,
                 key="btn_arabic",
             ):
