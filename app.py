@@ -11,8 +11,8 @@ from bv_ui import (
     render_sidebar,
     render_topbar,
 )
-if "HF_TOKEN" in st.secrets:              
-    login(token=st.secrets["HF_TOKEN"])
+if "claude" in st.secrets:              
+    login(token=st.secrets["claude"])
 # ----------------------------------------------------------------------------
 # PAGE SETUP
 # ----------------------------------------------------------------------------
