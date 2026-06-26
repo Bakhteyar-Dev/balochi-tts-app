@@ -123,18 +123,50 @@ st.markdown("""
         background: var(--bv-soft) !important;
         border: 1px solid var(--bv-border) !important;
         border-radius: 999px !important;
-        padding: 5px !important;
+        padding: 4px !important;
         display: flex !important;
         align-items: center !important;
-        position: relative !important;
     }
+    
+    /* Force columns to stay horizontal on mobile */
+    .st-key-direction_switch [data-testid="stHorizontalBlock"],
+    .st-key-script_switch [data-testid="stHorizontalBlock"] {
+        flex-direction: row !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 4px !important;
+    }
+
     .st-key-direction_switch button {
         border-radius: 999px !important;
         font-weight: 700 !important;
         border: none !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        height: 48px !important;
-        flex: 1 !important;
+        height: 44px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Middle Arrow Button - Positioned absolutely is safer for centering */
+    .st-key-dir_mid_btn button {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        border-radius: 50% !important;
+        background: white !important;
+        color: #64748b !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+        padding: 0 !important;
+        font-size: 1.2rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    @media screen and (max-width: 640px) {
+        .st-key-direction_switch button { font-size: 0.8rem !important; height: 40px !important; }
+        .st-key-dir_mid_btn button { width: 36px !important; height: 36px !important; min-width: 36px !important; }
     }
     
     /* Green for English -> Balochi */
@@ -156,21 +188,6 @@ st.markdown("""
         color: var(--bv-muted) !important;
     }
 
-    /* Middle Arrow Button */
-    .st-key-dir_mid_btn button {
-        width: 44px !important;
-        height: 44px !important;
-        min-width: 44px !important;
-        border-radius: 50% !important;
-        background: white !important;
-        color: #64748b !important;
-        border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-        padding: 0 !important;
-        z-index: 2;
-        margin: 0 -10px !important;
-    }
-    
     /* Dark Mode Adjustment for Middle Button */
     [data-theme="dark"] .st-key-dir_mid_btn button,
     .dark .st-key-dir_mid_btn button {
@@ -221,7 +238,7 @@ st.markdown(
 st.markdown(
     f"""
     <div class="bv-hero-sub">
-        Translate between English and Balochi. Currently translating in <b>{direction_label}</b>.
+        Translate between English and Balochi. Currently translating in <b>{direction_label}</b> direction using the fine-tuned neural models.
     </div>
     """,
     unsafe_allow_html=True,
