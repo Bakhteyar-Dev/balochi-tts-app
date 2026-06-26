@@ -221,7 +221,7 @@ st.markdown(
 st.markdown(
     f"""
     <div class="bv-hero-sub">
-        Translate between English and Balochi. Currently translating in <b>{direction_label}</b> direction using the fine-tuned neural models.
+        Translate between English and Balochi. Currently translating in <b>{direction_label}</b>.
     </div>
     """,
     unsafe_allow_html=True,
