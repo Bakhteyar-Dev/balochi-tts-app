@@ -128,21 +128,25 @@ st.markdown("""
         align-items: center !important;
     }
     
-    /* Force columns to stay horizontal on mobile and take equal width */
+    /* Force horizontal layout even on narrow portrait screens */
+    div[data-testid="stHorizontalBlock"] {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+
     .st-key-direction_switch [data-testid="column"],
     .st-key-script_switch [data-testid="column"] {
         width: 100% !important;
-        flex: 1 1 0 !important;
+        flex: 1 1 auto !important;
         min-width: 0 !important;
     }
     
-    .st-key-direction_switch [data-testid="stHorizontalBlock"],
-    .st-key-script_switch [data-testid="stHorizontalBlock"] {
-        flex-direction: row !important;
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important;
-        gap: 5px !important;
+    .st-key-direction_switch, .st-key-script_switch {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .st-key-script_switch button,
