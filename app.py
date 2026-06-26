@@ -1,6 +1,9 @@
 import streamlit as st
 
 from bv_ui import (
+    ASR_ICON,
+    DATA_ICON,
+    OCR_ICON,
     TRANSLATION_ICON,
     TTS_ICON,
     inject_theme,
@@ -121,19 +124,19 @@ st.markdown('<div class="bv-kicker">On the roadmap</div>', unsafe_allow_html=Tru
 st.markdown('<div class="bv-h2">Coming soon</div>', unsafe_allow_html=True)
 
 coming = [
-    ("🎧", "Speech Recognition (ASR)", "Convert spoken Balochi to text in both Latin and Arabic script."),
-    ("🖼️", "OCR", "Extract Balochi text from images and scanned documents."),
-    ("📚", "Building Datasets", "Tools to collect and curate high-quality Balochi language datasets."),
+    (ASR_ICON, "Speech Recognition (ASR)", "Convert spoken Balochi to text in both Latin and Arabic script."),
+    (OCR_ICON, "OCR", "Extract Balochi text from images and scanned documents."),
+    (DATA_ICON, "Building Datasets", "Tools to collect and curate high-quality Balochi language datasets."),
 ]
 
 soon_cols = st.columns(3)
-for index, (emoji, title, desc) in enumerate(coming):
+for index, (icon, title, desc) in enumerate(coming):
     with soon_cols[index]:
         st.markdown(
             f"""
             <div class="bv-soon">
                 <div class="bv-soon-badge">Soon</div>
-                <div class="bv-soon-emoji">{emoji}</div>
+                <div class="bv-soon-emoji">{icon}</div>
                 <div class="bv-soon-title">{title}</div>
                 <div class="bv-soon-desc">{desc}</div>
             </div>
