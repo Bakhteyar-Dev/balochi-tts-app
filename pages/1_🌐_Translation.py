@@ -33,7 +33,7 @@ TRANSLATION_MODELS = {
 # MODEL LOADING / INFERENCE
 # ----------------------------------------------------------------------------
 
-@st.cache_resource(show_spinner=False)
+@st.cache_resource(show_spinner=False, max_entries=1)
 def load_translation_model(model_id: str):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
@@ -45,14 +45,21 @@ def load_translation_model(model_id: str):
         
         tokenizer = AutoTokenizer.from_pretrained(base_model_id)
 
+        load_kwargs = {
+            "low_cpu_mem_usage": True,
+        }
+
+        if torch.cuda.is_available():
+            load_kwargs["torch_dtype"] = torch.float16
+
         base_model = AutoModelForSeq2SeqLM.from_pretrained(
             base_model_id,
-            low_cpu_mem_usage=True,
-        ).to(device)
-
-        base_model.resize_token_embeddings(len(tokenizer))
+            **load_kwargs,
+        )
 
         model = PeftModel.from_pretrained(base_model, model_id)
+        model = model.to(device)
+
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_id)
         model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to(device)
