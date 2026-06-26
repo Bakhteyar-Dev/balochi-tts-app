@@ -52,7 +52,6 @@ def load_translation_model(model_id: str):
         base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_id).to(device)
         
         # Resize embeddings to handle the shape mismatch (256205 vs 256206)
-        # The error shows the checkpoint has 256205 tokens
         base_model.resize_token_embeddings(256205)
         
         # Load the LoRA adapter onto the resized base model
@@ -118,19 +117,22 @@ inject_theme()
 # Custom CSS for the Direction Toggle
 st.markdown("""
     <style>
-    /* Compact Pill Style for */.st-key-direction_switch {
-        background: #f8fafc !impa: 1px solid #e2e8f0 !important;
-        border-radius: 999px !importanct Pil forustify-content: center !important;
+    /* Compact Pill Style for Direction Switch */
+    .st-key-direction_switch {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 999px !important;
+        padding: 2px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         width: fit-content !important;
         margin: 0 auto !important;
         height: 42px !important;
         min-width: 180px !important;
-        height: 42px !important;
-        min-width: 180px !important;
     }
     
-    /* Dynamic Trackd: #3b82f6 !iCportant; lorder-radous: 999px !important; }
-    
+    /* Dynamic Track Colors */
     .st-key-dir_green_track { background: #22c55e !important; border-radius: 999px !important; }
     .st-key-dir_blue_track { background: #3b82f6 !important; border-radius: 999px !important; }
     
@@ -138,13 +140,13 @@ st.markdown("""
         flex-direction: row !important;
         flex-wrap: nowrap !important;
         align-items: center !important;
+        gap: 0 !important;
     }
 
     .st-key-direction_switch button {
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
-        color: white !important;
         color: white !important;
         font-weight: 700 !important;
         font-size: 0.8rem !important;
@@ -166,16 +168,24 @@ st.markdown("""
         align-items: center !important;
         justify-content: center !important;
         padding: 0 !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !importan 8px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        margin: 0 8px !important;
         font-size: 1rem !important;
-   i  /* Dark Mode Adjustment */
-    [data-theme="dark"] .st-key-direction_switch { background: #1e293b !important; border-color: #3341    
+    }
+    
+    .st-key-dir_mid_btn button p { color: #64748b !important; }
+
+    /* Dark Mode Adjustment */
+    [data-theme="dark"] .st-key-direction_switch { background: #1e293b !important; border-color: #334155 !important; }
+    [data-theme="dark"] .st-key-dir_mid_btn button { background: #f8fafc !important; }
+    
     /* Responsive stacking for settings */
     @media screen and (max-width: 640px) {
         .st-key-settings_grid [data-testid="stHorizontalBlock"] {
             flex-direction: column !important;
             gap: 1.2rem !important;
         }
+        .st-key-direction_switch { margin-top: 5px !important; }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -187,7 +197,7 @@ render_topbar("Translate")
 # HERO
 # ----------------------------------------------------------------------------
 
-direction_la Balochi" if st.session_state.translate_direction == "en_to_bal" elBlolish"
+direction_label = "English → Balochi" if st.session_state.translate_direction == "en_to_bal" else "Balochi → English"
 st.markdown(f'<span class="bv-eyebrow">{direction_label}</span>', unsafe_allow_html=True)
 
 st.markdown(
@@ -220,7 +230,7 @@ with st.container(key="input_card"):
             with st.container(key="script_switch"):
                 sw_col1, sw_col2 = st.columns(2)
                 with sw_col1:
- */          if st.button("Latin", type="primary" if st.session_state.translate_script_key == "latin" else "secondary", use_container_width=True, key="btn_lat"):
+                    if st.button("Latin", type="primary" if st.session_state.translate_script_key == "latin" else "secondary", use_container_width=True, key="btn_lat"):
                         st.session_state.translate_script_key = "latin"
                         st.rerun()
                 with sw_col2:
@@ -234,33 +244,32 @@ with st.container(key="input_card"):
                 st.markdown('<div class="bv-section-caption" style="text-align:center;">Select Direction</div>', unsafe_allow_html=True)
                 
                 is_en_to_bal = st.session_state.translate_direction == "en_to_bal"
-                with st.container(key=track_class):
-                        # 3 columns for En, Swap, Bal
+                track_class = "dir_green_track" if is_en_to_bal else "dir_blue_track"
                 
                 # Small, compact direction switcher
                 with st.container(key="direction_switch"):
-                trackwith diracoklass):
+                    with st.container(key=track_class):
                         # 3 columns for En, Swap, Bal
-                           dir_col1, dir_mid, dir_col2 = st.columns([1, 0.6, 1])
+                        dir_col1, dir_mid, dir_col2 = st.columns([1, 0.6, 1])
                         
-               
-                            if st.button("ENG", key="lbl_en", key="lbl_en", use_container_width=True):
-                        st.session_state.translate_direction = "en_to_bal"
+                        with dir_col1:
+                            if st.button("ENG", key="lbl_en", use_container_width=True):
+                                st.session_state.translate_direction = "en_to_bal"
                                 st.rerun()
                         
-                        wit
-                            with dirmd_btn"):
+                        with dir_mid:
+                            with st.container(key="dir_mid_btn"):
                                 if st.button("⇄", key="btn_swap", use_container_width=True):
-                   t.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
+                                    st.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
                                     st.rerun()
                         
-                        wit
-                            if st.button("بلوچی", key="lbl_bal", key="lbl_bal", use_container_width=True):
+                        with dir_col2:
+                            if st.button("بلوچی", key="lbl_bal", use_container_width=True):
                                 st.session_state.translate_direction = "bal_to_en"
-               n()
+                                st.rerun()
             else:
                 st.session_state.translate_direction = "en_to_bal"
-   for Latin mode
+                # spacing for Latin mode
                 st.markdown('<div style="margin-top: 32px;"></div>', unsafe_allow_html=True)
 
     script_choice = st.session_state.translate_script_key
