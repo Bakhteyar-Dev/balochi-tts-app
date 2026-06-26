@@ -135,7 +135,7 @@ st.markdown("""
         .st-key-direction_switch [data-testid="stHorizontalBlock"] {
             flex-direction: column !important;
             display: flex !important;
-            gap: 10px !important;
+            gap: 12px !important;
         }
 
         .st-key-script_switch [data-testid="column"],
@@ -148,31 +148,32 @@ st.markdown("""
         .st-key-dir_mid_btn {
             display: flex !important;
             justify-content: center !important;
-            margin: -15px 0 !important;
+            margin: -20px 0 !important;
             z-index: 10 !important;
         }
         .st-key-dir_mid_btn button {
-            width: 48px !important;
-            height: 48px !important;
-            min-width: 48px !important;
+            width: 52px !important;
+            height: 52px !important;
+            min-width: 52px !important;
             border-radius: 50% !important;
             background: white !important;
             color: #7c3aed !important;
             border: 2px solid #7c3aed !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-            font-size: 1.4rem !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.18) !important;
+            font-size: 1.6rem !important;
             margin: 0 auto !important;
         }
 
         .st-key-script_switch button,
         .st-key-direction_switch button {
-            height: 50px !important;
-            font-size: 1rem !important;
+            height: 54px !important;
+            font-size: 1.05rem !important;
         }
         
-        .st-key-direction_switch {
-            padding: 8px !important;
-            border-radius: 18px !important;
+        .st-key-direction_switch,
+        .st-key-script_switch {
+            padding: 10px !important;
+            border-radius: 20px !important; /* Fixed radius is better for stacked items than 999px */
         }
     }
     
