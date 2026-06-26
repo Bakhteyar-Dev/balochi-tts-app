@@ -81,6 +81,9 @@ THEME_CONFIG = {
         "bg": "#ffffff",
         "bg_glow_1": "rgba(124, 58, 237, 0.10)",
         "bg_glow_2": "rgba(219, 39, 119, 0.08)",
+        "sidebar_bg": "#f8f9ff",
+        "sidebar_text": "#1e1b2e",
+        "input_bg": "#ffffff",
     },
     "dark": {
         "ink": "#f3f0ff",
@@ -91,6 +94,9 @@ THEME_CONFIG = {
         "bg": "#0b0a0f",
         "bg_glow_1": "rgba(124, 58, 237, 0.15)",
         "bg_glow_2": "rgba(219, 39, 119, 0.12)",
+        "sidebar_bg": "#13111c",
+        "sidebar_text": "#f3f0ff",
+        "input_bg": "#1e1b2e",
     }
 }
  
@@ -115,6 +121,7 @@ THEME_CSS = """
     --bv-grad: linear-gradient(135deg, #7c3aed 0%, #6366f1 50%, #db2777 100%);
     --bv-radius: 20px;
     --bv-shadow: 0 18px 40px -18px rgba(79, 70, 229, 0.45);
+    --bv-input-bg: {input_bg};
 }
  
 html, body, [class*="css"], .stApp, [data-testid="stAppViewContainer"] {
@@ -148,37 +155,49 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {
  
 /* ---------- Sidebar ---------- */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #2a1758 0%, #4c1d95 55%, #6d28d9 100%) !important;
-    border-right: none !important;
+    background: {sidebar_bg} !important;
+    border-right: 1px solid var(--bv-border) !important;
 }
 [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
 [data-testid="stSidebar"] .bv-side-title,
 [data-testid="stSidebar"] .bv-side-sub { 
-    color: #f3eaff !important; 
+    color: {sidebar_text} !important; 
 }
 
-/* Sidebar Toggle Button Visibility Fix */
+/* Sidebar Toggle Button Visibility Fix - HAMBURGER STYLE */
 button[data-testid="stSidebarCollapse"] {
-    color: white !important;
-    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: var(--bv-ink) !important;
+    background-color: var(--bv-soft) !important;
+    border: 1px solid var(--bv-border) !important;
+    border-radius: 10px !important;
+    width: 42px !important;
+    height: 42px !important;
+}
+button[data-testid="stSidebarCollapse"] svg {
+    display: none !important;
+}
+button[data-testid="stSidebarCollapse"]::after {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--bv-ink);
+    box-shadow: 0 6px 0 var(--bv-ink), 0 -6px 0 var(--bv-ink);
+    margin: 0 auto;
 }
 
 /* Theme Toggle Specific Styling */
 .st-key-theme_toggle button {
-    background: white !important;
-    color: #7c3aed !important;
-    border: 2px solid white !important;
+    background: var(--bv-soft) !important;
+    color: var(--bv-purple) !important;
+    border: 1.5px solid var(--bv-border) !important;
     border-radius: 999px !important;
-    font-weight: 800 !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
 }
 .st-key-theme_toggle button p {
-    color: #7c3aed !important;
-    font-weight: 800 !important;
-}
-.st-key-theme_toggle button:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
+    color: var(--bv-purple) !important;
+    font-weight: 700 !important;
 }
  
 div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
@@ -191,25 +210,27 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
 .bv-side-sub { font-size: 0.78rem; opacity: 0.7; margin: 14px 6px 10px 6px; letter-spacing: 0.04em; text-transform: uppercase; }
  
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a {
-    background: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+    background: var(--bv-soft) !important;
+    border: 1px solid var(--bv-border) !important;
     border-radius: 14px !important;
     margin: 7px 4px !important;
     padding: 11px 14px !important;
     font-weight: 600 !important;
+    color: var(--bv-ink) !important;
     justify-content: flex-start !important;
     transition: all 0.18s ease !important;
 }
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
-    background: rgba(255, 255, 255, 0.16) !important;
+    background: rgba(124, 58, 237, 0.1) !important;
     transform: translateX(3px);
 }
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
-    background: rgba(255, 255, 255, 0.96) !important;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25) !important;
+    background: var(--bv-grad) !important;
+    border: none !important;
+    box-shadow: 0 8px 22px rgba(124, 58, 237, 0.25) !important;
 }
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] * {
-    color: #5b21b6 !important;
+    color: #ffffff !important;
 }
  
 .bv-side-foot {
@@ -354,7 +375,8 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
 /* ---------- Text area ---------- */
 div[data-testid="stTextArea"] textarea {
     border-radius: 14px !important; border: 1.5px solid var(--bv-border) !important;
-    font-size: 1.02rem !important; background: #fcfbff !important;
+    font-size: 1.02rem !important; background: var(--bv-input-bg) !important;
+    color: var(--bv-ink) !important;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 div[data-testid="stTextArea"] textarea:focus {
@@ -396,7 +418,7 @@ div[data-testid="stButton"] button[data-testid="baseButton-primary"]:active { tr
 .st-key-btn_clear button {
     border-radius: 13px !important; font-weight: 700 !important;
     border: 1.5px solid var(--bv-border) !important; color: var(--bv-purple) !important;
-    background: #fff !important;
+    background: var(--bv-input-bg) !important;
 }
 .st-key-btn_clear button:hover { background: var(--bv-soft) !important; }
  
@@ -404,7 +426,7 @@ div[data-testid="stButton"] button[data-testid="baseButton-primary"]:active { tr
 div[data-testid="stDownloadButton"] button {
     border-radius: 13px !important; font-weight: 700 !important;
     border: 1.5px solid var(--bv-border) !important; color: var(--bv-purple) !important;
-    background: #fff !important; transition: all 0.15s ease;
+    background: var(--bv-input-bg) !important; transition: all 0.15s ease;
 }
 div[data-testid="stDownloadButton"] button:hover { background: var(--bv-soft) !important; transform: translateY(-1px); }
  
@@ -412,7 +434,8 @@ div[data-testid="stDownloadButton"] button:hover { background: var(--bv-soft) !i
 .bv-result-text {
     border: 1px solid var(--bv-border); border-radius: 14px; padding: 18px 20px;
     min-height: 104px; font-size: 1.15rem; line-height: 1.75;
-    background: linear-gradient(160deg, #faf8ff, #f5f1ff); margin-bottom: 16px;
+    background: var(--bv-soft); margin-bottom: 16px;
+    color: var(--bv-ink);
 }
 .bv-avg-rating { font-size: 0.84rem; color: var(--bv-muted); margin-top: 8px; }
  
