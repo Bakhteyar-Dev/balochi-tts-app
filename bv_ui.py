@@ -72,8 +72,8 @@ html, body, [class*="css"], .stApp, [data-testid="stAppViewContainer"] {
         #ffffff;
 }
  
-#MainMenu, header[data-testid="stHeader"], footer { visibility: hidden; }
-header[data-testid="stHeader"] { height: 0; }
+#MainMenu, footer { visibility: hidden; }
+header[data-testid="stHeader"] { background: transparent !important; }
  
 .block-container {
     padding-top: 2.6rem;
@@ -89,11 +89,11 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {
 [data-testid="stSidebarNav"] { display: none !important; }
  
 /* ---------- Sidebar ---------- */
-section[data-testid="stSidebar"] {
+[data-testid="stSidebar"] {
     background: linear-gradient(180deg, #2a1758 0%, #4c1d95 55%, #6d28d9 100%) !important;
     border-right: none !important;
 }
-section[data-testid="stSidebar"] * { color: #f3eaff !important; }
+[data-testid="stSidebar"] * { color: #f3eaff !important; }
  
 div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
  
@@ -104,7 +104,7 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
 .bv-side-title { font-size: 1.25rem; font-weight: 800; line-height: 1; }
 .bv-side-sub { font-size: 0.78rem; opacity: 0.7; margin: 14px 6px 10px 6px; letter-spacing: 0.04em; text-transform: uppercase; }
  
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
+[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
     background: rgba(255, 255, 255, 0.06) !important;
     border: 1px solid rgba(255, 255, 255, 0.10) !important;
     border-radius: 14px !important;
@@ -114,15 +114,15 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
     justify-content: flex-start !important;
     transition: all 0.18s ease !important;
 }
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
+[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
     background: rgba(255, 255, 255, 0.16) !important;
     transform: translateX(3px);
 }
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
+[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
     background: rgba(255, 255, 255, 0.96) !important;
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25) !important;
 }
-section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] * {
+[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] * {
     color: #5b21b6 !important;
 }
  
@@ -272,10 +272,10 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
 /* ---------- Page cards (input / result) ---------- */
 .st-key-input_card, .st-key-result_card {
     background: var(--bv-card); border: 1px solid var(--bv-border); border-radius: var(--bv-radius);
-    padding: 26px 28px 10px 28px; margin-bottom: 22px;
+    padding: 26px 28px 24px 28px; margin-bottom: 22px;
     box-shadow: 0 14px 36px -26px rgba(79, 70, 229, 0.55);
 }
-.st-key-input_card > div, .st-key-result_card > div { gap: 0 !important; }
+.st-key-input_card > div, .st-key-result_card > div { gap: 0.8rem !important; }
  
 .bv-section-title { font-size: 1.18rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.01em; }
 .bv-section-caption { font-size: 0.86rem; color: var(--bv-muted); margin-bottom: 18px; }
@@ -311,13 +311,16 @@ div[data-testid="stTextArea"] textarea:focus {
 .st-key-script_switch button[kind="secondary"]:hover { color: var(--bv-purple) !important; }
  
 /* ---------- Buttons ---------- */
-div[data-testid="stButton"] button[kind="primary"] {
+div[data-testid="stButton"] button[kind="primary"], 
+div[data-testid="stButton"] button[data-testid="baseButton-primary"] {
     background: var(--bv-grad); border: none; border-radius: 13px; padding: 0.7rem 1.4rem;
     font-weight: 700; box-shadow: 0 10px 22px -8px rgba(124, 58, 237, 0.6);
     transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
-div[data-testid="stButton"] button[kind="primary"]:hover { transform: translateY(-2px); filter: brightness(1.05); }
-div[data-testid="stButton"] button[kind="primary"]:active { transform: translateY(0); }
+div[data-testid="stButton"] button[kind="primary"]:hover,
+div[data-testid="stButton"] button[data-testid="baseButton-primary"]:hover { transform: translateY(-2px); filter: brightness(1.05); }
+div[data-testid="stButton"] button[kind="primary"]:active,
+div[data-testid="stButton"] button[data-testid="baseButton-primary"]:active { transform: translateY(0); }
  
 .st-key-btn_clear button {
     border-radius: 13px !important; font-weight: 700 !important;
