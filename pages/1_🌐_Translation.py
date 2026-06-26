@@ -128,34 +128,43 @@ st.markdown("""
         align-items: center !important;
     }
     
-    /* Ensure main settings columns stack on mobile, but switches stay horizontal */
+    /* Mobile vertical layout fix */
     @media screen and (max-width: 640px) {
-        /* The two main columns (Script and Direction) should stack */
+        /* Allow the main columns to stack vertically */
         .st-key-settings_grid [data-testid="column"] {
             width: 100% !important;
             flex: 1 1 100% !important;
-            margin-bottom: 1rem;
+            display: block !important;
+            margin-bottom: 1.5rem !important;
         }
-        
-        /* The buttons INSIDE the switches must stay horizontal */
-        .st-key-script_switch [data-testid="column"],
-        .st-key-direction_switch [data-testid="column"] {
-            width: auto !important;
-            flex: 1 1 0 !important;
-            min-width: 0 !important;
-            margin-bottom: 0 !important;
-        }
-        
+
+        /* Keep internal switches horizontal */
         .st-key-script_switch [data-testid="stHorizontalBlock"],
         .st-key-direction_switch [data-testid="stHorizontalBlock"] {
+            display: flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
-            gap: 4px !important;
+            gap: 8px !important;
+        }
+
+        /* Ensure columns inside switches stay side-by-side */
+        .st-key-script_switch [data-testid="column"],
+        .st-key-direction_switch [data-testid="column"] {
+            flex: 1 1 auto !important;
+            width: auto !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* Adjust button heights for better touch targets */
+        .st-key-script_switch button,
+        .st-key-direction_switch button {
+            height: 46px !important;
+            font-size: 0.85rem !important;
         }
         
-        .st-key-direction_switch button {
-            font-size: 0.75rem !important;
-            padding: 0 2px !important;
+        .st-key-dir_mid_btn button {
+            width: 40px !important;
+            min-width: 40px !important;
         }
     }
     
