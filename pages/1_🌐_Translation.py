@@ -129,6 +129,13 @@ st.markdown("""
     }
     
     /* Force columns to stay horizontal on mobile */
+    .st-key-direction_switch [data-testid="column"],
+    .st-key-script_switch [data-testid="column"] {
+        width: unset !important;
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+    }
+    
     .st-key-direction_switch [data-testid="stHorizontalBlock"],
     .st-key-script_switch [data-testid="stHorizontalBlock"] {
         flex-direction: row !important;
@@ -272,8 +279,8 @@ with st.container(key="input_card"):
         if not is_latin:
             st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
             with st.container(key="direction_switch"):
-                # Layout: [English] [ (Arrow) ] [Balochi]
-                dir_col1, dir_mid, dir_col2 = st.columns([1, 0.4, 1])
+                # Force horizontal layout for direction switch on all screens
+                dir_col1, dir_mid, dir_col2 = st.columns([1.5, 0.6, 1.5])
                 
                 with dir_col1:
                     is_en = st.session_state.translate_direction == "en_to_bal"
@@ -289,7 +296,9 @@ with st.container(key="input_card"):
                 
                 with dir_col2:
                     is_bal = st.session_state.translate_direction == "bal_to_en"
-                    if st.button("Balochi", type="primary" if is_bal else "secondary", use_container_width=True, key="dir_bal_en"):
+                    # Shortened label for mobile fit
+                    bal_label = "Balochi"
+                    if st.button(bal_label, type="primary" if is_bal else "secondary", use_container_width=True, key="dir_bal_en"):
                         st.session_state.translate_direction = "bal_to_en"
                         st.rerun()
         else:
