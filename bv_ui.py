@@ -37,20 +37,28 @@ TTS_ICON = (
 )
 
 ASR_ICON = (
-    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
-    '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>'
-    '<path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>'
+    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M12 2c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2s2-.9 2-2V4c0-1.1-.9-2-2-2z"/>'
+    '<path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18.5V22M8 22h8"/>'
+    '<path d="M17 4h2M17 8h3M17 12h2" stroke-opacity="0.5"/>'
+    '</svg>'
 )
 
 OCR_ICON = (
-    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
-    '<path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/>'
-    '<path d="M7 8h10"/><path d="M7 12h10"/><path d="M7 16h10"/></svg>'
+    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M7 3H5a2 2 0 0 0-2 2v2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M3 17v2a2 2 0 0 0 2 2h2"/>'
+    '<path d="M8 12h8M12 8v8M12 12l3.5 3.5M12 12l-3.5-3.5" stroke-opacity="0.6"/>'
+    '<circle cx="12" cy="12" r="3"/>'
+    '</svg>'
 )
 
 DATA_ICON = (
-    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
-    '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>'
+    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M21 5c0 1.66-4 3-9 3s-9-1.34-9-3 4-3 9-3 9 1.34 9 3z"/>'
+    '<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>'
+    '<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>'
+    '<path d="M10 12l2 2 4-4" stroke-width="2"/>'
+    '</svg>'
 )
 
 # ----------------------------------------------------------------------------
