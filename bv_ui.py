@@ -349,7 +349,7 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
 .bv-footer {
     margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--bv-border);
     display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
-    font-size: 0.85rem; color: var(--bv-muted);
+    font-size: 0.85rem; color: var(--bv-ink);
 }
 .bv-footer .dot { color: var(--bv-purple); }
  
