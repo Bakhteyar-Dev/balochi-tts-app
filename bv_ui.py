@@ -35,6 +35,50 @@ TTS_ICON = (
     '<path d="M15.5 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
     "</svg>"
 )
+
+ASR_ICON = (
+    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>'
+    '<path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>'
+)
+
+OCR_ICON = (
+    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/>'
+    '<path d="M7 8h10"/><path d="M7 12h10"/><path d="M7 16h10"/></svg>'
+)
+
+DATA_ICON = (
+    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+    '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>'
+)
+
+# ----------------------------------------------------------------------------
+# THEME CONFIG
+# ----------------------------------------------------------------------------
+
+THEME_CONFIG = {
+    "light": {
+        "ink": "#1e1b2e",
+        "muted": "#6b6783",
+        "border": "rgba(124, 58, 237, 0.14)",
+        "card": "#ffffff",
+        "soft": "#f5f3ff",
+        "bg": "#ffffff",
+        "bg_glow_1": "rgba(124, 58, 237, 0.10)",
+        "bg_glow_2": "rgba(219, 39, 119, 0.08)",
+    },
+    "dark": {
+        "ink": "#f3f0ff",
+        "muted": "#9d99b9",
+        "border": "rgba(167, 139, 250, 0.2)",
+        "card": "#13111c",
+        "soft": "#1e1b2e",
+        "bg": "#0b0a0f",
+        "bg_glow_1": "rgba(124, 58, 237, 0.15)",
+        "bg_glow_2": "rgba(219, 39, 119, 0.12)",
+    }
+}
  
 # ----------------------------------------------------------------------------
 # THEME CSS
@@ -45,11 +89,11 @@ THEME_CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap');
  
 :root {
-    --bv-ink: #1e1b2e;
-    --bv-muted: #6b6783;
-    --bv-border: rgba(124, 58, 237, 0.14);
-    --bv-card: #ffffff;
-    --bv-soft: #f5f3ff;
+    --bv-ink: {ink};
+    --bv-muted: {muted};
+    --bv-border: {border};
+    --bv-card: {card};
+    --bv-soft: {soft};
     --bv-purple: #7c3aed;
     --bv-purple-2: #6d28d9;
     --bv-indigo: #4f46e5;
@@ -67,9 +111,9 @@ html, body, [class*="css"], .stApp, [data-testid="stAppViewContainer"] {
 /* Soft ambient background glow */
 [data-testid="stAppViewContainer"] {
     background:
-        radial-gradient(900px 500px at 12% -10%, rgba(124, 58, 237, 0.10), transparent 60%),
-        radial-gradient(800px 500px at 100% 0%, rgba(219, 39, 119, 0.08), transparent 55%),
-        #ffffff;
+        radial-gradient(900px 500px at 12% -10%, {bg_glow_1}, transparent 60%),
+        radial-gradient(800px 500px at 100% 0%, {bg_glow_2}, transparent 55%),
+        {bg};
 }
  
 #MainMenu, footer { visibility: hidden; }
@@ -350,9 +394,27 @@ audio { width: 100% !important; border-radius: 12px; }
  
 def inject_theme() -> None:
     """Inject the shared theme CSS. Call once per page after set_page_config."""
-    st.markdown(THEME_CSS, unsafe_allow_html=True)
- 
- 
+    if "theme" not in st.session_state:
+        st.session_state.theme = "light"
+    
+    cfg = THEME_CONFIG[st.session_state.theme]
+    css = THEME_CSS
+    for key, value in cfg.items():
+        css = css.replace(f"{{{key}}}", value)
+    st.markdown(css, unsafe_allow_html=True)
+
+
+def render_theme_toggle() -> None:
+    """Render a theme toggle button."""
+    if "theme" not in st.session_state:
+        st.session_state.theme = "light"
+    
+    label = "🌙 Dark Mode" if st.session_state.theme == "light" else "☀️ Light Mode"
+    if st.button(label, use_container_width=True, key="theme_toggle"):
+        st.session_state.theme = "dark" if st.session_state.theme == "light" else "light"
+        st.rerun()
+
+
 def render_sidebar() -> None:
     """Render the branded sidebar with navigation."""
     with st.sidebar:
@@ -366,6 +428,9 @@ def render_sidebar() -> None:
         st.page_link("app.py", label="Home", icon="🏠")
         st.page_link("pages/1_🌐_Translation.py", label="Translation", icon="🌐")
         st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon="🔊")
+
+        st.markdown('<div style="margin-top: 2rem;"></div>', unsafe_allow_html=True)
+        render_theme_toggle()
  
         st.markdown(
             f'<div class="bv-side-foot">© {datetime.now().year} Bakhteyar-AI.<br>All rights reserved.</div>',
