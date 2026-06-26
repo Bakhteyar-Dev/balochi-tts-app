@@ -153,8 +153,8 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
  
 /* ---------- Top navigation (always visible, sidebar-independent) ---------- */
 .st-key-topnav { margin-top: 14px; border-bottom: 1px solid var(--bv-border); padding-bottom: 12px; }
-.st-key-topnav div[data-testid="stHorizontalBlock"] { gap: 8px; flex-wrap: nowrap; }
-.st-key-topnav div[data-testid="stColumn"] { width: auto !important; flex: 1 1 0 !important; min-width: 0 !important; }
+.st-key-topnav div[data-testid="stHorizontalBlock"] { gap: 8px; flex-wrap: nowrap; align-items: center; justify-content: center; }
+.st-key-topnav div[data-testid="stColumn"] { width: auto !important; flex: 1 1 0 !important; min-width: 0 !important; display: flex; justify-content: center; }
 .st-key-topnav div[data-testid="stPageLink"] { width: 100% !important; }
 .st-key-topnav div[data-testid="stPageLink"] > div { width: 100% !important; }
 .st-key-topnav div[data-testid="stPageLink"] a {
@@ -172,7 +172,7 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
     box-shadow: 0 8px 22px rgba(124, 58, 237, 0.30) !important;
 }
 .st-key-topnav div[data-testid="stPageLink"] a[aria-current="page"] * { color: #fff !important; }
-.bv-brand-name { font-size: 1.35rem; font-weight: 800; white-space: nowrap; letter-spacing: -0.01em; }
+.bv-brand-name { font-size: 1.35rem; font-weight: 800; white-space: nowrap; letter-spacing: -0.01em; margin-top: -2px; }
 .bv-brand-name .accent {
     background: var(--bv-grad); -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -394,11 +394,9 @@ def render_sidebar() -> None:
  
  
 def render_topbar(suffix: str = "") -> None:
-    """Render the top brand bar with inline navigation.
+    """Render the top brand bar.
  
-    The nav links live in the main content area (not only the sidebar) so the
-    app is always navigable even when the sidebar is collapsed or hidden
-    (e.g. on Streamlit Community Cloud / mobile widths).
+    The navigation is handled exclusively by the sidebar to avoid redundancy.
     """
     tag = f'<span class="bv-brand-tag">{suffix}</span>' if suffix else ""
     with st.container(key="topbar"):
@@ -408,14 +406,6 @@ def render_topbar(suffix: str = "") -> None:
             f"{tag}</div>",
             unsafe_allow_html=True,
         )
-        with st.container(key="topnav"):
-            cols = st.columns(3)
-            with cols[0]:
-                st.page_link("app.py", label="Home", icon="🏠")
-            with cols[1]:
-                st.page_link("pages/1_🌐_Translation.py", label="Translation", icon="🌐")
-            with cols[2]:
-                st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon="🔊")
  
  
 def render_footer() -> None:
