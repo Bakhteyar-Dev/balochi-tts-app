@@ -81,9 +81,13 @@ THEME_CONFIG = {
         "bg": "#ffffff",
         "bg_glow_1": "rgba(124, 58, 237, 0.10)",
         "bg_glow_2": "rgba(219, 39, 119, 0.08)",
-        "sidebar_bg": "linear-gradient(180deg, #2a1758 0%, #4c1d95 55%, #6d28d9 100%)",
-        "sidebar_text": "#f3f0ff",
+        "sidebar_bg": "#f8f9fa",
+        "sidebar_text": "#1e1b2e",
         "input_bg": "#ffffff",
+        "font_main": "'Inter', sans-serif",
+        "toggle_btn_bg": "#7c3aed",
+        "toggle_btn_text": "#ffffff",
+        "toggle_btn_border": "#7c3aed",
     },
     "dark": {
         "ink": "#f3f0ff",
@@ -97,6 +101,10 @@ THEME_CONFIG = {
         "sidebar_bg": "#0f0e16",
         "sidebar_text": "#ffffff",
         "input_bg": "#1e1b2e",
+        "font_main": "'Sora', sans-serif",
+        "toggle_btn_bg": "#ffffff",
+        "toggle_btn_text": "#7c3aed",
+        "toggle_btn_border": "#ffffff",
     }
 }
  
@@ -125,7 +133,7 @@ THEME_CSS = """
 }}
  
 html, body, [class*="css"], .stApp, [data-testid="stAppViewContainer"] {{
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: {font_main}, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: var(--bv-ink);
 }}
  
@@ -161,24 +169,16 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {{
 [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
 [data-testid="stSidebar"] .bv-side-title,
 [data-testid="stSidebar"] .bv-side-sub,
-[data-testid="stSidebar"] .bv-side-foot,
-[data-testid="stSidebar"] span {{ 
+[data-testid="stSidebar"] .bv-side-foot {{ 
     color: {sidebar_text} !important; 
     opacity: 1.0 !important;
 }}
 
-/* Sidebar Icons Visibility */
-[data-testid="stSidebar"] [data-testid="stPageLink"] svg {{
-    fill: {sidebar_text} !important;
-    color: {sidebar_text} !important;
-}}
-
-/* Sidebar Toggle Button Visibility Fix - HAMBURGER STYLE */
+/* Sidebar Toggle Button Visibility Fix */
 button[data-testid="stSidebarCollapse"] {{
-    color: white !important;
-    background-color: rgba(255, 255, 255, 0.2) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-radius: 8px !important;
+    color: {sidebar_text} !important;
+    background-color: transparent !important;
+    border: none !important;
     width: 40px !important;
     height: 40px !important;
     display: flex !important;
@@ -187,33 +187,27 @@ button[data-testid="stSidebarCollapse"] {{
     z-index: 999999 !important;
 }}
 button[data-testid="stSidebarCollapse"] svg {{
-    display: none !important;
-}}
-button[data-testid="stSidebarCollapse"]::after {{
-    content: "";
-    display: block;
-    width: 18px;
-    height: 2px;
-    background: white !important;
-    box-shadow: 0 5px 0 white, 0 -5px 0 white !important;
+    fill: {sidebar_text} !important;
+    width: 24px !important;
+    height: 24px !important;
 }}
 
 /* Theme Toggle Specific Styling */
 .st-key-theme_toggle button {{
-    background: white !important;
-    color: #7c3aed !important;
-    border: 2px solid white !important;
+    background: {toggle_btn_bg} !important;
+    color: {toggle_btn_text} !important;
+    border: 2px solid {toggle_btn_border} !important;
     border-radius: 999px !important;
     font-weight: 800 !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
 }}
 .st-key-theme_toggle button p {{
-    color: #7c3aed !important;
+    color: {toggle_btn_text} !important;
     font-weight: 800 !important;
 }}
 .st-key-theme_toggle button:hover {{
     transform: scale(1.02);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
+    opacity: 0.9;
 }}
  
 div[data-testid="stSidebarUserContent"] {{ padding-top: 1rem; }}
@@ -226,27 +220,27 @@ div[data-testid="stSidebarUserContent"] {{ padding-top: 1rem; }}
 .bv-side-sub {{ font-size: 0.78rem; opacity: 0.8; margin: 14px 6px 10px 6px; letter-spacing: 0.04em; text-transform: uppercase; }}
  
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a {{
-    background: rgba(255, 255, 255, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: rgba(124, 58, 237, 0.05) !important;
+    border: 1px solid var(--bv-border) !important;
     border-radius: 14px !important;
     margin: 7px 4px !important;
     padding: 11px 14px !important;
     font-weight: 600 !important;
-    color: white !important;
+    color: {sidebar_text} !important;
     justify-content: flex-start !important;
     transition: all 0.18s ease !important;
 }}
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {{
-    background: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(124, 58, 237, 0.12) !important;
     transform: translateX(3px);
 }}
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {{
-    background: white !important;
+    background: var(--bv-grad) !important;
     border: none !important;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 8px 22px rgba(124, 58, 237, 0.25) !important;
 }}
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] * {{
-    color: #5b21b6 !important;
+    color: white !important;
 }}
  
 .bv-side-foot {{
