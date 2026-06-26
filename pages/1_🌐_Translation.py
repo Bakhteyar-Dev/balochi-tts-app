@@ -179,13 +179,19 @@ st.markdown("""
     [data-theme="dark"] .st-key-direction_switch { background: #1e293b !important; border-color: #334155 !important; }
     [data-theme="dark"] .st-key-dir_mid_btn button { background: #f8fafc !important; }
     
+    /* Center the direction toggle button container */
+    [data-testid="column"] .stButton {
+        display: flex !important;
+        justify-content: center !important;
+    }
+
     /* Responsive stacking for settings */
     @media screen and (max-width: 640px) {
         .st-key-settings_grid [data-testid="stHorizontalBlock"] {
             flex-direction: column !important;
-            gap: 1.2rem !important;
+            gap: 1.5rem !important;
         }
-        .st-key-direction_switch { margin-top: 5px !important; }
+        .bv-hero-title { margin-top: 15px !important; }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -227,7 +233,25 @@ with st.container(key="input_card"):
         
         with set_col1:
             st.markdown('<div class="bv-section-caption">Select Script</div>', unsafe_allow_html=True)
-            with st.container(key="script_switch"):
+            # Branded script toggle
+            st.markdown("""
+                <style>
+                .st-key-script_switch_container button {
+                    border-radius: 999px !important;
+                    font-weight: 700 !important;
+                    height: 42px !important;
+                    transition: all 0.2s ease !important;
+                }
+                .st-key-script_switch_container div[data-testid="column"]:first-child button[kind="primary"],
+                .st-key-script_switch_container div[data-testid="column"]:last-child button[kind="primary"] {
+                    background: var(--bv-grad) !important;
+                    border: none !important;
+                    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+                }
+                </style>
+            """, unsafe_allow_html=True)
+            
+            with st.container(key="script_switch_container"):
                 sw_col1, sw_col2 = st.columns(2)
                 with sw_col1:
                     if st.button("Latin", type="primary" if st.session_state.translate_script_key == "latin" else "secondary", use_container_width=True, key="btn_lat"):
