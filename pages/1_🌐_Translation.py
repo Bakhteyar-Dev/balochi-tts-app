@@ -44,8 +44,14 @@ def load_translation_model(model_id: str):
         base_model_id = config.base_model_name_or_path
         
         tokenizer = AutoTokenizer.from_pretrained(base_model_id)
-        base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_id).to(device)
-        base_model.resize_token_embeddings(256205)
+
+        base_model = AutoModelForSeq2SeqLM.from_pretrained(
+            base_model_id,
+            low_cpu_mem_usage=True,
+        ).to(device)
+
+        base_model.resize_token_embeddings(len(tokenizer))
+
         model = PeftModel.from_pretrained(base_model, model_id)
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -63,7 +69,12 @@ def translate_text(text: str, script_key: str, direction: str) -> str:
     inputs = {key: value.to(device) for key, value in inputs.items()}
 
     with torch.no_grad():
-        generated = model.generate(**inputs, max_length=256, num_beams=1)
+        generated = model.generate(
+            **inputs,
+            max_new_tokens=128,
+            num_beams=1,
+            do_sample=False,
+        )
 
     return tokenizer.batch_decode(generated, skip_special_tokens=True)[0].strip()
 
