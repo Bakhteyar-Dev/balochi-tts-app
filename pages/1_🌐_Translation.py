@@ -145,11 +145,23 @@ st.markdown("""
         }
 
         /* Adjust middle arrow button for vertical stacking */
+        .st-key-dir_mid_btn {
+            display: flex !important;
+            justify-content: center !important;
+            margin: -15px 0 !important;
+            z-index: 10 !important;
+        }
         .st-key-dir_mid_btn button {
-            width: 100% !important;
-            height: 40px !important;
-            border-radius: 12px !important;
-            margin: 0 !important;
+            width: 48px !important;
+            height: 48px !important;
+            min-width: 48px !important;
+            border-radius: 50% !important;
+            background: white !important;
+            color: #7c3aed !important;
+            border: 2px solid #7c3aed !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+            font-size: 1.4rem !important;
+            margin: 0 auto !important;
         }
 
         .st-key-script_switch button,
