@@ -1,5 +1,5 @@
 import streamlit as st
-
+from huggingface_hub import login
 from bv_ui import (
     ASR_ICON,
     DATA_ICON,
@@ -11,7 +11,8 @@ from bv_ui import (
     render_sidebar,
     render_topbar,
 )
-
+if "HF_TOKEN" in st.secrets:              
+    login(token=st.secrets["HF_TOKEN"])
 # ----------------------------------------------------------------------------
 # PAGE SETUP
 # ----------------------------------------------------------------------------
