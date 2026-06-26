@@ -118,32 +118,65 @@ inject_theme()
 # Custom CSS for the Direction Toggle
 st.markdown("""
     <style>
-    /* Direction Switch Container */
+    /* Direction Switch Container - Refined for Dual Color */
     .st-key-direction_switch {
         background: var(--bv-soft) !important;
         border: 1px solid var(--bv-border) !important;
-        border-radius: 14px !important;
-        padding: 4px !important;
+        border-radius: 999px !important;
+        padding: 5px !important;
+        display: flex !important;
+        align-items: center !important;
+        position: relative !important;
     }
     .st-key-direction_switch button {
-        border-radius: 10px !important;
+        border-radius: 999px !important;
         font-weight: 700 !important;
         border: none !important;
-        transition: all 0.2s ease !important;
-        height: 42px !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        height: 48px !important;
+        flex: 1 !important;
     }
-    .st-key-direction_switch button[kind="primary"] {
-        background: var(--bv-grad) !important;
+    
+    /* Green for English -> Balochi */
+    .st-key-dir_en_bal button[kind="primary"] {
+        background: #22c55e !important;
         color: white !important;
-        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25) !important;
+        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3) !important;
     }
+    
+    /* Blue for Balochi -> English */
+    .st-key-dir_bal_en button[kind="primary"] {
+        background: #3b82f6 !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+    }
+    
     .st-key-direction_switch button[kind="secondary"] {
         background: transparent !important;
         color: var(--bv-muted) !important;
     }
-    .st-key-direction_switch button[kind="secondary"]:hover {
-        color: var(--bv-purple) !important;
-        background: rgba(124, 58, 237, 0.05) !important;
+
+    /* Middle Arrow Button */
+    .st-key-dir_mid_btn button {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        border-radius: 50% !important;
+        background: white !important;
+        color: #64748b !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+        padding: 0 !important;
+        z-index: 2;
+        margin: 0 -10px !important;
+    }
+    
+    /* Dark Mode Adjustment for Middle Button */
+    [data-theme="dark"] .st-key-dir_mid_btn button,
+    .dark .st-key-dir_mid_btn button {
+        background: #1e293b !important;
+        border-color: #334155 !important;
+        color: #94a3b8 !important;
     }
     
     /* Disabled State */
@@ -222,13 +255,24 @@ with st.container(key="input_card"):
         if not is_latin:
             st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
             with st.container(key="direction_switch"):
-                dir_col1, dir_col2 = st.columns(2)
+                # Layout: [English] [ (Arrow) ] [Balochi]
+                dir_col1, dir_mid, dir_col2 = st.columns([1, 0.4, 1])
+                
                 with dir_col1:
-                    if st.button("En → Bal", type="primary" if st.session_state.translate_direction == "en_to_bal" else "secondary", use_container_width=True, key="dir_en_bal"):
+                    is_en = st.session_state.translate_direction == "en_to_bal"
+                    if st.button("English", type="primary" if is_en else "secondary", use_container_width=True, key="dir_en_bal"):
                         st.session_state.translate_direction = "en_to_bal"
                         st.rerun()
+                
+                with dir_mid:
+                    # Circular swap button
+                    if st.button("⇄", key="dir_mid_btn", use_container_width=True):
+                        st.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
+                        st.rerun()
+                
                 with dir_col2:
-                    if st.button("Bal → En", type="primary" if st.session_state.translate_direction == "bal_to_en" else "secondary", use_container_width=True, key="dir_bal_en"):
+                    is_bal = st.session_state.translate_direction == "bal_to_en"
+                    if st.button("Balochi", type="primary" if is_bal else "secondary", use_container_width=True, key="dir_bal_en"):
                         st.session_state.translate_direction = "bal_to_en"
                         st.rerun()
         else:
