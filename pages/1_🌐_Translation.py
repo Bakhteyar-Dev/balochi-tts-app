@@ -128,18 +128,35 @@ st.markdown("""
         align-items: center !important;
     }
     
-    /* Fix for mobile stacking in settings grid */
-    [data-testid="column"] {
-        width: 100% !important;
-        flex: 1 1 auto !important;
-        min-width: 0 !important;
-    }
-    
-    div[data-testid="stHorizontalBlock"] {
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important;
-        gap: 0.5rem !important;
+    /* Ensure main settings columns stack on mobile, but switches stay horizontal */
+    @media screen and (max-width: 640px) {
+        /* The two main columns (Script and Direction) should stack */
+        .st-key-settings_grid [data-testid="column"] {
+            width: 100% !important;
+            flex: 1 1 100% !important;
+            margin-bottom: 1rem;
+        }
+        
+        /* The buttons INSIDE the switches must stay horizontal */
+        .st-key-script_switch [data-testid="column"],
+        .st-key-direction_switch [data-testid="column"] {
+            width: auto !important;
+            flex: 1 1 0 !important;
+            min-width: 0 !important;
+            margin-bottom: 0 !important;
+        }
+        
+        .st-key-script_switch [data-testid="stHorizontalBlock"],
+        .st-key-direction_switch [data-testid="stHorizontalBlock"] {
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            gap: 4px !important;
+        }
+        
+        .st-key-direction_switch button {
+            font-size: 0.75rem !important;
+            padding: 0 2px !important;
+        }
     }
     
     .st-key-direction_switch, .st-key-script_switch {
