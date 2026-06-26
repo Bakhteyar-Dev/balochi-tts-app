@@ -23,45 +23,48 @@ BRAND_MARK = (
 )
  
 TRANSLATION_ICON = (
-    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    '<path d="M4 5h8M8 3v2M9.5 5c0 3.5-2 6.5-5.5 8M6 9c1.2 2 3 3.5 5 4.2" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-    '<path d="M13 21l4-9 4 9M14.5 18h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-    "</svg>"
+    '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<path d="M5 8H14M9 5V8M11 8C11 12 9 15 6 17M8 13C9 14.5 11 16 13 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<path d="M13 20L16 11L19 20M14.5 17H17.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<circle cx="18" cy="6" r="3" stroke="#db2777" stroke-width="1.5"/>'
+    '</svg>'
 )
- 
+
 TTS_ICON = (
-    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    '<path d="M11 5L6 9H3v6h3l5 4V5z" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-    '<path d="M15.5 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-    "</svg>"
+    '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<path d="M11 5L6 9H3V15H6L11 19V5Z" fill="white"/>'
+    '<path d="M15.5 8.5C16.3 9.5 16.8 10.7 16.8 12C16.8 13.3 16.3 14.5 15.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round"/>'
+    '<path d="M19 5C20.8 7 21.8 9.4 21.8 12C21.8 14.6 20.8 17 19 19" stroke="#db2777" stroke-width="2" stroke-linecap="round"/>'
+    '</svg>'
 )
 
 ASR_ICON = (
-    '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
-    '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>'
-    '<path d="M19 10v2a7 7 0 0 1-14 0v-2"/>'
-    '<line x1="12" y1="19" x2="12" y2="22"/>'
-    '<path d="M8 22h8"/>'
-    '<path d="M18 5c1 0 2 1 2 2s-1 2-2 2" opacity="0.4"/>'
-    '<path d="M6 5c-1 0-2 1-2 2s1 2 2 2" opacity="0.4"/>'
-    '</svg>'
+    '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<path d="M12 2C10.3431 2 9 3.34315 9 5V12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12V5C15 3.34315 13.6569 2 12 2Z" fill="url(#grad1)"/>'
+    '<path d="M19 10V12C19 15.866 15.866 19 12 19C8.13401 19 5 15.866 5 12V10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+    '<path d="M12 19V22M8 22H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+    '<path d="M21 4L18 7M18 4L21 7" stroke="#db2777" stroke-width="2" stroke-linecap="round"/>'
+    '<defs><linearGradient id="grad1" x1="9" y1="2" x2="15" y2="15" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
+    "</svg>"
 )
 
 OCR_ICON = (
-    '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
-    '<path d="M4 7V4a1 1 0 0 1 1-1h3M16 3h3a1 1 0 0 1 1 1v3M20 17v3a1 1 0 0 1-1 1h-3M8 21H5a1 1 0 0 1-1-1v-3"/>'
-    '<path d="M7 12h10" opacity="0.5"/><path d="M12 7v10" opacity="0.5"/>'
-    '<rect x="9" y="9" width="6" height="6" rx="1"/>'
-    '</svg>'
+    '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<path d="M7 3H5C3.89543 3 3 3.89543 3 5V7M17 3H19C20.1046 3 21 3.89543 21 5V7M7 21H5C3.89543 21 3 20.1046 3 19V17M17 21H19C20.1046 21 21 20.1046 21 19V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+    '<path d="M9 12L11 14L15 10" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<circle cx="12" cy="12" r="6" stroke="url(#grad2)" stroke-width="2"/>'
+    '<path d="M20 7L18 9M18 7L20 9" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round"/>'
+    '<defs><linearGradient id="grad2" x1="6" y1="6" x2="18" y2="18" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
+    "</svg>"
 )
 
 DATA_ICON = (
-    '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
-    '<path d="M12 21c-4.97 0-9-1.79-9-4V7c0-2.21 4.03-4 9-4s9 1.79 9 4v10c0 2.21-4.03 4-9 4Z"/>'
-    '<path d="M3 7c0 2.21 4.03 4 9 4s9-1.79 9-4" opacity="0.5"/>'
-    '<path d="M3 12c0 2.21 4.03 4 9 4s9-1.79 9-4" opacity="0.5"/>'
-    '<path d="M10 14.5l1.5 1.5 3-3"/>'
-    '</svg>'
+    '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<path d="M4 7C4 5.34315 7.58172 4 12 4C16.4183 4 20 5.34315 20 7M4 7V17C4 18.6569 7.58172 20 12 20C16.4183 20 20 18.6569 20 17V7M4 7C4 8.65685 7.58172 10 12 10C16.4183 10 20 8.65685 20 7" stroke="currentColor" stroke-width="2"/>'
+    '<path d="M4 12C4 13.6569 7.58172 15 12 15C16.4183 15 20 13.6569 20 12" stroke="currentColor" stroke-width="2" opacity="0.5"/>'
+    '<path d="M15 15L17 17L21 13" stroke="url(#grad3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<defs><linearGradient id="grad3" x1="15" y1="13" x2="21" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
+    "</svg>"
 )
 
 # ----------------------------------------------------------------------------
@@ -302,7 +305,12 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
     letter-spacing: 0.08em; text-transform: uppercase; color: #fff;
     background: var(--bv-grad); padding: 4px 10px; border-radius: 999px;
 }
-.bv-soon-emoji { font-size: 1.7rem; }
+.bv-soon-emoji { 
+    font-size: 1.7rem; 
+    color: var(--bv-purple);
+    display: flex;
+    align-items: center;
+}
 .bv-soon-title { font-weight: 700; font-size: 1.02rem; margin: 10px 0 5px 0; }
 .bv-soon-desc { font-size: 0.86rem; color: var(--bv-muted); line-height: 1.55; }
  
@@ -466,9 +474,9 @@ def render_sidebar() -> None:
             unsafe_allow_html=True,
         )
  
-        st.page_link("app.py", label="Home", icon=":material/home:")
-        st.page_link("pages/1_🌐_Translation.py", label="Translation", icon=":material/translate:")
-        st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon=":material/record_voice_over:")
+        st.page_link("app.py", label="Home", icon=":material/rocket_launch:")
+        st.page_link("pages/1_🌐_Translation.py", label="Translation", icon=":material/language:")
+        st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon=":material/volume_up:")
 
         st.markdown('<div style="margin-top: 2rem;"></div>', unsafe_allow_html=True)
         render_theme_toggle()
