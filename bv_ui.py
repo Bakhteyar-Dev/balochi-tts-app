@@ -165,7 +165,9 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {
 /* Sidebar Toggle Button Visibility Fix */
 button[data-testid="stSidebarCollapse"] {
     color: white !important;
-    background-color: rgba(255, 255, 255, 0.2) !important;
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    border-radius: 8px !important;
 }
 
 /* Theme Toggle: always visible with gradient bg and white text */
