@@ -149,6 +149,16 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {
     border-right: none !important;
 }
 [data-testid="stSidebar"] * { color: #f3eaff !important; }
+
+/* Fix Sidebar Toggle Button Visibility */
+button[data-testid="stSidebarCollapse"] {
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+}
+button[data-testid="stSidebarCollapse"]:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
  
 div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
  
@@ -423,14 +433,20 @@ def render_theme_toggle() -> None:
     label = "🌙 Dark Mode" if st.session_state.theme == "light" else "☀️ Light Mode"
     
     # Custom styling for the toggle button to ensure visibility
+    # Target by data-testid and the specific label text to be safe
     st.markdown("""
         <style>
-        div.stButton > button[key="theme_toggle"] {
+        div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
             background: var(--bv-grad) !important;
             color: white !important;
             border: none !important;
             font-weight: 700 !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+            opacity: 1 !important;
+        }
+        div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] p {
+            color: white !important;
+            font-weight: 700 !important;
         }
         </style>
     """, unsafe_allow_html=True)
