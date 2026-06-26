@@ -118,23 +118,36 @@ st.markdown("""
     <style>
     /* Direction Toggle Button Styling */
     .st-key-btn_toggle_dir button {
-        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 12px !important;
+        background: var(--bv-card) !important;
+        color: var(--bv-purple) !important;
+        border: 1.5px solid var(--bv-border) !important;
+        border-radius: 14px !important;
         font-weight: 700 !important;
         padding: 0.6rem 1rem !important;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08) !important;
         transition: all 0.2s ease !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
     }
     .st-key-btn_toggle_dir button:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4) !important;
-        filter: brightness(1.1) !important;
+        background: var(--bv-soft) !important;
+        border-color: var(--bv-purple) !important;
+        box-shadow: 0 6px 15px rgba(124, 58, 237, 0.15) !important;
     }
     .st-key-btn_toggle_dir button p {
-        color: white !important;
+        color: var(--bv-purple) !important;
         font-weight: 700 !important;
+        margin: 0 !important;
+    }
+    
+    /* Active State indicator */
+    .st-key-btn_toggle_dir button::before {
+        content: '🤖';
+        margin-right: 4px;
+        font-size: 1.1rem;
     }
     
     /* Disabled State */
@@ -210,16 +223,17 @@ with st.container(key="input_card"):
 
     with set_col2:
         is_latin = st.session_state.translate_script_key == "latin"
-        if is_latin:
-            st.session_state.translate_direction = "en_to_bal" # Force English to Balochi for Latin
+        if not is_latin:
             st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
-            # Show a disabled button for consistency in layout
-            st.button(f"English → Balochi", use_container_width=True, key="btn_toggle_dir_dis", disabled=True)
-        else:
-            st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
-            if st.button(f"🔄 {direction_label}", use_container_width=True, key="btn_toggle_dir"):
+            # Modern Styled Toggle Button for Arabic script
+            btn_label = "English ⇄ Balochi" 
+            if st.button(btn_label, use_container_width=True, key="btn_toggle_dir"):
                 st.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
                 st.rerun()
+        else:
+            st.session_state.translate_direction = "en_to_bal"
+            # Ensure the vertical alignment is consistent even when set_col2 is empty
+            st.markdown('<div style="height: 68px;"></div>', unsafe_allow_html=True)
 
     script_choice = st.session_state.translate_script_key
     current = TRANSLATION_MODELS[script_choice]
