@@ -13,7 +13,7 @@ STAR_LABELS = ["Poor", "Fair", "Good", "Very Good", "Excellent"]
 TRANSLATION_MODELS = {
     "latin": {
         "en_to_bal": "Bakhteyar/Balochi-Model",
-        "bal_to_en": None, # Not supported for Latin
+        "bal_to_en": None,
         "label": "Latin",
         "direction": "ltr",
         "align": "left",
@@ -37,24 +37,15 @@ TRANSLATION_MODELS = {
 def load_translation_model(model_id: str):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
-    # Check if it's a LoRA adapter (contains 'lora' in ID or has adapter config)
     if "lora" in model_id.lower():
         from peft import PeftModel, PeftConfig
         
-        # Load the configuration of the LoRA adapter
         config = PeftConfig.from_pretrained(model_id)
         base_model_id = config.base_model_name_or_path
         
-        # Tokenizer is usually the same as the base model for LoRA
         tokenizer = AutoTokenizer.from_pretrained(base_model_id)
-        
-        # Load the base model
         base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_id).to(device)
-        
-        # Resize embeddings to handle the shape mismatch (256205 vs 256206)
         base_model.resize_token_embeddings(256205)
-        
-        # Load the LoRA adapter onto the resized base model
         model = PeftModel.from_pretrained(base_model, model_id)
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -72,9 +63,7 @@ def translate_text(text: str, script_key: str, direction: str) -> str:
     inputs = {key: value.to(device) for key, value in inputs.items()}
 
     with torch.no_grad():
-        # Using num_beams=1 for English -> Balochi for much faster performance
-        beams = 1 if direction == "en_to_bal" else 4
-        generated = model.generate(**inputs, max_length=256, num_beams=beams)
+        generated = model.generate(**inputs, max_length=256, num_beams=1)
 
     return tokenizer.batch_decode(generated, skip_special_tokens=True)[0].strip()
 
@@ -114,10 +103,8 @@ st.set_page_config(
 )
 inject_theme()
 
-# Custom CSS for the Direction Toggle
 st.markdown("""
     <style>
-    /* Compact Pill Style for Direction Switch */
     .st-key-direction_switch {
         background: #f8fafc !important;
         border: 1px solid #e2e8f0 !important;
@@ -132,7 +119,6 @@ st.markdown("""
         min-width: 180px !important;
     }
     
-    /* Dynamic Track Colors */
     .st-key-dir_green_track { background: #22c55e !important; border-radius: 999px !important; }
     .st-key-dir_blue_track { background: #3b82f6 !important; border-radius: 999px !important; }
     
@@ -156,7 +142,6 @@ st.markdown("""
         width: auto !important;
     }
     
-    /* Middle Swap Circle */
     .st-key-dir_mid_btn button {
         background: white !important;
         color: #64748b !important;
@@ -175,17 +160,14 @@ st.markdown("""
     
     .st-key-dir_mid_btn button p { color: #64748b !important; }
 
-    /* Dark Mode Adjustment */
     [data-theme="dark"] .st-key-direction_switch { background: #1e293b !important; border-color: #334155 !important; }
     [data-theme="dark"] .st-key-dir_mid_btn button { background: #f8fafc !important; }
     
-    /* Center the direction toggle button container */
     [data-testid="column"] .stButton {
         display: flex !important;
         justify-content: center !important;
     }
 
-    /* Responsive stacking for settings */
     @media screen and (max-width: 640px) {
         .st-key-settings_grid [data-testid="stHorizontalBlock"] {
             flex-direction: column !important;
@@ -227,13 +209,11 @@ st.markdown(
 with st.container(key="input_card"):
     st.markdown('<div class="bv-section-title">Translation Settings</div>', unsafe_allow_html=True)
     
-    # Grid for Script and Direction
     with st.container(key="settings_grid"):
         set_col1, set_col2 = st.columns(2)
         
         with set_col1:
             st.markdown('<div class="bv-section-caption">Select Script</div>', unsafe_allow_html=True)
-            # Branded script toggle
             st.markdown("""
                 <style>
                 .st-key-script_switch_container button {
@@ -270,7 +250,6 @@ with st.container(key="input_card"):
                 is_en_to_bal = st.session_state.translate_direction == "en_to_bal"
                 track_color = "#22c55e" if is_en_to_bal else "#3b82f6"
                 
-                # Single button styled as a compact pill toggle
                 st.markdown(f"""
                     <style>
                     .st-key-dir_pill_toggle button {{
@@ -301,13 +280,11 @@ with st.container(key="input_card"):
                     st.rerun()
             else:
                 st.session_state.translate_direction = "en_to_bal"
-                # spacing for Latin mode
                 st.markdown('<div style="margin-top: 32px;"></div>', unsafe_allow_html=True)
 
     script_choice = st.session_state.translate_script_key
     current = TRANSLATION_MODELS[script_choice]
     
-    # Input Area styling based on Source Language
     source_dir = "ltr" if st.session_state.translate_direction == "en_to_bal" else current["direction"]
     source_align = "left" if st.session_state.translate_direction == "en_to_bal" else current["align"]
     source_font = "'Inter', sans-serif" if st.session_state.translate_direction == "en_to_bal" else current["font"]
@@ -383,7 +360,6 @@ if translate_clicked:
 if st.session_state.translation_result:
     result = st.session_state.translation_result
     
-    # Determine result styling
     if result["direction"] == "en_to_bal":
         res_dir = TRANSLATION_MODELS[result["script"]]["direction"]
         res_align = TRANSLATION_MODELS[result["script"]]["align"]
