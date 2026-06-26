@@ -35,25 +35,24 @@ TRANSLATION_MODELS = {
 
 @st.cache_resource(show_spinner=False)
 def load_translation_model(model_id: str):
-    import torch
-    from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-    
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
     # Check if it's a LoRA adapter (contains 'lora' in ID or has adapter config)
     if "lora" in model_id.lower():
-        try:
-            from peft import PeftModel, PeftConfig
-            config = PeftConfig.from_pretrained(model_id)
-            # Use the base model specified in the LoRA config
-            base_model_id = config.base_model_name_or_path
-            tokenizer = AutoTokenizer.from_pretrained(model_id)
-            base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_id).to(device)
-            model = PeftModel.from_pretrained(base_model, model_id)
-        except ImportError:
-            # Fallback if PEFT is not available or fails
-            tokenizer = AutoTokenizer.from_pretrained(model_id)
-            model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to(device)
+        from peft import PeftModel, PeftConfig
+        
+        # Load the configuration of the LoRA adapter
+        config = PeftConfig.from_pretrained(model_id)
+        base_model_id = config.base_model_name_or_path
+        
+        # Tokenizer is usually the same as the base model for LoRA
+        tokenizer = AutoTokenizer.from_pretrained(base_model_id)
+        
+        # Load the base model
+        base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_id).to(device)
+        
+        # Load the LoRA adapter onto the base model
+        model = PeftModel.from_pretrained(base_model, model_id)
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_id)
         model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to(device)
@@ -115,18 +114,19 @@ st.markdown("""
     <style>
     /* Direction Toggle Button Styling */
     .st-key-btn_toggle_dir button {
-        background: var(--bv-grad) !important;
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
         color: white !important;
         border: none !important;
-        border-radius: 999px !important;
+        border-radius: 12px !important;
         font-weight: 700 !important;
-        padding: 0.5rem 1rem !important;
-        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3) !important;
+        padding: 0.6rem 1rem !important;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
         transition: all 0.2s ease !important;
     }
     .st-key-btn_toggle_dir button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4) !important;
+        filter: brightness(1.1) !important;
     }
     .st-key-btn_toggle_dir button p {
         color: white !important;
@@ -208,6 +208,9 @@ with st.container(key="input_card"):
         is_latin = st.session_state.translate_script_key == "latin"
         if is_latin:
             st.session_state.translate_direction = "en_to_bal" # Force English to Balochi for Latin
+            st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
+            # Show a disabled button for consistency in layout
+            st.button(f"English → Balochi", use_container_width=True, key="btn_toggle_dir_dis", disabled=True)
         else:
             st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
             if st.button(f"🔄 {direction_label}", use_container_width=True, key="btn_toggle_dir"):
