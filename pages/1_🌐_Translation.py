@@ -73,7 +73,9 @@ def translate_text(text: str, script_key: str, direction: str) -> str:
     inputs = {key: value.to(device) for key, value in inputs.items()}
 
     with torch.no_grad():
-        generated = model.generate(**inputs, max_length=256, num_beams=4)
+        # Using num_beams=1 for English -> Balochi for much faster performance
+        beams = 1 if direction == "en_to_bal" else 4
+        generated = model.generate(**inputs, max_length=256, num_beams=beams)
 
     return tokenizer.batch_decode(generated, skip_special_tokens=True)[0].strip()
 
