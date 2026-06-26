@@ -24,20 +24,20 @@ BRAND_MARK = (
  
 TRANSLATION_ICON = (
     '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    '<path d="M5 8H14M9 5V8M11 8C11 12 9 15 6 17M8 13C9 14.5 11 16 13 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
-    '<path d="M13 20L16 11L19 20M14.5 17H17.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<path d="M5 8H14M9 5V8M11 8C11 12 9 15 6 17M8 13C9 14.5 11 16 13 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<path d="M13 20L16 11L19 20M14.5 17H17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
     '<circle cx="18" cy="6" r="3" stroke="#db2777" stroke-width="1.5"/>'
     '</svg>'
 )
-
+ 
 TTS_ICON = (
     '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    '<path d="M11 5L6 9H3V15H6L11 19V5Z" fill="white"/>'
-    '<path d="M15.5 8.5C16.3 9.5 16.8 10.7 16.8 12C16.8 13.3 16.3 14.5 15.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round"/>'
+    '<path d="M11 5L6 9H3V15H6L11 19V5Z" fill="currentColor"/>'
+    '<path d="M15.5 8.5C16.3 9.5 16.8 10.7 16.8 12C16.8 13.3 16.3 14.5 15.5 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
     '<path d="M19 5C20.8 7 21.8 9.4 21.8 12C21.8 14.6 20.8 17 19 19" stroke="#db2777" stroke-width="2" stroke-linecap="round"/>'
     '</svg>'
 )
-
+ 
 ASR_ICON = (
     '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
     '<path d="M12 3V14M12 3C10.5 3 9 4.5 9 6V11C9 12.5 10.5 14 12 14C13.5 14 15 12.5 15 11V6C15 4.5 13.5 3 12 3Z" stroke="url(#ai_grad)" stroke-width="2" stroke-linecap="round"/>'
@@ -47,7 +47,7 @@ ASR_ICON = (
     '<defs><linearGradient id="ai_grad" x1="9" y1="3" x2="15" y2="14" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
     "</svg>"
 )
-
+ 
 OCR_ICON = (
     '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
     '<rect x="4" y="4" width="16" height="16" rx="3" stroke="#8b5cf6" stroke-width="2" opacity="0.6"/>'
@@ -56,7 +56,7 @@ OCR_ICON = (
     '<defs><linearGradient id="ai_grad2" x1="8" y1="8" x2="16" y2="16" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
     "</svg>"
 )
-
+ 
 DATA_ICON = (
     '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
     '<ellipse cx="12" cy="6" rx="8" ry="3" stroke="#8b5cf6" stroke-width="2" opacity="0.6"/>'
@@ -66,11 +66,11 @@ DATA_ICON = (
     '<defs><linearGradient id="ai_grad3" x1="4" y1="12" x2="20" y2="15" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
     "</svg>"
 )
-
+ 
 # ----------------------------------------------------------------------------
 # THEME CONFIG
 # ----------------------------------------------------------------------------
-
+ 
 THEME_CONFIG = {
     "light": {
         "ink": "#1e1b2e",
@@ -81,8 +81,8 @@ THEME_CONFIG = {
         "bg": "#ffffff",
         "bg_glow_1": "rgba(124, 58, 237, 0.10)",
         "bg_glow_2": "rgba(219, 39, 119, 0.08)",
-        "sidebar_bg": "#f8f9ff",
-        "sidebar_text": "#1e1b2e",
+        "sidebar_bg": "linear-gradient(180deg, #2a1758 0%, #4c1d95 55%, #6d28d9 100%)",
+        "sidebar_text": "#f3f0ff",
         "input_bg": "#ffffff",
     },
     "dark": {
@@ -94,8 +94,8 @@ THEME_CONFIG = {
         "bg": "#0b0a0f",
         "bg_glow_1": "rgba(124, 58, 237, 0.15)",
         "bg_glow_2": "rgba(219, 39, 119, 0.12)",
-        "sidebar_bg": "#13111c",
-        "sidebar_text": "#f3f0ff",
+        "sidebar_bg": "#0f0e16",
+        "sidebar_text": "#ffffff",
         "input_bg": "#1e1b2e",
     }
 }
@@ -160,18 +160,23 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {
 }
 [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
 [data-testid="stSidebar"] .bv-side-title,
-[data-testid="stSidebar"] .bv-side-sub { 
+[data-testid="stSidebar"] .bv-side-sub,
+[data-testid="stSidebar"] .bv-side-foot { 
     color: {sidebar_text} !important; 
+    opacity: 0.9 !important;
 }
 
 /* Sidebar Toggle Button Visibility Fix - HAMBURGER STYLE */
 button[data-testid="stSidebarCollapse"] {
-    color: var(--bv-ink) !important;
-    background-color: var(--bv-soft) !important;
-    border: 1px solid var(--bv-border) !important;
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 10px !important;
     width: 42px !important;
     height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 button[data-testid="stSidebarCollapse"] svg {
     display: none !important;
@@ -179,25 +184,29 @@ button[data-testid="stSidebarCollapse"] svg {
 button[data-testid="stSidebarCollapse"]::after {
     content: "";
     display: block;
-    width: 18px;
+    width: 20px;
     height: 2px;
-    background: var(--bv-ink);
-    box-shadow: 0 6px 0 var(--bv-ink), 0 -6px 0 var(--bv-ink);
+    background: white;
+    box-shadow: 0 6px 0 white, 0 -6px 0 white;
     margin: 0 auto;
 }
 
 /* Theme Toggle Specific Styling */
 .st-key-theme_toggle button {
-    background: var(--bv-soft) !important;
-    color: var(--bv-purple) !important;
-    border: 1.5px solid var(--bv-border) !important;
+    background: white !important;
+    color: #7c3aed !important;
+    border: 2px solid white !important;
     border-radius: 999px !important;
-    font-weight: 700 !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+    font-weight: 800 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
 }
 .st-key-theme_toggle button p {
-    color: var(--bv-purple) !important;
-    font-weight: 700 !important;
+    color: #7c3aed !important;
+    font-weight: 800 !important;
+}
+.st-key-theme_toggle button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
 }
  
 div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
@@ -207,34 +216,34 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
     padding: 6px 6px 4px 6px;
 }
 .bv-side-title { font-size: 1.25rem; font-weight: 800; line-height: 1; }
-.bv-side-sub { font-size: 0.78rem; opacity: 0.7; margin: 14px 6px 10px 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+.bv-side-sub { font-size: 0.78rem; opacity: 0.8; margin: 14px 6px 10px 6px; letter-spacing: 0.04em; text-transform: uppercase; }
  
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a {
-    background: var(--bv-soft) !important;
-    border: 1px solid var(--bv-border) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     border-radius: 14px !important;
     margin: 7px 4px !important;
     padding: 11px 14px !important;
     font-weight: 600 !important;
-    color: var(--bv-ink) !important;
+    color: white !important;
     justify-content: flex-start !important;
     transition: all 0.18s ease !important;
 }
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
-    background: rgba(124, 58, 237, 0.1) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
     transform: translateX(3px);
 }
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
-    background: var(--bv-grad) !important;
+    background: white !important;
     border: none !important;
-    box-shadow: 0 8px 22px rgba(124, 58, 237, 0.25) !important;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25) !important;
 }
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] * {
-    color: #ffffff !important;
+    color: #5b21b6 !important;
 }
  
 .bv-side-foot {
-    margin: 20px 8px 6px 8px; font-size: 0.72rem; opacity: 0.55; line-height: 1.5;
+    margin: 20px 8px 6px 8px; font-size: 0.72rem; opacity: 0.8 !important; line-height: 1.5;
 }
  
 /* ---------- Brand mark (animated bars) ---------- */
@@ -306,6 +315,7 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
     width: 54px; height: 54px; border-radius: 16px; display: inline-flex;
     align-items: center; justify-content: center; margin-bottom: 16px;
     box-shadow: 0 10px 22px -6px rgba(124, 58, 237, 0.55);
+    color: white !important;
 }
 .bv-icon-1 { background: linear-gradient(135deg, #6366f1, #4338ca); }
 .bv-icon-2 { background: linear-gradient(135deg, #db2777, #9d174d); }
@@ -377,6 +387,7 @@ div[data-testid="stTextArea"] textarea {
     border-radius: 14px !important; border: 1.5px solid var(--bv-border) !important;
     font-size: 1.02rem !important; background: var(--bv-input-bg) !important;
     color: var(--bv-ink) !important;
+    caret-color: var(--bv-purple) !important;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 div[data-testid="stTextArea"] textarea:focus {
@@ -420,139 +431,98 @@ div[data-testid="stButton"] button[data-testid="baseButton-primary"]:active { tr
     border: 1.5px solid var(--bv-border) !important; color: var(--bv-purple) !important;
     background: var(--bv-input-bg) !important;
 }
-.st-key-btn_clear button:hover { background: var(--bv-soft) !important; }
  
-/* ---------- Download buttons ---------- */
-div[data-testid="stDownloadButton"] button {
-    border-radius: 13px !important; font-weight: 700 !important;
-    border: 1.5px solid var(--bv-border) !important; color: var(--bv-purple) !important;
-    background: var(--bv-input-bg) !important; transition: all 0.15s ease;
+/* ---------- Audio Player ---------- */
+audio { width: 100%; border-radius: 14px; margin-bottom: 12px; }
+ 
+/* ---------- Rating Feedback ---------- */
+.bv-avg-rating {
+    font-size: 0.8rem; color: var(--bv-muted); margin-top: 10px; text-align: center;
 }
-div[data-testid="stDownloadButton"] button:hover { background: var(--bv-soft) !important; transform: translateY(-1px); }
  
-/* ---------- Result text ---------- */
+/* ---------- Result Text Display ---------- */
 .bv-result-text {
-    border: 1px solid var(--bv-border); border-radius: 14px; padding: 18px 20px;
-    min-height: 104px; font-size: 1.15rem; line-height: 1.75;
-    background: var(--bv-soft); margin-bottom: 16px;
-    color: var(--bv-ink);
+    padding: 22px; border-radius: 16px; background: var(--bv-soft);
+    border: 1.5px solid var(--bv-border); font-size: 1.25rem; line-height: 1.6;
+    margin-bottom: 18px; min-height: 80px;
 }
-.bv-avg-rating { font-size: 0.84rem; color: var(--bv-muted); margin-top: 8px; }
  
-audio { width: 100% !important; border-radius: 12px; }
- 
-/* ---------- Mobile ---------- */
+/* ---------- Responsive Grid Fixes ---------- */
 @media screen and (max-width: 640px) {
-    .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 3.5rem !important; }
-    .bv-hero-title { font-size: 2.1rem; }
-    .bv-hero-sub { font-size: 0.96rem; margin-bottom: 26px; }
-    .bv-h2 { font-size: 1.4rem; }
-    .bv-card, .bv-step, .bv-soon { margin-bottom: 16px; }
-    .st-key-input_card, .st-key-result_card { padding: 22px 20px 10px 20px; }
-    .st-key-script_switch { max-width: 100%; width: 100%; }
-    .st-key-script_switch div[data-testid="column"] { width: 100% !important; flex: 1 1 100% !important; }
-    .st-key-script_switch button { width: 100% !important; min-height: 46px; font-size: 1rem !important; }
-    .bv-footer { flex-direction: column; align-items: flex-start; }
-    
-    /* Move section titles down on mobile to avoid overlap with toggle */
-    .bv-section-title { margin-top: 8px !important; }
+    .bv-hero-title { font-size: 2.2rem; }
+    .st-key-input_card, .st-key-result_card { padding: 18px 16px; }
 }
 </style>
 """
  
  
-# ----------------------------------------------------------------------------
-# LAYOUT HELPERS
-# ----------------------------------------------------------------------------
+def inject_theme():
+    mode = st.session_state.get("theme_mode", "light")
+    config = THEME_CONFIG[mode]
+    st.markdown(THEME_CSS.format(**config), unsafe_allow_html=True)
  
-def inject_theme() -> None:
-    """Inject the shared theme CSS. Call once per page after set_page_config."""
-    if "theme" not in st.session_state:
-        st.session_state.theme = "light"
-    
-    cfg = THEME_CONFIG[st.session_state.theme]
-    css = THEME_CSS
-    for key, value in cfg.items():
-        css = css.replace(f"{{{key}}}", value)
-    st.markdown(css, unsafe_allow_html=True)
-
-
-def render_theme_toggle() -> None:
-    """Render a high-visibility theme toggle button."""
-    if "theme" not in st.session_state:
-        st.session_state.theme = "light"
-    
-    label = "🌙 Dark Mode" if st.session_state.theme == "light" else "☀️ Light Mode"
-    
-    # Custom styling for the toggle button to ensure visibility
-    # Target by data-testid and the specific label text to be safe
-    st.markdown("""
-        <style>
-        div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
-            background: var(--bv-grad) !important;
-            color: white !important;
-            border: none !important;
-            font-weight: 700 !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
-            opacity: 1 !important;
-        }
-        div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] p {
-            color: white !important;
-            font-weight: 700 !important;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    if st.button(label, use_container_width=True, key="theme_toggle"):
-        st.session_state.theme = "dark" if st.session_state.theme == "light" else "light"
-        st.rerun()
-
-
-def render_sidebar() -> None:
-    """Render the branded sidebar with navigation."""
+ 
+def render_sidebar():
     with st.sidebar:
         st.markdown(
-            f'<div class="bv-side-brand">{BRAND_MARK}'
-            f'<div class="bv-side-title">Bakhteyar-AI</div></div>'
-            f'<div class="bv-side-sub">Balochi Language Tools</div>',
+            f"""
+            <div class="bv-side-brand">
+                {BRAND_MARK}
+                <div class="bv-side-title">Bakhteyar AI</div>
+            </div>
+            <div class="bv-side-sub">Tools & Navigation</div>
+            """,
             unsafe_allow_html=True,
         )
  
-        st.page_link("app.py", label="Home", icon=":material/home:")
-        st.page_link("pages/1_🌐_Translation.py", label="Translation", icon=":material/translate:")
-        st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon=":material/record_voice_over:")
-
-        st.markdown('<div style="margin-top: 2rem;"></div>', unsafe_allow_html=True)
-        render_theme_toggle()
+        st.page_link("app.py", label="Home", icon="🏠")
+        st.page_link("pages/1_🌐_Translation.py", label="Translate", icon="🌐")
+        st.page_link("pages/2_🎙️_Text_to_Speech.py", label="Voice", icon="🎙️")
+ 
+        st.markdown('<div class="bv-side-sub">Preferences</div>', unsafe_allow_html=True)
+        
+        mode = st.session_state.get("theme_mode", "light")
+        new_mode = "dark" if mode == "light" else "light"
+        btn_label = "🌙 Dark Mode" if mode == "light" else "☀️ Light Mode"
+        
+        if st.button(btn_label, key="theme_toggle", use_container_width=True):
+            st.session_state.theme_mode = new_mode
+            st.rerun()
  
         st.markdown(
-            f'<div class="bv-side-foot">© {datetime.now().year} Bakhteyar-AI.<br>All rights reserved.</div>',
+            f"""
+            <div class="bv-side-foot">
+                &copy; {datetime.now().year} Bakhteyar-AI<br/>
+                Fine-tuned models for Balochi.
+            </div>
+            """,
             unsafe_allow_html=True,
         )
  
  
-def render_topbar(suffix: str = "") -> None:
-    """Render the top brand bar.
- 
-    The navigation is handled exclusively by the sidebar to avoid redundancy.
-    """
-    tag = f'<span class="bv-brand-tag">{suffix}</span>' if suffix else ""
-    with st.container(key="topbar"):
+def render_topbar(current_page: str = None):
+    cols = st.columns([1, 1])
+    with cols[0]:
         st.markdown(
-            f'<div class="bv-brand">{BRAND_MARK}'
-            f'<span class="bv-brand-name">Bakhteyar<span class="accent">-AI</span></span>'
-            f"{tag}</div>",
+            f"""
+            <div class="bv-brand">
+                <div class="bv-brand-name">Bakhteyar<span class="accent">AI</span></div>
+            </div>
+            """,
             unsafe_allow_html=True,
         )
+    with cols[1]:
+        if current_page:
+            st.markdown(f'<div class="bv-brand-tag">{current_page}</div>', unsafe_allow_html=True)
  
  
-def render_footer() -> None:
-    """Render the copyright footer."""
-    year = datetime.now().year
+def render_footer():
     st.markdown(
-        f'<div class="bv-footer">'
-        f"<div>© {year} Bakhteyar-AI. All rights reserved.</div>"
-        f'<div>Built for the Balochi language <span class="dot">●</span> Latin &amp; Arabic script</div>'
-        f"</div>",
+        f"""
+        <div class="bv-footer">
+            <div>Built for the <b>Balochi</b> community <span class="dot">&bull;</span> {datetime.now().year}</div>
+            <div>Bakhteyar-AI v1.0</div>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
