@@ -116,38 +116,32 @@ inject_theme()
 # Custom CSS for the Direction Toggle
 st.markdown("""
     <style>
-    /* Direction Toggle Button Styling */
-    .st-key-btn_toggle_dir button {
-        background: var(--bv-card) !important;
-        color: var(--bv-purple) !important;
-        border: 1.5px solid var(--bv-border) !important;
-        border-radius: 14px !important;
-        font-weight: 700 !important;
-        padding: 0.6rem 1rem !important;
-        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08) !important;
-        transition: all 0.2s ease !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 8px !important;
-    }
-    .st-key-btn_toggle_dir button:hover {
-        transform: translateY(-2px) !important;
+    /* Direction Switch Container */
+    .st-key-direction_switch {
         background: var(--bv-soft) !important;
-        border-color: var(--bv-purple) !important;
-        box-shadow: 0 6px 15px rgba(124, 58, 237, 0.15) !important;
+        border: 1px solid var(--bv-border) !important;
+        border-radius: 14px !important;
+        padding: 4px !important;
     }
-    .st-key-btn_toggle_dir button p {
-        color: var(--bv-purple) !important;
+    .st-key-direction_switch button {
+        border-radius: 10px !important;
         font-weight: 700 !important;
-        margin: 0 !important;
+        border: none !important;
+        transition: all 0.2s ease !important;
+        height: 42px !important;
     }
-    
-    /* Active State indicator */
-    .st-key-btn_toggle_dir button::before {
-        content: '🤖';
-        margin-right: 4px;
-        font-size: 1.1rem;
+    .st-key-direction_switch button[kind="primary"] {
+        background: var(--bv-grad) !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25) !important;
+    }
+    .st-key-direction_switch button[kind="secondary"] {
+        background: transparent !important;
+        color: var(--bv-muted) !important;
+    }
+    .st-key-direction_switch button[kind="secondary"]:hover {
+        color: var(--bv-purple) !important;
+        background: rgba(124, 58, 237, 0.05) !important;
     }
     
     /* Disabled State */
@@ -225,14 +219,19 @@ with st.container(key="input_card"):
         is_latin = st.session_state.translate_script_key == "latin"
         if not is_latin:
             st.markdown('<div class="bv-section-caption">Select Direction</div>', unsafe_allow_html=True)
-            # Modern Styled Toggle Button for Arabic script
-            btn_label = "English ⇄ Balochi" 
-            if st.button(btn_label, use_container_width=True, key="btn_toggle_dir"):
-                st.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
-                st.rerun()
+            with st.container(key="direction_switch"):
+                dir_col1, dir_col2 = st.columns(2)
+                with dir_col1:
+                    if st.button("En → Bal", type="primary" if st.session_state.translate_direction == "en_to_bal" else "secondary", use_container_width=True, key="dir_en_bal"):
+                        st.session_state.translate_direction = "en_to_bal"
+                        st.rerun()
+                with dir_col2:
+                    if st.button("Bal → En", type="primary" if st.session_state.translate_direction == "bal_to_en" else "secondary", use_container_width=True, key="dir_bal_en"):
+                        st.session_state.translate_direction = "bal_to_en"
+                        st.rerun()
         else:
             st.session_state.translate_direction = "en_to_bal"
-            # Ensure the vertical alignment is consistent even when set_col2 is empty
+            # Maintain alignment
             st.markdown('<div style="height: 68px;"></div>', unsafe_allow_html=True)
 
     script_choice = st.session_state.translate_script_key
