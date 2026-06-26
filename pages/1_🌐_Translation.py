@@ -44,16 +44,12 @@ def load_translation_model(model_id: str):
         base_model_id = config.base_model_name_or_path
         
         tokenizer = AutoTokenizer.from_pretrained(base_model_id)
-        base_model = AutoModelForSeq2SeqLM.from_pretrained(
-            base_model_id, device_map="auto"
-        )
-        base_model.resize_token_embeddings(len(tokenizer))
+        base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_id).to(device)
+        base_model.resize_token_embeddings(256205)
         model = PeftModel.from_pretrained(base_model, model_id)
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_id)
-        model = AutoModelForSeq2SeqLM.from_pretrained(
-            model_id, device_map="auto"
-        )
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to(device)
         
     model.eval()
     return tokenizer, model, device
@@ -356,6 +352,90 @@ if translate_clicked:
             except Exception as error:
                 st.session_state.translation_result = None
                 st.error(f"Could not translate text: {error}")
-                st.exception(error)
 
-# --------------------------------------
+# ----------------------------------------------------------------------------
+# RESULT CARD
+# ----------------------------------------------------------------------------
+
+if st.session_state.translation_result:
+    result = st.session_state.translation_result
+    
+    if result["direction"] == "en_to_bal":
+        res_dir = TRANSLATION_MODELS[result["script"]]["direction"]
+        res_align = TRANSLATION_MODELS[result["script"]]["align"]
+        res_font = TRANSLATION_MODELS[result["script"]]["font"]
+        res_label = f"Balochi ({TRANSLATION_MODELS[result['script']]['label']} script)"
+    else:
+        res_dir = "ltr"
+        res_align = "left"
+        res_font = "'Inter', sans-serif"
+        res_label = "English"
+
+    with st.container(key="result_card"):
+        st.markdown(f'<div class="bv-section-title">Translation Result</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="bv-section-caption">Output: {res_label}</div>', unsafe_allow_html=True)
+
+        st.markdown(
+            f"""
+            <div class="bv-result-text" style="
+                direction:{res_dir};
+                text-align:{res_align};
+                font-family:{res_font};">
+                {result['text']}
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        st.download_button(
+            "Download as Text",
+            data=result["text"],
+            file_name=f"bakhtai_translation_{result['script']}.txt",
+            mime="text/plain",
+            use_container_width=True,
+        )
+
+        st.markdown(
+            '<div class="bv-section-title" style="font-size:0.95rem; margin-top:20px;">Rate this translation</div>',
+            unsafe_allow_html=True,
+        )
+
+        has_native_feedback = hasattr(st, "feedback")
+
+        if has_native_feedback:
+            rating = st.feedback("stars", key=f"translation_rating_{id(result)}")
+
+            if rating is not None and not result["rated"]:
+                st.session_state.translation_feedback_log.append(rating + 1)
+                st.session_state.translation_result["rated"] = True
+                st.toast(f"Thanks for rating it {STAR_LABELS[rating]}!", icon="⭐")
+
+        else:
+            rating_label = st.radio(
+                "Rate this translation",
+                options=STAR_LABELS,
+                horizontal=True,
+                label_visibility="collapsed",
+                key=f"translation_rating_fallback_{id(result)}",
+                index=None,
+            )
+
+            if rating_label and not result["rated"]:
+                st.session_state.translation_feedback_log.append(
+                    STAR_LABELS.index(rating_label) + 1
+                )
+                st.session_state.translation_result["rated"] = True
+                st.toast(f"Thanks for rating it {rating_label}!", icon="⭐")
+
+        if st.session_state.translation_feedback_log:
+            avg = sum(st.session_state.translation_feedback_log) / len(
+                st.session_state.translation_feedback_log
+            )
+
+            st.markdown(
+                f'<div class="bv-avg-rating">Average rating: {avg:.1f} / 5 '
+                f'from {len(st.session_state.translation_feedback_log)} rating(s)</div>',
+                unsafe_allow_html=True,
+            )
+
+render_footer()
