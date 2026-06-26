@@ -162,15 +162,18 @@ h1, h2, h3, .bv-hero-title, .bv-brand-name, .bv-side-title {
     color: #f3eaff !important; 
 }
 
-/* Sidebar Toggle Button Visibility Fix */
-button[data-testid="stSidebarCollapse"] {
-    color: white !important;
+/* Sidebar Toggle Button - visible in both expanded and collapsed state */
+button[data-testid="stSidebarCollapse"],
+[data-testid="collapsedControl"] button,
+[data-testid="collapsedControl"] {
     background: var(--bv-grad) !important;
     border: none !important;
     border-radius: 8px !important;
     opacity: 1 !important;
+    color: white !important;
 }
-button[data-testid="stSidebarCollapse"] svg {
+button[data-testid="stSidebarCollapse"] svg,
+[data-testid="collapsedControl"] svg {
     fill: white !important;
     color: white !important;
     stroke: white !important;
