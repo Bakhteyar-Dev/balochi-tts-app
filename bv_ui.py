@@ -41,8 +41,8 @@ TTS_ICON = (
 ASR_ICON = (
     '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
     '<path d="M12 3V14M12 3C10.5 3 9 4.5 9 6V11C9 12.5 10.5 14 12 14C13.5 14 15 12.5 15 11V6C15 4.5 13.5 3 12 3Z" stroke="url(#ai_grad)" stroke-width="2" stroke-linecap="round"/>'
-    '<path d="M19 10C19 14 15.866 17 12 17C8.134 17 5 14 5 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6"/>'
-    '<path d="M12 17V21M9 21H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6"/>'
+    '<path d="M19 10C19 14 15.866 17 12 17C8.134 17 5 14 5 10" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" opacity="0.8"/>'
+    '<path d="M12 17V21M9 21H15" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" opacity="0.8"/>'
     '<path d="M18 4L20 6M20 4L18 6" stroke="#db2777" stroke-width="2" stroke-linecap="round"/>'
     '<defs><linearGradient id="ai_grad" x1="9" y1="3" x2="15" y2="14" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
     "</svg>"
@@ -50,7 +50,7 @@ ASR_ICON = (
 
 OCR_ICON = (
     '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    '<rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="2" opacity="0.4"/>'
+    '<rect x="4" y="4" width="16" height="16" rx="3" stroke="#8b5cf6" stroke-width="2" opacity="0.6"/>'
     '<path d="M8 8H11M8 12H16M8 16H13" stroke="url(#ai_grad2)" stroke-width="2" stroke-linecap="round"/>'
     '<path d="M16 4L18 2M14 2L16 4" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round"/>'
     '<defs><linearGradient id="ai_grad2" x1="8" y1="8" x2="16" y2="16" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
@@ -59,8 +59,8 @@ OCR_ICON = (
 
 DATA_ICON = (
     '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    '<ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="2" opacity="0.4"/>'
-    '<path d="M4 6V18C4 19.6569 7.58172 21 12 21C16.4183 21 20 19.6569 20 18V6" stroke="currentColor" stroke-width="2" opacity="0.4"/>'
+    '<ellipse cx="12" cy="6" rx="8" ry="3" stroke="#8b5cf6" stroke-width="2" opacity="0.6"/>'
+    '<path d="M4 6V18C4 19.6569 7.58172 21 12 21C16.4183 21 20 19.6569 20 18V6" stroke="#8b5cf6" stroke-width="2" opacity="0.6"/>'
     '<path d="M4 12C4 13.6569 7.58172 15 12 15C16.4183 15 20 13.6569 20 12" stroke="url(#ai_grad3)" stroke-width="2"/>'
     '<path d="M14 18L16 20L20 16" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
     '<defs><linearGradient id="ai_grad3" x1="4" y1="12" x2="20" y2="15" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
@@ -495,9 +495,9 @@ def render_sidebar() -> None:
             unsafe_allow_html=True,
         )
  
-        st.page_link("app.py", label="Home", icon=":material/rocket_launch:")
-        st.page_link("pages/1_🌐_Translation.py", label="Translation", icon=":material/language:")
-        st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon=":material/volume_up:")
+        st.page_link("app.py", label="Home", icon=":material/home:")
+        st.page_link("pages/1_🌐_Translation.py", label="Translation", icon=":material/translate:")
+        st.page_link("pages/2_🔊_Text_to_Speech.py", label="Text to Speech", icon=":material/record_voice_over:")
 
         st.markdown('<div style="margin-top: 2rem;"></div>', unsafe_allow_html=True)
         render_theme_toggle()
