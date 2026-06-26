@@ -1,4 +1,3 @@
-
 """Shared UI theme, branding and layout helpers for the Bakhteyar-AI Streamlit app.
  
 Keeping the CSS and the sidebar / top-bar / footer markup in one place keeps the
@@ -81,6 +80,8 @@ THEME_CONFIG = {
         "bg": "#ffffff",
         "bg_glow_1": "rgba(124, 58, 237, 0.10)",
         "bg_glow_2": "rgba(219, 39, 119, 0.08)",
+        "input_bg": "#fcfbff",
+        "input_color": "#1e1b2e",
     },
     "dark": {
         "ink": "#f3f0ff",
@@ -91,6 +92,8 @@ THEME_CONFIG = {
         "bg": "#0b0a0f",
         "bg_glow_1": "rgba(124, 58, 237, 0.15)",
         "bg_glow_2": "rgba(219, 39, 119, 0.12)",
+        "input_bg": "#1a1628",
+        "input_color": "#f3f0ff",
     }
 }
  
@@ -210,6 +213,13 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
 }
 [data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] * {
     color: #5b21b6 !important;
+    fill: #5b21b6 !important;
+}
+
+/* FIX: Sidebar nav icons and labels always visible (sidebar bg is always dark) */
+[data-testid="stSidebar"] div[data-testid="stPageLink"] a:not([aria-current="page"]) * {
+    color: #f3eaff !important;
+    fill: #f3eaff !important;
 }
  
 .bv-side-foot {
@@ -351,15 +361,23 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
 .bv-section-title { font-size: 1.18rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.01em; }
 .bv-section-caption { font-size: 0.86rem; color: var(--bv-muted); margin-bottom: 18px; }
  
-/* ---------- Text area ---------- */
+/* ---------- Text area: FIX dark mode visibility ---------- */
 div[data-testid="stTextArea"] textarea {
     border-radius: 14px !important; border: 1.5px solid var(--bv-border) !important;
-    font-size: 1.02rem !important; background: #fcfbff !important;
+    font-size: 1.02rem !important;
+    background: {input_bg} !important;
+    color: {input_color} !important;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 div[data-testid="stTextArea"] textarea:focus {
     border-color: var(--bv-purple) !important;
     box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.14) !important;
+}
+
+/* FIX: textarea placeholder text visible in dark mode */
+div[data-testid="stTextArea"] textarea::placeholder {
+    color: {muted} !important;
+    opacity: 1 !important;
 }
  
 /* ---------- Pill script switch ---------- */
@@ -412,7 +430,7 @@ div[data-testid="stDownloadButton"] button:hover { background: var(--bv-soft) !i
 .bv-result-text {
     border: 1px solid var(--bv-border); border-radius: 14px; padding: 18px 20px;
     min-height: 104px; font-size: 1.15rem; line-height: 1.75;
-    background: linear-gradient(160deg, #faf8ff, #f5f1ff); margin-bottom: 16px;
+    background: {input_bg}; color: {input_color}; margin-bottom: 16px;
 }
 .bv-avg-rating { font-size: 0.84rem; color: var(--bv-muted); margin-top: 8px; }
  
@@ -461,8 +479,6 @@ def render_theme_toggle() -> None:
     
     label = "🌙 Dark Mode" if st.session_state.theme == "light" else "☀️ Light Mode"
     
-    # Custom styling for the toggle button to ensure visibility
-    # Target by data-testid and the specific label text to be safe
     st.markdown("""
         <style>
         div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
@@ -509,10 +525,7 @@ def render_sidebar() -> None:
  
  
 def render_topbar(suffix: str = "") -> None:
-    """Render the top brand bar.
- 
-    The navigation is handled exclusively by the sidebar to avoid redundancy.
-    """
+    """Render the top brand bar."""
     tag = f'<span class="bv-brand-tag">{suffix}</span>' if suffix else ""
     with st.container(key="topbar"):
         st.markdown(
