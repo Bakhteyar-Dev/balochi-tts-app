@@ -39,31 +39,31 @@ TTS_ICON = (
 )
 
 ASR_ICON = (
-    '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    '<path d="M12 2C10.3431 2 9 3.34315 9 5V12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12V5C15 3.34315 13.6569 2 12 2Z" fill="url(#grad1)"/>'
-    '<path d="M19 10V12C19 15.866 15.866 19 12 19C8.13401 19 5 15.866 5 12V10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
-    '<path d="M12 19V22M8 22H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
-    '<path d="M21 4L18 7M18 4L21 7" stroke="#db2777" stroke-width="2" stroke-linecap="round"/>'
-    '<defs><linearGradient id="grad1" x1="9" y1="2" x2="15" y2="15" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
+    '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<path d="M12 3V14M12 3C10.5 3 9 4.5 9 6V11C9 12.5 10.5 14 12 14C13.5 14 15 12.5 15 11V6C15 4.5 13.5 3 12 3Z" stroke="url(#ai_grad)" stroke-width="2" stroke-linecap="round"/>'
+    '<path d="M19 10C19 14 15.866 17 12 17C8.134 17 5 14 5 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6"/>'
+    '<path d="M12 17V21M9 21H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6"/>'
+    '<path d="M18 4L20 6M20 4L18 6" stroke="#db2777" stroke-width="2" stroke-linecap="round"/>'
+    '<defs><linearGradient id="ai_grad" x1="9" y1="3" x2="15" y2="14" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
     "</svg>"
 )
 
 OCR_ICON = (
-    '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    '<path d="M7 3H5C3.89543 3 3 3.89543 3 5V7M17 3H19C20.1046 3 21 3.89543 21 5V7M7 21H5C3.89543 21 3 20.1046 3 19V17M17 21H19C20.1046 21 21 20.1046 21 19V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
-    '<path d="M9 12L11 14L15 10" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
-    '<circle cx="12" cy="12" r="6" stroke="url(#grad2)" stroke-width="2"/>'
-    '<path d="M20 7L18 9M18 7L20 9" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round"/>'
-    '<defs><linearGradient id="grad2" x1="6" y1="6" x2="18" y2="18" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
+    '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="2" opacity="0.4"/>'
+    '<path d="M8 8H11M8 12H16M8 16H13" stroke="url(#ai_grad2)" stroke-width="2" stroke-linecap="round"/>'
+    '<path d="M16 4L18 2M14 2L16 4" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round"/>'
+    '<defs><linearGradient id="ai_grad2" x1="8" y1="8" x2="16" y2="16" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
     "</svg>"
 )
 
 DATA_ICON = (
-    '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    '<path d="M4 7C4 5.34315 7.58172 4 12 4C16.4183 4 20 5.34315 20 7M4 7V17C4 18.6569 7.58172 20 12 20C16.4183 20 20 18.6569 20 17V7M4 7C4 8.65685 7.58172 10 12 10C16.4183 10 20 8.65685 20 7" stroke="currentColor" stroke-width="2"/>'
-    '<path d="M4 12C4 13.6569 7.58172 15 12 15C16.4183 15 20 13.6569 20 12" stroke="currentColor" stroke-width="2" opacity="0.5"/>'
-    '<path d="M15 15L17 17L21 13" stroke="url(#grad3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
-    '<defs><linearGradient id="grad3" x1="15" y1="13" x2="21" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
+    '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="2" opacity="0.4"/>'
+    '<path d="M4 6V18C4 19.6569 7.58172 21 12 21C16.4183 21 20 19.6569 20 18V6" stroke="currentColor" stroke-width="2" opacity="0.4"/>'
+    '<path d="M4 12C4 13.6569 7.58172 15 12 15C16.4183 15 20 13.6569 20 12" stroke="url(#ai_grad3)" stroke-width="2"/>'
+    '<path d="M14 18L16 20L20 16" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<defs><linearGradient id="ai_grad3" x1="4" y1="12" x2="20" y2="15" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>'
     "</svg>"
 )
 
