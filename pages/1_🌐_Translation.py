@@ -128,43 +128,39 @@ st.markdown("""
         align-items: center !important;
     }
     
-    /* Mobile vertical layout fix */
+    /* Mobile Button Stacking (Vertical layout for buttons) */
     @media screen and (max-width: 640px) {
-        /* Allow the main columns to stack vertically */
-        .st-key-settings_grid [data-testid="column"] {
-            width: 100% !important;
-            flex: 1 1 100% !important;
-            display: block !important;
-            margin-bottom: 1.5rem !important;
-        }
-
-        /* Keep internal switches horizontal */
+        /* Force the buttons inside switches to stack vertically */
         .st-key-script_switch [data-testid="stHorizontalBlock"],
         .st-key-direction_switch [data-testid="stHorizontalBlock"] {
+            flex-direction: column !important;
             display: flex !important;
-            flex-direction: row !important;
-            flex-wrap: nowrap !important;
-            gap: 8px !important;
+            gap: 10px !important;
         }
 
-        /* Ensure columns inside switches stay side-by-side */
         .st-key-script_switch [data-testid="column"],
         .st-key-direction_switch [data-testid="column"] {
-            flex: 1 1 auto !important;
-            width: auto !important;
-            margin-bottom: 0 !important;
+            width: 100% !important;
+            flex: 1 1 100% !important;
         }
 
-        /* Adjust button heights for better touch targets */
+        /* Adjust middle arrow button for vertical stacking */
+        .st-key-dir_mid_btn button {
+            width: 100% !important;
+            height: 40px !important;
+            border-radius: 12px !important;
+            margin: 0 !important;
+        }
+
         .st-key-script_switch button,
         .st-key-direction_switch button {
-            height: 46px !important;
-            font-size: 0.85rem !important;
+            height: 50px !important;
+            font-size: 1rem !important;
         }
         
-        .st-key-dir_mid_btn button {
-            width: 40px !important;
-            min-width: 40px !important;
+        .st-key-direction_switch {
+            padding: 8px !important;
+            border-radius: 18px !important;
         }
     }
     
