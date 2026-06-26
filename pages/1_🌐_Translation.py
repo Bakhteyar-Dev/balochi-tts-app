@@ -244,29 +244,37 @@ with st.container(key="input_card"):
                 st.markdown('<div class="bv-section-caption" style="text-align:center;">Select Direction</div>', unsafe_allow_html=True)
                 
                 is_en_to_bal = st.session_state.translate_direction == "en_to_bal"
-                track_class = "dir_green_track" if is_en_to_bal else "dir_blue_track"
+                track_color = "#22c55e" if is_en_to_bal else "#3b82f6"
                 
-                # Small, compact direction switcher
-                with st.container(key="direction_switch"):
-                    with st.container(key=track_class):
-                        # 3 columns for En, Swap, Bal
-                        dir_col1, dir_mid, dir_col2 = st.columns([1, 0.6, 1])
-                        
-                        with dir_col1:
-                            if st.button("ENG", key="lbl_en", use_container_width=True):
-                                st.session_state.translate_direction = "en_to_bal"
-                                st.rerun()
-                        
-                        with dir_mid:
-                            with st.container(key="dir_mid_btn"):
-                                if st.button("⇄", key="btn_swap", use_container_width=True):
-                                    st.session_state.translate_direction = "bal_to_en" if st.session_state.translate_direction == "en_to_bal" else "en_to_bal"
-                                    st.rerun()
-                        
-                        with dir_col2:
-                            if st.button("بلوچی", key="lbl_bal", use_container_width=True):
-                                st.session_state.translate_direction = "bal_to_en"
-                                st.rerun()
+                # Single button styled as a compact pill toggle
+                st.markdown(f"""
+                    <style>
+                    .st-key-dir_pill_toggle button {{
+                        background: {track_color} !important;
+                        color: white !important;
+                        border-radius: 999px !important;
+                        padding: 0 24px !important;
+                        height: 42px !important;
+                        border: none !important;
+                        font-weight: 700 !important;
+                        font-size: 0.9rem !important;
+                        width: auto !important;
+                        min-width: 180px !important;
+                        margin: 0 auto !important;
+                        display: block !important;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+                        transition: all 0.2s ease !important;
+                    }}
+                    .st-key-dir_pill_toggle button:hover {{
+                        transform: scale(1.02);
+                        opacity: 0.9;
+                    }}
+                    </style>
+                """, unsafe_allow_html=True)
+                
+                if st.button("ENG    ⇄    بلوچی", key="dir_pill_toggle"):
+                    st.session_state.translate_direction = "bal_to_en" if is_en_to_bal else "en_to_bal"
+                    st.rerun()
             else:
                 st.session_state.translate_direction = "en_to_bal"
                 # spacing for Latin mode
