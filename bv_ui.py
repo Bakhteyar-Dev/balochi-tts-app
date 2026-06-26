@@ -151,27 +151,7 @@ div[data-testid="stSidebarUserContent"] { padding-top: 1rem; }
 .st-key-topbar { margin-bottom: 26px; }
 .bv-brand { display: flex; align-items: center; gap: 13px; }
  
-/* ---------- Top navigation (always visible, sidebar-independent) ---------- */
-.st-key-topnav { margin-top: 14px; border-bottom: 1px solid var(--bv-border); padding-bottom: 12px; }
-.st-key-topnav div[data-testid="stHorizontalBlock"] { gap: 8px; flex-wrap: nowrap; align-items: center; justify-content: center; }
-.st-key-topnav div[data-testid="stColumn"] { width: auto !important; flex: 1 1 0 !important; min-width: 0 !important; display: flex; justify-content: center; }
-.st-key-topnav div[data-testid="stPageLink"] { width: 100% !important; }
-.st-key-topnav div[data-testid="stPageLink"] > div { width: 100% !important; }
-.st-key-topnav div[data-testid="stPageLink"] a {
-    background: var(--bv-soft) !important; border: 1px solid var(--bv-border) !important;
-    border-radius: 12px !important; padding: 9px 14px !important; width: 100% !important;
-    display: flex !important; justify-content: center !important; align-items: center !important;
-    font-weight: 700 !important; color: var(--bv-purple) !important;
-    transition: all 0.18s ease !important;
-}
-.st-key-topnav div[data-testid="stPageLink"] a:hover {
-    background: #ede9fe !important; transform: translateY(-1px);
-}
-.st-key-topnav div[data-testid="stPageLink"] a[aria-current="page"] {
-    background: var(--bv-grad) !important; border-color: transparent !important;
-    box-shadow: 0 8px 22px rgba(124, 58, 237, 0.30) !important;
-}
-.st-key-topnav div[data-testid="stPageLink"] a[aria-current="page"] * { color: #fff !important; }
+/* ---------- Top navigation (removed) ---------- */
 .bv-brand-name { font-size: 1.35rem; font-weight: 800; white-space: nowrap; letter-spacing: -0.01em; margin-top: -2px; }
 .bv-brand-name .accent {
     background: var(--bv-grad); -webkit-background-clip: text; background-clip: text;
