@@ -128,10 +128,10 @@ st.markdown("""
         align-items: center !important;
     }
     
-    /* Force columns to stay horizontal on mobile */
+    /* Force columns to stay horizontal on mobile and take equal width */
     .st-key-direction_switch [data-testid="column"],
     .st-key-script_switch [data-testid="column"] {
-        width: unset !important;
+        width: 100% !important;
         flex: 1 1 0 !important;
         min-width: 0 !important;
     }
@@ -142,16 +142,19 @@ st.markdown("""
         display: flex !important;
         flex-wrap: nowrap !important;
         align-items: center !important;
-        gap: 4px !important;
+        gap: 5px !important;
     }
 
+    .st-key-script_switch button,
     .st-key-direction_switch button {
+        width: 100% !important;
         border-radius: 999px !important;
         font-weight: 700 !important;
         border: none !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        height: 44px !important;
+        transition: all 0.3s ease !important;
+        height: 42px !important;
         font-size: 0.9rem !important;
+        padding: 0 5px !important;
     }
     
     /* Middle Arrow Button - Positioned absolutely is safer for centering */
@@ -303,8 +306,9 @@ with st.container(key="input_card"):
                         st.rerun()
         else:
             st.session_state.translate_direction = "en_to_bal"
-            # Maintain alignment
-            st.markdown('<div style="height: 68px;"></div>', unsafe_allow_html=True)
+            # On mobile, we don't want a huge empty space when direction is hidden
+            st.markdown('<div class="bv-mobile-spacer" style="height: 10px;"></div>', unsafe_allow_html=True)
+            st.markdown('<style>@media screen and (min-width: 641px) { .bv-mobile-spacer { height: 68px !important; } }</style>', unsafe_allow_html=True)
 
     script_choice = st.session_state.translate_script_key
     current = TRANSLATION_MODELS[script_choice]
