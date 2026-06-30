@@ -21,7 +21,7 @@ TRANSLATION_MODELS = {
     },
     "arabic": {
         "en_to_bal": "Bakhteyar/mbart-en-to-bal-19k",
-        "bal_to_en": "Bakhteyar/nllb-balochi-to-english-lora",
+        "bal_to_en": None,
         "label": "Arabic",
         "direction": "rtl",
         "align": "right",
@@ -106,6 +106,10 @@ if "translate_script_key" not in st.session_state:
 
 if "translate_direction" not in st.session_state:
     st.session_state.translate_direction = "en_to_bal"
+
+# Balochi → English is temporarily disabled.
+# Keep the app locked to English → Balochi without changing the rest of the UI.
+st.session_state.translate_direction = "en_to_bal"
 
 if "translation_result" not in st.session_state:
     st.session_state.translation_result = None
@@ -291,54 +295,34 @@ with st.container(key="input_card"):
                         st.rerun()
 
         with set_col2:
-            is_latin = st.session_state.translate_script_key == "latin"
+            st.session_state.translate_direction = "en_to_bal"
 
-            if not is_latin:
-                st.markdown(
-                    '<div class="bv-section-caption" style="text-align:center;">Select Direction</div>',
-                    unsafe_allow_html=True,
-                )
+            st.markdown(
+                '<div class="bv-section-caption" style="text-align:center;">Direction</div>',
+                unsafe_allow_html=True,
+            )
 
-                is_en_to_bal = st.session_state.translate_direction == "en_to_bal"
-                track_color = "#22c55e" if is_en_to_bal else "#3b82f6"
-
-                st.markdown(f"""
-                    <style>
-                    .st-key-dir_pill_toggle button {{
-                        background: {track_color} !important;
-                        color: white !important;
-                        border-radius: 999px !important;
-                        padding: 0 24px !important;
-                        height: 42px !important;
-                        border: none !important;
-                        font-weight: 700 !important;
-                        font-size: 0.9rem !important;
-                        width: auto !important;
-                        min-width: 180px !important;
-                        margin: 0 auto !important;
-                        display: block !important;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-                        transition: all 0.2s ease !important;
-                    }}
-
-                    .st-key-dir_pill_toggle button:hover {{
-                        transform: scale(1.02);
-                        opacity: 0.9;
-                    }}
-                    </style>
-                """, unsafe_allow_html=True)
-
-                if st.button("ENG    ⇄    بلوچی", key="dir_pill_toggle"):
-                    st.session_state.translate_direction = (
-                        "bal_to_en"
-                        if is_en_to_bal
-                        else "en_to_bal"
-                    )
-                    st.rerun()
-
-            else:
-                st.session_state.translate_direction = "en_to_bal"
-                st.markdown('<div style="margin-top: 32px;"></div>', unsafe_allow_html=True)
+            st.markdown(
+                """
+                <div style="
+                    margin: 0 auto;
+                    margin-top: 6px;
+                    padding: 11px 18px;
+                    border-radius: 999px;
+                    background: #22c55e;
+                    color: white;
+                    font-weight: 700;
+                    font-size: 0.9rem;
+                    text-align: center;
+                    width: fit-content;
+                    min-width: 180px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                ">
+                    English → Balochi
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
     script_choice = st.session_state.translate_script_key
     current = TRANSLATION_MODELS[script_choice]
